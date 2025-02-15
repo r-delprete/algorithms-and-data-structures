@@ -1,0 +1,38 @@
+/**
+ * white —> Stato iniziale di tutti i nodi
+ *
+ * gray —> Quando un nodo ha tra i suoi adiacenti nodi bianchi (alcuni da scoprire)
+ *
+ * black —> Quando un nodo NON ha tra i suoi adiacenti nodi bianchi (tutti scoperti)
+ */
+
+bfs(nodes, source_node) {
+  for (node in nodes - source_node) {
+    color[node] = white;
+    d[node] = 0;
+    pi[node] = null;
+  }
+
+  color[source_node] = gray;
+  d[source_node] = 0;
+  pi[source_node] = null;
+
+  queue = new queue();
+  queue.enqueue(source_node);
+
+  while (!queue.is_empty()) {
+    node = queue.dequeue();
+
+    for (adj_node in adj[node]) {
+      if (color[adj_node] == white) {
+        color[adj_node] = gray;
+        d[adj_node] = d[node] + 1;
+        pi[adj_node] = node;
+
+        queue.enqueue(adj_node);
+      }
+    }
+
+    color[node] = black;
+  }
+}

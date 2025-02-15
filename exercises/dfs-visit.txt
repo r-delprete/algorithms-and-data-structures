@@ -1,0 +1,39 @@
+/**
+ * white —> Stato iniziale di tutti i nodi
+ *
+ * gray —> quando vengono visitati
+ *
+ * black —> quando la visita è finita, ossia la lista di adiacenza è stata completamente 
+ * ispezionata
+ */
+
+dfs(graph) {
+  for (node in graph.nodes) {
+    color[node] = white;
+    pi[node] = null;
+    d[node] = 0;
+  }
+
+  for (node in graph.nodes) {
+    if (color[node] == white) {
+      dfs_visit(node);
+    }
+  }
+}
+
+dfs_visit(node) {
+  color[node] = gray;
+  d[node] = time = time + 1;
+
+  for (adj_node in adj[node]) {
+    if (color[adj_node] == white) {
+      pi[adj_node] = node;
+      color[adj_node] = gray;
+
+      dfs_visit(adj_node);
+    }
+  }
+
+  color[node] = black;
+  f[node] = time = time + 1;
+}
