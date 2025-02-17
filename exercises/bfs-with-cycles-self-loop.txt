@@ -1,0 +1,41 @@
+/**
+ * visita DFS che tiene conto anche di cappi e cicli di un grafo
+ */
+
+cycles: int = 0
+self_loops: int = 0
+
+bfs_visit(nodes, source_node) {
+  for (node in nodes - source_node) {
+    pi[node] = null;
+    d[node] = 0;
+    color[node] = white;
+  }
+
+  d[source_node] = 0;
+  pi[source_node] = null;
+  color[source_node] = gray;
+
+  queue = new queue();
+  queue.enqueue(source_node);
+
+  while (!queue.is_empty()) {
+    node = queue.dequeue();
+
+    for (adj_node in adj[node]) {
+      if (adj_node == node) {
+        self_loops++;
+      } else if (color[adj_node] == white) {
+        color[adj_node] = gray;
+        d[adj_node] = d[node] + 1;
+        pi[adj_node] = node;
+
+        queue.enqueue(adj_node);
+      } else if (color[adj_node] == gray) {
+        cycles++;
+      } else 
+    }
+
+    color[node] = black;
+  }
+}

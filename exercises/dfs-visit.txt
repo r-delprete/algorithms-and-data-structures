@@ -23,7 +23,7 @@ dfs(graph) {
 
 dfs_visit(node) {
   color[node] = gray;
-  d[node] = time = time + 1;
+  d[node] = time + 1;
 
   for (adj_node in adj[node]) {
     if (color[adj_node] == white) {
@@ -35,5 +35,5 @@ dfs_visit(node) {
   }
 
   color[node] = black;
-  f[node] = time = time + 1;
+  f[node] = time + 1;
 }

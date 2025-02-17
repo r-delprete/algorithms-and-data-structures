@@ -1,0 +1,44 @@
+/**
+ * visita DFS che tiene conto anche di cappi e cicli di un grafo
+ */
+
+cycles: int = 0
+self_loops: int = 0
+
+dfs(graph) {
+  for (node in graph.nodes) {
+    pi[node] = null;
+    d[node] = 0;
+    color[node] = white;
+  }
+
+  for (node in graph.nodes) {
+    if (color[node] == white) {
+      dfs_visit(node);
+    }
+  }
+}
+
+dfs_visit(node) {
+  d[node] = time + 1;
+  color[node] = gray;
+
+  for (adj_node in adj[node]) {
+    if (adj_node == node) {
+      // self loop
+      self_loops++;
+    } else if (color[adj_node] == white) {
+      color[adj_node] = gray;
+      pi[adj_node] = node;
+      d[adj_node] = time + 1;
+
+      dfs_visit(adj_node);
+    } else if (color[adj_node] == gray) {
+      // cycle
+      cycles++;
+    }
+  }
+
+  f[node] = time + 1;
+  color[node] = black;
+}
