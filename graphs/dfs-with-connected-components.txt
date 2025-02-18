@@ -1,3 +1,8 @@
+/**
+ * scc = strongly connected components
+ * t_graph = transposed graph (graph with reversed edges)
+ */
+
 dfs (graph) {
   stack = new stack();
 
@@ -13,46 +18,47 @@ dfs (graph) {
     }
   }
 
-  graph_t = create_graph_t();   // transposed graph with reversed edgesr
+  t_graph = create_t_graph();
 
   while (!stack.is_empty()) {
     node = stack.pop();
 
     if (color[node] == white) {
-      dfs_visit_2(node, graph_t);
+      dfs_visit_2(node, t_graph);
     }
-
-    scc = predecessor - subgraph;
   }
+
+  scc = predecessor - subgraph;
 }
 
 dfs_visit_1(node, stack) {
   color[node] = gray;
-  d[node] = time++;
+  d[node] = time + 1;
 
   for (adj_node in adj[node]) {
     if (color[adj_node] == white) {
       pi[adj_node] = node;
-
-      dfs_visit_1(adj_node, stack);
+      dfs_visit_1(node, stack);
     }
   }
-  
+
   color[node] = black;
-  f[node] = time++;
+  f[node] = time + 1;
+
   stack.push(node);
 }
 
-dfs_visit_2(node, graph_t) {
+dfs_visit_2(node, t_graph) {
   color[node] = gray;
-  d[node] = time++;
+  d[node] = time + 1;
 
-  for (adj_node in adj_t[node]) {
-    if (color[adj_node] == white) {
-      dfs_visit_2(adj_node, graph_t);
+  for (t_adj_node in t_adj[node]) {
+    if (color[t_adj_node] == white) {
+      pi[t_adj_node] = node;
+      dfs_visit_2(t_adj_node, t_graph);
     }
   }
 
-  color[node] = gray;
-  f[node] = time++;
+  f[node] = time + 1;
+  color[node] = black;
 }

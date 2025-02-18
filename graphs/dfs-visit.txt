@@ -5,6 +5,10 @@
  *
  * black —> quando la visita è finita, ossia la lista di adiacenza è stata completamente 
  * ispezionata
+ *
+ * d[node] -> tempo in cui un nodo viene scoperto
+ *
+ * f[node] -> tempo in cui sono state controllate tutte le adiacenze del nodo
  */
 
 dfs(graph) {
