@@ -28,7 +28,6 @@ dfs_visit(node) {
   for (adj_node in adj[node]) {
     if (color[adj_node] == white) {
       pi[adj_node] = node;
-      color[adj_node] = gray;
 
       dfs_visit(adj_node);
     }

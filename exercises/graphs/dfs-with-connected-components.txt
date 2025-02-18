@@ -1,0 +1,58 @@
+dfs (graph) {
+  stack = new stack();
+
+  for (node in graph.nodes) {
+    pi[node] = null;
+    d[node] = 0;
+    color[node] = white;
+  }
+
+  for (node in graph.nodes) {
+    if (color[node] == white) {
+      dfs_visit_1(node, stack);
+    }
+  }
+
+  graph_t = create_graph_t();   // transposed graph with reversed edgesr
+
+  while (!stack.is_empty()) {
+    node = stack.pop();
+
+    if (color[node] == white) {
+      dfs_visit_2(node, graph_t);
+    }
+
+    scc = predecessor - subgraph;
+  }
+}
+
+dfs_visit_1(node, stack) {
+  color[node] = gray;
+  d[node] = time++;
+
+  for (adj_node in adj[node]) {
+    if (color[adj_node] == white) {
+      pi[adj_node] = node;
+
+      dfs_visit_1(adj_node, stack);
+    }
+  }
+  
+  color[node] = black;
+  f[node] = time++;
+  stack.push(node);
+}
+
+dfs_visit_2(node, graph_t) {
+  color[node] = gray;
+  d[node] = time++;
+
+  for (adj_node in adj_t[node]) {
+    if (color[adj_node] == white) {
+      dfs_visit_2(adj_node, graph_t);
+    }
+  }
+
+  color[node] = gray;
+  f[node] = time++;
+}
