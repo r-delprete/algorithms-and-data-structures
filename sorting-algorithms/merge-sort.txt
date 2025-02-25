@@ -18,15 +18,15 @@ merge(array, start, end, mid) {
   int right_size = end - mid;
   int left[left_size], right[right_size];
 
-  for (i = 0 to left_size) {
-    left[i] = array[start + i - 1];
+  for (i = 0 to left_size - 1) {
+    left[i] = array[start + i];
   }
 
-  for (j = 0 to right_size) {
-    right[j] = array[mid + j]
+  for (j = 0 to right_size - 1) {
+    right[j] = array[mid + j + 1]
   }
 
-  left[left_size + 1] = right[right_size + 1] = inf;
+  left[left_size] = right[right_size] = inf;
 
   int i = j = 0;
 
