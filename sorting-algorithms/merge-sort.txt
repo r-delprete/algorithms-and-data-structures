@@ -1,5 +1,5 @@
 /**
- * Merge Sort
+ * Abstract merge-sort with sentinels
  */
 
 merge_sort(array, start, end) {
