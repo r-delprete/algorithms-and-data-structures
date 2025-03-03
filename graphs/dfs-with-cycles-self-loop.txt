@@ -7,38 +7,36 @@ self_loops: int = 0
 
 dfs(graph) {
   for (node in graph.nodes) {
-    pi[node] = null;
-    d[node] = 0;
-    color[node] = white;
+    node.color = white;
+    node.parent = null;
+    node.d = 0;
   }
 
   for (node in graph.nodes) {
-    if (color[node] == white) {
+    if (node.color == white) {
       dfs_visit(node);
     }
   }
 }
 
 dfs_visit(node) {
-  d[node] = time + 1;
-  color[node] = gray;
+  node.color = gray;
+  node.d = time + 1;
 
-  for (adj_node in adj[node]) {
+  for (adj_node in node.adj) {
     if (adj_node == node) {
       // self loop
       self_loops++;
-    } else if (color[adj_node] == white) {
-      color[adj_node] = gray;
-      pi[adj_node] = node;
-      d[adj_node] = time + 1;
+    } else if (adj_node.color == white) {
+      adj_node.parent = node;
 
       dfs_visit(adj_node);
-    } else if (color[adj_node] == gray) {
+    } else if (adj_node.color == gray) {
       // cycle
       cycles++;
     }
   }
 
-  f[node] = time + 1;
-  color[node] = black;
+  node.color = black;
+  node.f = time + 1;
 }

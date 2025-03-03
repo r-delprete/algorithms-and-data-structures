@@ -7,13 +7,13 @@ dfs (graph) {
   stack = new stack();
 
   for (node in graph.nodes) {
-    pi[node] = null;
-    d[node] = 0;
-    color[node] = white;
+    node.parent = null;
+    node.d = 0;
+    node.color = white;
   }
 
   for (node in graph.nodes) {
-    if (color[node] == white) {
+    if (node.color == white) {
       dfs_visit_1(node, stack);
     }
   }
@@ -23,7 +23,7 @@ dfs (graph) {
   while (!stack.is_empty()) {
     node = stack.pop();
 
-    if (color[node] == white) {
+    if (node.color == white) {
       dfs_visit_2(node, t_graph);
     }
   }
@@ -32,33 +32,33 @@ dfs (graph) {
 }
 
 dfs_visit_1(node, stack) {
-  color[node] = gray;
-  d[node] = time + 1;
+  node.color = gray;
+  node.d = time + 1;
 
-  for (adj_node in adj[node]) {
-    if (color[adj_node] == white) {
-      pi[adj_node] = node;
+  for (adj_node in node.adj) {
+    if (adj_node.color == white) {
+      adj_node.parent = node;
       dfs_visit_1(node, stack);
     }
   }
 
-  color[node] = black;
-  f[node] = time + 1;
+  node.color = black;
+  node.f = time + 1;
 
   stack.push(node);
 }
 
 dfs_visit_2(node, t_graph) {
-  color[node] = gray;
-  d[node] = time + 1;
+  node.color = gray;
+  node.d = time + 1;
 
-  for (t_adj_node in t_adj[node]) {
+  for (t_adj_node in node.t_adj_node) {
     if (color[t_adj_node] == white) {
-      pi[t_adj_node] = node;
+      parent.t_adj_node = node;
       dfs_visit_2(t_adj_node, t_graph);
     }
   }
 
-  f[node] = time + 1;
-  color[node] = black;
+  node.f = time + 1;
+  node.color = black;
 }

@@ -6,37 +6,37 @@
  * black —> quando la visita è finita, ossia la lista di adiacenza è stata completamente 
  * ispezionata
  *
- * d[node] -> tempo in cui un nodo viene scoperto
+ * node.d -> tempo in cui un nodo viene scoperto
  *
  * f[node] -> tempo in cui sono state controllate tutte le adiacenze del nodo
  */
 
 dfs(graph) {
   for (node in graph.nodes) {
-    color[node] = white;
-    pi[node] = null;
-    d[node] = 0;
+    node.color = white;
+    node.parent = null;
+    node.d = 0;
   }
 
   for (node in graph.nodes) {
-    if (color[node] == white) {
+    if (node.color == white) {
       dfs_visit(node);
     }
   }
 }
 
 dfs_visit(node) {
-  color[node] = gray;
-  d[node] = time + 1;
+  node.color = gray;
+  node.d = time + 1;
 
-  for (adj_node in adj[node]) {
-    if (color[adj_node] == white) {
-      pi[adj_node] = node;
+  for (adj_node in node.adj) {
+    if (adj_node.color == white) {
+      adj_node.parent = node;
 
       dfs_visit(adj_node);
     }
   }
 
-  color[node] = black;
-  f[node] = time + 1;
+  node.color = black;
+  node.f = time + 1;
 }
