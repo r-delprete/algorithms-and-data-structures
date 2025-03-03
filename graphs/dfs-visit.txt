@@ -8,13 +8,13 @@
  *
  * node.d -> tempo in cui un nodo viene scoperto
  *
- * f[node] -> tempo in cui sono state controllate tutte le adiacenze del nodo
+ * node.f -> tempo in cui sono state controllate tutte le adiacenze del nodo
  */
 
 dfs(graph) {
   for (node in graph.nodes) {
     node.color = white;
-    node.parent = null;
+    node.predecessor = null;
     node.d = 0;
   }
 
@@ -31,8 +31,7 @@ dfs_visit(node) {
 
   for (adj_node in node.adj) {
     if (adj_node.color == white) {
-      adj_node.parent = node;
-
+      adj_node.predecessor = node;
       dfs_visit(adj_node);
     }
   }

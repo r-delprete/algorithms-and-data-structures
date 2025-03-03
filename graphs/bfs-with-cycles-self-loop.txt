@@ -9,12 +9,12 @@ bfs(nodes, source_node) {
   for (node in nodes - source_node) {
     node.color = white;
     node.d = inf;
-    node.parent = null;
+    node.predecessor = null;
   }
 
   source_node.color = gray;
   source_node.d = 0;
-  source_node.parent = null;
+  source_node.predecessor = null;
 
   queue = new queue();
   queue.enqueue(source_node);
@@ -28,7 +28,7 @@ bfs(nodes, source_node) {
       } else if (adj_node.color == white) {
         adj_node.color = gray;
         adj_node.d = d.node + 1;
-        adj_node.parent = node;
+        adj_node.predecessor = node;
 
         queue.enqueue(adj_node);
       } else if (adj_node.color == gray) {

@@ -1,15 +1,16 @@
 /**
- * visita DFS che tiene conto anche di cappi e cicli di un grafo
+ * Dato un grafo orientato G = (V, E), scrivere un algoritmo
+ * che restituisca il numero degli archi trasversali nel grafo.
  */
 
-cycles: int = 0
-self_loops: int = 0
+trasversal_edges: int = 0;
 
 dfs(graph) {
   for (node in graph.nodes) {
-    node.color = white;
     node.predecessor = null;
     node.d = 0;
+    node.f = 0;
+    node.color = white;
   }
 
   for (node in graph.nodes) {
@@ -24,16 +25,13 @@ dfs_visit(node) {
   node.d = time + 1;
 
   for (adj_node in node.adj) {
-    if (adj_node == node) {
-      // self loop
-      self_loops++;
+    if (adj_node.color == black) {
+      if (node.d > adj_node.d && node.f > adj_node.f){
+        trasversal_edges++;
+      }
     } else if (adj_node.color == white) {
       adj_node.predecessor = node;
-
-      dfs_visit(adj_node);
-    } else if (adj_node.color == gray) {
-      // cycle
-      cycles++;
+      dfs_visit(adj_node); 
     }
   }
 

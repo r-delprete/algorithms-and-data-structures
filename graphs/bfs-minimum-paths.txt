@@ -1,0 +1,47 @@
+/**
+ * Grafo BFS dove devi conteggiare il numero dei cammini minimi < K 
+ */
+
+bfs_visit(graph, source_node) {
+  minimum_paths: int = 0    // minimum paths below K;
+
+  for (node in graph.nodes - source_node) {
+    node.d = inf;
+    node.color = white;
+    node.predecessor = null;
+    node.count = 0;         // minimum paths to reach node
+  }
+
+  source_node.color = gray;
+  source_node.d = 0;
+  source_node.predecessor = null;
+  source_node.count = 1;
+
+  queue = new queue();
+  queue.enqueue(source_node);
+
+  while (!queue.is_empty()) {
+    node = queue.dequeue();
+
+    for (adj_node in node.adj) {
+      if (adj_node.color == white) {
+        adj_node.color = gray;
+        adj_node.predecessor = node;
+        adj_node.d = node.d + 1;
+        adj_node.count = node.count;
+        
+        queue.enqueue(adj_node);
+      } else if (adj_node.d == node.d + 1) {
+        adj_node.count += node.count;
+      }
+    }
+
+    node.color = black;
+
+    if (node.d < K) {
+      minimum_paths += node.count;
+    }
+  }
+
+  return minimum_paths;
+}

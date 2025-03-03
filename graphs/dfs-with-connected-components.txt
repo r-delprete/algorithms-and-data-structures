@@ -7,7 +7,7 @@ dfs (graph) {
   stack = new stack();
 
   for (node in graph.nodes) {
-    node.parent = null;
+    node.predecessor = null;
     node.d = 0;
     node.color = white;
   }
@@ -37,7 +37,7 @@ dfs_visit_1(node, stack) {
 
   for (adj_node in node.adj) {
     if (adj_node.color == white) {
-      adj_node.parent = node;
+      adj_node.predecessor = node;
       dfs_visit_1(node, stack);
     }
   }
@@ -54,7 +54,7 @@ dfs_visit_2(node, t_graph) {
 
   for (t_adj_node in node.t_adj_node) {
     if (color[t_adj_node] == white) {
-      parent.t_adj_node = node;
+      predecessor.t_adj_node = node;
       dfs_visit_2(t_adj_node, t_graph);
     }
   }
