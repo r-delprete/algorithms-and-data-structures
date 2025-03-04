@@ -2,7 +2,7 @@
  * Grafo BFS dove devi conteggiare il numero dei cammini minimi < K 
  */
 
-bfs_visit(graph, source_node) {
+get_minimum_paths(graph, source_node) {
   minimum_paths: int = 0    // minimum paths below K;
 
   for (node in graph.nodes - source_node) {
