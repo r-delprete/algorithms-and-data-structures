@@ -1,0 +1,46 @@
+/**
+ * Dato un grafo G(V, E), un nodo s ed un intero K,
+ * restituire il numero di nodi il cui cammino minimo
+ * da s sia maggiore di K
+ */
+
+get_nodes_min_path_greater_K(graph, source_node, K) {
+  total_nodes = 0;
+
+  for (node in graph.nodes) {
+    node.predecessor = null;
+    node.d = inf;
+    node.color = white;
+  }
+
+  source_node.predecessor = null;
+  source_node.d = 0;
+  source_node.color = gray;
+
+  queue = new queue();
+  queue.enqueue(source_node);
+
+  while (!queue.is_empty()) {
+    node = queue.dequeue();
+
+    for (adj_node in node.adj) {
+      if (adj_node.color == white) {
+        adj_node.predecessor = node;
+        adj_node.d = node.d + 1;
+        adj_node.color = gray;
+
+        queue.enqueue(adj_node);
+      }
+    }
+
+    node.color = black;
+  }
+
+  for (node in graph.nodes) {
+    if (node.d > K) {
+      total_nodes++;
+    }
+  }
+
+  return total_nodes;
+}
