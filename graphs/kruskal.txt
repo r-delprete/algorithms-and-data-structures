@@ -1,0 +1,22 @@
+/**
+ * Kruskal algorithm
+ */
+
+kruskal(graph) {
+  set = new set();                               // define new empty set
+
+  for (node in graph.nodes) {
+    make_set(node);                              // new set for each node 
+  }
+
+  sort(graph.edges)                              // sort graph edges by weight
+
+  for (edge in graph.edges) {
+    if (find_set(edge.first_node) != find_set(edge.second_node)) {
+      set.add(edge);                             // add edge to set
+      union(edge.first_node, edge.second_node);   // merge between edge node into a single set
+    }
+  }
+
+  return set                    	               // return the minimum spanning tree created
+}
