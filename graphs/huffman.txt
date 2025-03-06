@@ -6,7 +6,7 @@
  * @param nodes Nodes list to encode
  */
 
-Huffman(nodes: List<Node>) -> Node {
+Huffman(nodes: List<Node>) -> Node:
   size = nodes.size()
   queue = new min_priority_queue()
 
@@ -29,4 +29,3 @@ Huffman(nodes: List<Node>) -> Node {
     queue.add(z);
 
   return queue.extract_min()    // Huffman tree root
-}
