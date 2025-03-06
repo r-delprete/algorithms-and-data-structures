@@ -1,0 +1,32 @@
+/**
+ * Huffman algorithm
+ */
+
+/**
+ * @param nodes Nodes list to encode
+ */
+
+Huffman(nodes: List<Node>) -> Node {
+  size = nodes.size()
+  queue = new min_priority_queue()
+
+  for (node in nodes):
+    queue.add(node)
+
+  for (i = 1 to n - 1):
+    /**
+     * Node constructor
+     * First param is symbol
+     * Second param is frequency value
+     */
+    z = new Node(NULL, 0);
+
+    z.left = Q.extract_min();
+    z.right = Q.extract_min();
+
+    z.frequency = z.left.frequency + z.right.frequency;
+
+    queue.add(z);
+
+  return queue.extract_min()    // Huffman tree root
+}
