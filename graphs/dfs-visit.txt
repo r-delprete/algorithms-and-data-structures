@@ -13,29 +13,29 @@
 
 dfs(graph) {
   for (node in graph.nodes) {
-    node.color = white;
-    node.predecessor = null;
-    node.d = 0;
+    node.predecessor = null
+    node.color = white
+    time = 0
   }
 
   for (node in graph.nodes) {
     if (node.color == white) {
-      dfs_visit(node);
+      dfs_visit(node)
     }
   }
 }
 
 dfs_visit(node) {
-  node.color = gray;
-  node.d = time + 1;
+  node.color = gray
+  node.d = time++
 
   for (adj_node in node.adj) {
-    if (adj_node.color == white) {
-      adj_node.predecessor = node;
-      dfs_visit(adj_node);
+    if (color.adj_node == white) {
+      adj_node.predecessor = node
+      dfs_visit(adj_node)
     }
   }
 
   node.color = black;
-  node.f = time + 1;
+  node.f = time++
 }

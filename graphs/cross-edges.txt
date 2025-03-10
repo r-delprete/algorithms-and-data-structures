@@ -3,14 +3,13 @@
  * che restituisca il numero degli archi trasversali nel grafo.
  */
 
-cross_edges: int = 0;
+cross_edges = 0;
 
 dfs(graph) {
   for (node in graph.nodes) {
     node.predecessor = null;
-    node.d = 0;
-    node.f = 0;
     node.color = white;
+    time = 0
   }
 
   for (node in graph.nodes) {
@@ -22,16 +21,14 @@ dfs(graph) {
 
 dfs_visit(node) {
   node.color = gray;
-  node.d = time + 1;
+  node.d = time++;
 
   for (adj_node in node.adj) {
-    if (adj_node.color == black) {
-      if (node.d > adj_node.d && node.f > adj_node.f){
-        cross_edges++;
-      }
+    if (adj_node.color == black && node.d > adj_node.d && node.f > adj_node.f) {
+      cross_edges++
     } else if (adj_node.color == white) {
-      adj_node.predecessor = node;
-      dfs_visit(adj_node); 
+      adj_node.predecessor = node
+      dfs_visit(adj_node)
     }
   }
 
