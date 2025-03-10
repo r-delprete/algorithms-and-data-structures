@@ -21,8 +21,8 @@ Huffman(nodes: List<Node>) -> Node:
      */
     z = new Node(NULL, 0);
 
-    z.left = Q.extract_min();
-    z.right = Q.extract_min();
+    z.left = queue.extract_min();
+    z.right = queue.extract_min();
 
     z.frequency = z.left.frequency + z.right.frequency;
 

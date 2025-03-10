@@ -22,7 +22,7 @@ kruskal(graph) {
   return set;
 }
 
-is_mst_unique(graph, mst, mst_weight) {
+is_mst_unique(graph, mst) {
   for (edge in graph.edges) {
     if (edge not in mst) {
       for (mst_edge in mst) {
@@ -38,11 +38,6 @@ is_mst_unique(graph, mst, mst_weight) {
 
 min_edges_not_in_MST(graph) {
   mst = kruskal(graph);
-  mst_weight = 0;
-
-  for (edge in mst) {
-    mst_weight += edge.weight;
-  }
 
   min_edges_weights = [];
 
@@ -58,7 +53,7 @@ min_edges_not_in_MST(graph) {
     }
   }
 
-  is_unique = is_mst_unique(graph, mst, mst_weight);
+  is_unique = is_mst_unique(graph, mst);
 
   return min_edges_not_in_MST, is_mst_unique;
 }
