@@ -3,7 +3,7 @@
  * che restituisca il numero degli archi trasversali nel grafo.
  */
 
-trasversal_edges: int = 0;
+cross_edges: int = 0;
 
 dfs(graph) {
   for (node in graph.nodes) {
@@ -27,7 +27,7 @@ dfs_visit(node) {
   for (adj_node in node.adj) {
     if (adj_node.color == black) {
       if (node.d > adj_node.d && node.f > adj_node.f){
-        trasversal_edges++;
+        cross_edges++;
       }
     } else if (adj_node.color == white) {
       adj_node.predecessor = node;

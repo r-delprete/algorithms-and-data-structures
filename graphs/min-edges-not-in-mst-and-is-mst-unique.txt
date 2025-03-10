@@ -1,0 +1,64 @@
+/**
+ * Grafo che ritorna i pesi minimi non appartenenti all'mst
+ * e dire che se un MST è unico
+ */
+
+kruskal(graph) {
+  set = new set();
+
+  for (node in graph.nodes) {
+    make_set(node);
+  }
+
+  sorted_edges = sort(graph.edges)    // sort graph edges by weight
+
+  for (edge in sorted_edges) {
+    if (find_set(edge.first_node) != find_set(edge.second_node)) {
+      set.add(edge);
+      union(edge.first_node, edge.second_node);
+    }
+  }
+
+  return set;
+}
+
+is_mst_unique(graph, mst, mst_weight) {
+  for (edge in graph.edges) {
+    if (edge not in mst) {
+      for (mst_edge in mst) {
+        if (edge.weight == mst_edge.weight) {
+          return false;
+        }
+      }
+    }
+  }
+
+  return true;
+}
+
+min_edges_not_in_MST(graph) {
+  mst = kruskal(graph);
+  mst_weight = 0;
+
+  for (edge in mst) {
+    mst_weight += edge.weight;
+  }
+
+  min_edges_weights = [];
+
+  min_weight = inf;
+  for (edge in graph.edges) {
+    if (edge not in mst) {
+      if (edge.weight < min_weight) {
+        min_edges_weights = [edge.weight];
+        min_weight = edge.weight;
+      } else if (edge.weight == min_weight) {
+        min_edges_weights.append(edge.weight);
+      }
+    }
+  }
+
+  is_unique = is_mst_unique(graph, mst, mst_weight);
+
+  return min_edges_not_in_MST, is_mst_unique;
+}
