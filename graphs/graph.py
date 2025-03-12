@@ -1,6 +1,12 @@
 from typing import List, Deque
+from enum import Enum
 from node import Node, Color
 from collections import deque
+
+class EdgeTypes(Enum):
+    forward = 'forward'
+    back = 'back'
+    cross = 'cross'
 
 
 class Graph:
@@ -9,6 +15,11 @@ class Graph:
         self.time = 0
         self.loops = 0
         self.cycles = 0
+        self.edges_type_count: dict[EdgeTypes, int] = {
+            EdgeTypes.back: 0,
+            EdgeTypes.forward: 0,
+            EdgeTypes.cross: 0
+        }
         
     def dfs(self):
       for node in self.nodes:
@@ -33,7 +44,13 @@ class Graph:
             elif vicinity_node == node:
                 self.loops += 1
             elif vicinity_node.color == Color.gray:
+                self.edges_type_count[EdgeTypes.back] += 1
                 self.cycles += 1
+            elif vicinity_node.color == Color.black:
+                if node.start_visit < vicinity_node.start_visit:
+                    self.edges_type_count[EdgeTypes.forward] += 1
+                elif node.start_visit > vicinity_node.start_visit and node.end_visit > vicinity_node.end_visit:
+                    self.edges_type_count[EdgeTypes.cross] += 1
         
         self.time += 1
         node.end_visit = self.time
@@ -90,3 +107,6 @@ for node in graph.nodes:
     
 print(f"Loops: {graph.loops}")
 print(f"Cycles: {graph.cycles}")
+
+for type in EdgeTypes:
+    print(f"{type.name.capitalize()}: {graph.edges_type_count[type]}")
