@@ -11,31 +11,31 @@
  * node.f -> tempo in cui sono state controllate tutte le adiacenze del nodo
  */
 
-dfs(graph) {
-  for (node in graph.nodes) {
-    node.predecessor = null
-    node.color = white
+dfs(graph):
     time = 0
-  }
 
-  for (node in graph.nodes) {
-    if (node.color == white) {
-      dfs_visit(node)
-    }
-  }
-}
+    for node in graph.nodes:
+        node.predecessor = null
+        node.d = 0
+        node.f = 0
+        node.color = white
 
-dfs_visit(node) {
-  node.color = gray
-  node.d = time++
+    for node in graph.nodes:
+        if node.color == white:
+            dfs_visit(node)
 
-  for (adj_node in node.adj) {
-    if (color.adj_node == white) {
-      adj_node.predecessor = node
-      dfs_visit(adj_node)
-    }
-  }
+dfs_visit(node):
+    back_edges = 0
+    forward_edges = 0
+    cross_edges = 0
 
-  node.color = black;
-  node.f = time++
-}
+    node.color = gray
+    node.d = time + 1
+
+    for adj_node in node.adj:
+        if adj_node.color == white
+            adj_node.predecessor = node:
+            dfs_visit(adj_node)
+
+    node.color = black
+    node.f = time + 1

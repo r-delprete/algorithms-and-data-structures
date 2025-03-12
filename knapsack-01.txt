@@ -1,0 +1,38 @@
+knapsack_01(weights, values, maxCapacity)
+    numItems = length(values)
+    
+    // Create a table of size [numItems+1][maxCapacity+1]
+    // Each cell will represent the maximum value obtainable with:
+    // - the first i items (row i)
+    // - knapsack capacity j (column j)
+    table[numItems+1][maxCapacity+1]
+    
+    // Base case: empty knapsack or no available items
+    for i = 0 to numItems
+        table[i][0] = 0
+    for c = 0 to maxCapacity
+        table[0][c] = 0
+        
+    // For each item
+    for item = 1 to numItems
+        // For each possible knapsack capacity
+        for currentCapacity = 1 to maxCapacity
+            
+            // If the item is too heavy, we cannot include it
+            if weights[item] > currentCapacity
+                // Take the maximum value without considering this item
+                table[item][currentCapacity] = table[item - 1][currentCapacity]
+            
+            // Otherwise, take the maximum between:
+            else
+                // 1. Not including the current item
+                valueWithout = table[item - 1][currentCapacity]
+                
+                // 2. Including the current item
+                valueWith = values[item] + table[item - 1][currentCapacity - weights[item]]
+                
+                // Store the maximum value
+                table[item][currentCapacity] = max(valueWithout, valueWith)
+    
+    // The maximum value is found in the last cell of the table
+    return table[numItems][maxCapacity]

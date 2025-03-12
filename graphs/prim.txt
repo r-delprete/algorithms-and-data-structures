@@ -22,7 +22,7 @@ prim(graph, source_node) {
     for (adj_node in graph.adj(node)) {
       if (queue.includes(adj_node) && graph.weight(node, adj_node) < adj_node.key) {
         adj_node.predecessor = node;
-        adj.key = graph.weight(node, adj_node);   // decrese key
+        adj.key = graph.weight(node, adj_node);   // decrease key
       }
     }
   }

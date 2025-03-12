@@ -4,35 +4,31 @@
  * gray —> Quando un nodo ha tra i suoi adiacenti nodi bianchi (alcuni da scoprire)
  *
  * black —> Quando un nodo NON ha tra i suoi adiacenti nodi bianchi (tutti scoperti)
+ *
+ * node.d -> tempo in cui un nodo viene scoperto
  */
 
-bfs(nodes, source_node) {
-  for (node in nodes - source_node) {
-    node.color = white;
-    node.d = inf;
-    node.predecessor = null;
-  }
+bfs(graph, source_node):
+    for node in graph.nodes - source_node:
+        node.color = white
+        node.predecessor = null
+        node.d = 0
 
-  source_node.color = gray;
-  source_node.d = 0;
-  source_node.predecessor = null;
+    source_node.color = gray
+    source_node.d = 0
+    source_node.predecessor = null
 
-  queue = new queue();
-  queue.enqueue(source_node);
+    queue = new queue()
+    queue.enqueue(source_node)
 
-  while (!queue.is_empty()) {
-    node = queue.dequeue();
+    while !queue.is_empty():
+        node = queue.dequeue()
 
-    for (adj_node in node.adj) {
-      if (adj_node.color == white) {
-        adj_node.color = gray;
-        adj_node.d = d.node + 1;
-        adj_node.predecessor = node;
+        for adj_node in node.adj:
+            if adj_node.color = white
+                adj_node.color = gray
+                adj_node.predecessor = node
+                adj_node.d = node.d + 1
+                queue.enqueue(adj_node)
 
-        queue.enqueue(adj_node);
-      }
-    }
-
-    node.color = black;
-  }
-}
+        node.color = black
