@@ -1,3 +1,5 @@
+from typing import List
+
 def lcs(first_string, second_string):
   m = len(first_string)
   n = len(second_string)
@@ -10,7 +12,7 @@ def lcs(first_string, second_string):
       else:
         dp[i][j] = max(dp[i - 1][j], dp[i][j - 1])
 
-  lcs_seq = []
+  lcs_seq: List[str] = []
   i, j = m, n
   while i > 0 and j > 0:
     if first_string[i - 1] == second_string[j - 1]:
