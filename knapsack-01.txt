@@ -8,23 +8,23 @@ knapsack_01(weights, values, maxCapacity)
     table[numItems+1][maxCapacity+1]
     
     // Base case: empty knapsack or no available items
-    for i = 0 to numItems
+    for i = 0 to numItems:
         table[i][0] = 0
-    for c = 0 to maxCapacity
+    for c = 0 to maxCapacity:
         table[0][c] = 0
         
     // For each item
-    for item = 1 to numItems
+    for item = 1 to numItems:
         // For each possible knapsack capacity
-        for currentCapacity = 1 to maxCapacity
+        for currentCapacity = 1 to maxCapacity:
             
             // If the item is too heavy, we cannot include it
-            if weights[item] > currentCapacity
+            if weights[item] > currentCapacity:
                 // Take the maximum value without considering this item
                 table[item][currentCapacity] = table[item - 1][currentCapacity]
             
             // Otherwise, take the maximum between:
-            else
+            else:
                 // 1. Not including the current item
                 valueWithout = table[item - 1][currentCapacity]
                 
