@@ -23,18 +23,18 @@ class Graph:
         }
         self.edges = edges
         
-    def make_set(self, node: Node):
+    def __make_set(self, node: Node):
         node.parent = node
         node.rank = 0
     
-    def find_set(self, node: Node) -> Node:
+    def __find_set(self, node: Node) -> Node:
         if node.parent != node:
-            node.parent = self.find_set(node.parent)
+            node.parent = self.__find_set(node.parent)
         return node.parent
     
-    def union(self, node1: Node, node2: Node):
-        root1 = self.find_set(node1)
-        root2 = self.find_set(node2)
+    def __union(self, node1: Node, node2: Node):
+        root1 = self.__find_set(node1)
+        root2 = self.__find_set(node2)
         
         if root1 != root2:
             if root1.rank < root2.rank:
@@ -49,14 +49,14 @@ class Graph:
         mst: List[Tuple[Node, Node, int]] = []
         
         for node in self.nodes:
-            self.make_set(node)
+            self.__make_set(node)
             
         sorted_edges = sorted(self.edges, key=lambda edge: edge[2])
         
         for node1, node2, weight in sorted_edges:
-            if self.find_set(node1) != self.find_set(node2):
+            if self.__find_set(node1) != self.__find_set(node2):
                 mst.append((node1, node2, weight))
-                self.union(node1, node2)
+                self.__union(node1, node2)
             
         return mst
     
@@ -105,9 +105,9 @@ class Graph:
           
       for node in self.nodes:
           if node.color == Color.white:
-              self.dfs_visit(node)
+              self.__dfs_visit(node)
           
-    def dfs_visit(self, node: Node):
+    def __dfs_visit(self, node: Node):
         self.time += 1
         node.color = Color.gray
         node.start_visit = self.time
@@ -115,7 +115,7 @@ class Graph:
         for adj_node, weight in node.adjacency_list:
             if adj_node.color == Color.white:
                 adj_node.predecessor = node
-                self.dfs_visit(adj_node)
+                self.__dfs_visit(adj_node)
             elif adj_node == node:
                 self.loops += 1
             elif adj_node.color == Color.gray:

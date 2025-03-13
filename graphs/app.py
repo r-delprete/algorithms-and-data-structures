@@ -48,5 +48,4 @@ for node in graph.nodes:
     print(f"{node.name}: {node.start_visit} - {node.end_visit}")
 
 print("\n")
-# graph.print_mst(graph.kruskal())
-graph.print_mst(graph.prim(a))
+graph.print_mst(graph.kruskal())
