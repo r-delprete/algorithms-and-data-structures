@@ -1,7 +1,8 @@
-from typing import List, Deque
+from typing import List, Deque, Tuple
 from enum import Enum
 from node import Node, Color
 from collections import deque
+import heapq
 
 class EdgeTypes(Enum):
     forward = 'forward'
@@ -10,7 +11,7 @@ class EdgeTypes(Enum):
 
 
 class Graph:
-    def __init__(self, nodes: List[Node]):
+    def __init__(self, nodes: List[Node], edges: List[Tuple[Node, Node, int]]):
         self.nodes = nodes
         self.time = 0
         self.loops = 0
@@ -20,6 +21,80 @@ class Graph:
             EdgeTypes.forward: 0,
             EdgeTypes.cross: 0
         }
+        self.edges = edges
+        
+    def make_set(self, node: Node):
+        node.parent = node
+        node.rank = 0
+    
+    def find_set(self, node: Node) -> Node:
+        if node.parent != node:
+            node.parent = self.find_set(node.parent)
+        return node.parent
+    
+    def union(self, node1: Node, node2: Node):
+        root1 = self.find_set(node1)
+        root2 = self.find_set(node2)
+        
+        if root1 != root2:
+            if root1.rank < root2.rank:
+                root1.parent = root2
+            elif root2.rank < root1.rank:
+                root2.parent = root1
+            elif root1.rank == root2.rank:
+                root2.parent = root1
+                root1.rank += 1
+    
+    def kruskal(self):
+        mst: List[Tuple[Node, Node, int]] = []
+        
+        for node in self.nodes:
+            self.make_set(node)
+            
+        sorted_edges = sorted(self.edges, key=lambda edge: edge[2])
+        
+        for node1, node2, weight in sorted_edges:
+            if self.find_set(node1) != self.find_set(node2):
+                mst.append((node1, node2, weight))
+                self.union(node1, node2)
+            
+        return mst
+    
+    def print_mst(self, mst: List[Tuple[Node, Node, int]]):
+        print("Minimum Spanning Tree (MST):")
+        for node1, node2, weight in mst:
+            print(f"{node1.name} --({weight})--> {node2.name}")
+            
+    def prim(graph, source_node: Node):
+        for node in graph.nodes:
+            node.key = 0
+            node.predecessor = None
+            
+        source_node.key = 0
+        
+        min_priority_queue: List[Node] = []
+        
+        for node in graph.nodes:
+            heapq.heappush(min_priority_queue, node)
+            
+        while min_priority_queue:
+            node = heapq.heappop(min_priority_queue)
+            
+            for adj_node, weight in node.adjacency_list:
+                if adj_node in min_priority_queue and weight < adj_node.key:
+                    adj_node.predecessor = node
+                    adj_node.key = weight
+                    
+                    min_priority_queue.remove((adj_node.key, adj_node))
+                    heapq.heappush(min_priority_queue, (adj_node.key, adj_node))
+        
+        mst: List[Tuple[Node, Node, int]] = []
+        for node in graph.nodes:
+            if node.predecessor:
+                mst.append((node.predecessor, node, node.key))
+        
+        return mst
+        
         
     def dfs(self):
       for node in self.nodes:
@@ -37,19 +112,19 @@ class Graph:
         node.color = Color.gray
         node.start_visit = self.time
         
-        for vicinity_node in node.vicinity_list:
-            if vicinity_node.color == Color.white:
-                vicinity_node.predecessor = node
-                self.dfs_visit(vicinity_node)
-            elif vicinity_node == node:
+        for adj_node, weight in node.adjacency_list:
+            if adj_node.color == Color.white:
+                adj_node.predecessor = node
+                self.dfs_visit(adj_node)
+            elif adj_node == node:
                 self.loops += 1
-            elif vicinity_node.color == Color.gray:
+            elif adj_node.color == Color.gray:
                 self.edges_type_count[EdgeTypes.back] += 1
                 self.cycles += 1
-            elif vicinity_node.color == Color.black:
-                if node.start_visit < vicinity_node.start_visit:
+            elif adj_node.color == Color.black:
+                if node.start_visit < adj_node.start_visit:
                     self.edges_type_count[EdgeTypes.forward] += 1
-                elif node.start_visit > vicinity_node.start_visit and node.end_visit > vicinity_node.end_visit:
+                elif node.start_visit > adj_node.start_visit and node.end_visit > adj_node.end_visit:
                     self.edges_type_count[EdgeTypes.cross] += 1
         
         self.time += 1
@@ -72,41 +147,11 @@ class Graph:
         while queue:
             node = queue.popleft()
             
-            for vicinity_node in node.vicinity_list:
-                if vicinity_node.color == Color.white:
-                    vicinity_node.predecessor = node
-                    vicinity_node.color = Color.gray
-                    vicinity_node.start_visit = node.start_visit + 1
-                    queue.append(vicinity_node)
+            for adj_node, weight in node.adjacency_list:
+                if adj_node.color == Color.white:
+                    adj_node.predecessor = node
+                    adj_node.color = Color.gray
+                    adj_node.start_visit = node.start_visit + 1
+                    queue.append(adj_node)
                     
             node.color = Color.black
-      
-node1 = Node(color=Color.white, predecessor=None, start_visit=0, end_visit=0, vicinity_list=[])
-node2 = Node(color=Color.white, predecessor=None, start_visit=0, end_visit=0, vicinity_list=[])
-node3 = Node(color=Color.white, predecessor=None, start_visit=0, end_visit=0, vicinity_list=[])
-node4 = Node(color=Color.white, predecessor=None, start_visit=0, end_visit=0, vicinity_list=[])
-
-# Set the connections (vicinity)
-node1.vicinity_list = [node2, node3, node1]  # Node1 is connected to Node2 and Node3
-node2.vicinity_list = [node1, node4]  # Node2 is connected to Node1 and Node4
-node3.vicinity_list = [node1]        # Node3 is connected to Node1
-node4.vicinity_list = [node2]        # Node4 is connected to Node2
-
-# node1.vicinity_list = [node2]
-# node2.vicinity_list = [node3]
-# node3.vicinity_list = [node4]
-# node4.vicinity_list = [node2]
-
-graph = Graph(nodes=[node1, node2, node3, node4])
-
-graph.dfs()
-# graph.bfs(node1)
-
-for node in graph.nodes:
-    print(f"Node {node}: {node.color}, {node.start_visit}, {node.end_visit}")
-    
-print(f"Loops: {graph.loops}")
-print(f"Cycles: {graph.cycles}")
-
-for type in EdgeTypes:
-    print(f"{type.name.capitalize()}: {graph.edges_type_count[type]}")
