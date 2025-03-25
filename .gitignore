@@ -228,6 +228,5 @@ cython_debug/
 
 # PyPI configuration file
 .pypirc
-**/**/__pycache__/**
-./graphs/huffman/__pycache__/min_priority_queue.cpython-312.pyc
-./graphs/huffman/__pycache__/node.cpython-312.pyc
+
+.vscode
