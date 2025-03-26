@@ -1,4 +1,5 @@
 def insert(hash_table, element, size):
+    """ Function to insert an element into an hash table """
     i = 0
     while i < size:
         index = hash_function(element, i) # type: ignore
