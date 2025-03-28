@@ -6,7 +6,7 @@ import heapq
 
 class EdgeTypes(Enum):
     forward = 'forward'
-    back = 'back'
+    backward = 'back'
     cross = 'cross'
 
 
@@ -17,7 +17,7 @@ class Graph:
         self.loops = 0
         self.cycles = 0
         self.edges_type_count: dict[EdgeTypes, int] = {
-            EdgeTypes.back: 0,
+            EdgeTypes.backward: 0,
             EdgeTypes.forward: 0,
             EdgeTypes.cross: 0
         }
@@ -119,7 +119,7 @@ class Graph:
             elif adj_node == node:
                 self.loops += 1
             elif adj_node.color == Color.gray:
-                self.edges_type_count[EdgeTypes.back] += 1
+                self.edges_type_count[EdgeTypes.backward] += 1
                 self.cycles += 1
             elif adj_node.color == Color.black:
                 if node.distance < adj_node.distance:

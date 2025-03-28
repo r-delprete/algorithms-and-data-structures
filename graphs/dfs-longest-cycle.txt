@@ -1,0 +1,43 @@
+/**
+ * Grafo con funzione peso W:E->R definire un algoritmo ricorsivo 
+ * che conta il numero di nodi nel più lungo ciclo di G
+ */
+
+time = 0
+
+dfs(graph): 
+    max_cycle_length = 0   # this variable count longest cycle nodes
+
+    for node in graph.nodes:
+        node.color = white
+        node.parent = null
+        node.distance = 0
+        node.end_visit = 0
+        node.depth = 0
+    
+    for node in graph.nodes:
+        if node.color == white:
+            max_cycle_length = max(max_cycle_length, dfs_visit(node))
+    
+    return max_cycle_length
+
+dfs_visit(node):
+    cycle_length = 0
+
+    time += 1
+    node.color = gray
+    node.distance = time
+
+    for adj_node in node.adj_list:
+        if adj_node.color == gray:
+            cycle_length = node.depth - adj_node.depth + 1
+        else if adj_node.color == white:
+            adj_node.depth += 1
+            adj_node.parent = node
+            cycle_length = max(cycle_length, dfs_visit(adj_node))
+            
+    node.color = black
+    time += 1
+    node.end_visit = time
+
+    return cycle_length

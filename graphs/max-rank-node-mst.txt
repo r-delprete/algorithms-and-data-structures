@@ -1,0 +1,60 @@
+/**
+ * Grafo G non orientato e pesato con nodo sorgente s 
+ * che restituisce il nodo di grado massimo dell'MST
+ */
+
+kruskal(graph):
+    mst = new set()
+
+    for node in graph.nodes:
+        make_set(node)
+
+    sorted_edges = sort(graph.edges)    # sort edges by weight
+
+    for edge in sorted_edges:
+        if find_set(edge.start_node) != find_set(edge.end_node):
+            mst.add(edge)
+            union(edge.start_node, edge.end_node)
+
+    return mst
+
+
+get_max_rank_node(graph):
+    mst = kruskal(graph)
+    mst_nodes = new set()
+
+    for edge in mst:
+        mst_nodes.add(edge.start_node)
+        mst_nodes.add(edge.end_node)
+
+    max_rank_node = new Node()
+    max_rank_node.rank = -1
+
+    for node in mst_nodes:
+        if node.rank > max_rank_node.rank:
+            max_rank_node = node
+
+    return max_rank_node
+
+find_set(node):
+    if (node.parent != node)
+        node.parent = find_set(node.parent)
+
+    return node.parent
+
+make_set(node):
+    node.rank = 0
+    node.parent = node
+
+union(node1, node2):
+    root1 = find_set(node1)
+    root2 = find_set(node2)
+
+    if root1 != root2:
+        if root1.rank < root2.rank:
+            root1.parent = root2
+        else if root2.rank < root1.rank:
+            root2.parent = root1
+        else if root1.rank == root2.rank:
+            root2.parent = root1
+            root1.rank += 1
