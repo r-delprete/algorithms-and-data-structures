@@ -124,7 +124,7 @@ class Graph:
             elif adj_node.color == Color.black:
                 if node.distance < adj_node.distance:
                     self.edges_type_count[EdgeTypes.forward] += 1
-                elif node.distance > adj_node.distance and node.end_visit > adj_node.end_visit:
+                elif node.distance > adj_node.distance:
                     self.edges_type_count[EdgeTypes.cross] += 1
         
         self.time += 1
