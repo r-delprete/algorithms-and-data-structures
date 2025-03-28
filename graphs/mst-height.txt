@@ -1,0 +1,80 @@
+/**
+ * Dato un grafo non orientato, pesato, con radice R. 
+ * Calcolare l'altezza del MST radicato in R
+ */
+
+prim(graph, source_node):
+    for node in graph.nodes:
+        node.predecessor = null
+        node.key = inf
+
+    source_node.key = 0
+
+    queue = new min_priority_queue()
+    
+    for node in graph.nodes: 
+        queue.add(node)
+
+    while not queue.is_empty():
+        node = queue.extract_min()
+
+        for adj_node in node.adj:
+            if queue.includes(adj_node) and graph.weight(node, adj_node) < adj_node.key:
+                adj_node.predecessor = node
+                adj_node.key = graph.weight(node, adj_node)    // decrease key
+
+    mst = new set()
+    for node in graph.nodes:
+        if node.predecessor is not null:
+            mst.add((node.predecessor, node))    // into mst there are edges (start, destination)
+
+    return mst
+
+
+bfs_visit(graph, root):
+    mst = prim(graph, source_node)
+    tree = {}
+    
+    for edge in mst:
+        tree[edge.first_node] = []
+        tree[edge.second_node] = []
+
+        tree[edge.first_node].append(edge.second_node)
+        tree[edge.second_node].append(edge.first_node)
+
+    height = 0
+
+    for node in tree:
+        node.color = white
+        node.distance = inf
+        node.predecessor = null
+
+    root.distance = 0
+    root.predecessor = null
+    root.color = gray
+
+    queue = new queue()
+    queue.append(root)
+
+    while queue:
+        node = queue.pop()
+
+        if node.distance > height:
+            height = node.distance
+
+        for adj_node in tree[node]:
+            if adj_node.color == white:
+                adj_node.predecessor = node
+                adj_node.color = gray
+                adj_node.distance = node.distance + 1
+
+                queue.append(adj_node)
+
+        node.color = black
+
+    return height
+
+
+
+
+    
