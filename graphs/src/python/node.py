@@ -22,7 +22,7 @@ class Node:
         self.name = name
         self.color = color
         self.predecessor = predecessor
-        self.start_visit = start_visit
+        self.distance = start_visit
         self.end_visit = end_visit
         self.adjacency_list = adjacency_list
         self.parent = parent

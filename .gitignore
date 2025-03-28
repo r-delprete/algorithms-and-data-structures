@@ -229,4 +229,4 @@ cython_debug/
 # PyPI configuration file
 .pypirc
 
-.vscode
+.vscode/c_cpp_properties.json

@@ -13,8 +13,8 @@ g = Node("G")
 nodes = [a, b, c, d, e, f, g]
 
 edges = [
-    (a, b, random.randint(1, 10)),
     (a, d, random.randint(1, 10)),
+    (a, b, random.randint(1, 10)),
     (b, c, random.randint(1, 10)),
     (b, d, random.randint(1, 10)),
     (b, e, random.randint(1, 10)),
@@ -45,7 +45,7 @@ graph.dfs()
 # graph.bfs(c)
 
 for node in graph.nodes:
-    print(f"{node.name}: {node.start_visit} - {node.end_visit}")
+    print(f"{node.name}: {node.distance} - {node.end_visit}")
 
 print("\n")
 graph.print_mst(graph.kruskal())

@@ -99,7 +99,7 @@ class Graph:
     def dfs(self):
       for node in self.nodes:
           node.color = Color.white
-          node.start_visit = 0
+          node.distance = 0
           node.end_visit = 0
           node.predecessor = None
           
@@ -110,7 +110,7 @@ class Graph:
     def __dfs_visit(self, node: Node):
         self.time += 1
         node.color = Color.gray
-        node.start_visit = self.time
+        node.distance = self.time
         
         for adj_node, weight in node.adjacency_list:
             if adj_node.color == Color.white:
@@ -122,9 +122,9 @@ class Graph:
                 self.edges_type_count[EdgeTypes.back] += 1
                 self.cycles += 1
             elif adj_node.color == Color.black:
-                if node.start_visit < adj_node.start_visit:
+                if node.distance < adj_node.distance:
                     self.edges_type_count[EdgeTypes.forward] += 1
-                elif node.start_visit > adj_node.start_visit and node.end_visit > adj_node.end_visit:
+                elif node.distance > adj_node.distance and node.end_visit > adj_node.end_visit:
                     self.edges_type_count[EdgeTypes.cross] += 1
         
         self.time += 1
@@ -134,11 +134,11 @@ class Graph:
     def bfs(self, source_node: Node):      
         for node in self.nodes:
             node.color = Color.white
-            node.start_visit = 0
+            node.distance = 0
             node.predecessor = None
         
-        source_node.color = Color.white
-        source_node.start_visit = 0
+        source_node.color = Color.gray
+        source_node.distance = 0
         source_node.predecessor = None
         
         queue: Deque[Node] = deque()
@@ -151,7 +151,7 @@ class Graph:
                 if adj_node.color == Color.white:
                     adj_node.predecessor = node
                     adj_node.color = Color.gray
-                    adj_node.start_visit = node.start_visit + 1
+                    adj_node.distance = node.distance + 1
                     queue.append(adj_node)
                     
             node.color = Color.black
