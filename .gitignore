@@ -230,3 +230,11 @@ cython_debug/
 .pypirc
 
 .vscode/c_cpp_properties.json
+
+# Output di g++ e file di compilazione
+*.o
+*.obj
+*.out
+*.exe
+*.app
+.dSYM/

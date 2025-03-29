@@ -4,7 +4,6 @@ Node::Node(string symbol, int frequency, Node* left_child, Node* right_child, bo
     : symbol(symbol), frequency(frequency), left_child(left_child), right_child(right_child), combined(combined) {}
 
 // Getter
-// Getter
 string Node::get_symbol() const { return symbol; }
 int Node::get_frequency() const { return frequency; }
 Node* Node::get_left_child() const { return left_child; }
