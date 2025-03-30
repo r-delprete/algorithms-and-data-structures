@@ -9,28 +9,21 @@
 
 using namespace std;
 
-struct CompareNodes {
-  bool operator()(const Node& a, const Node& b) const {
-    if (a.get_frequency() != b.get_frequency()) {
-      return a.get_frequency() > b.get_frequency();  // Invertiamo il segno per il min-heap
-    }
-    return !a.is_combined() && b.is_combined();
-  }
-};
-
 /**
- * Class used to define a min priority queue which contains
- * Node objects
+ * Generic min priority queue implementation using a heap
+ * @tparam T The type of elements in the priority queue
+ * @tparam Compare Comparison function object type (defaults to less<T>)
  */
+template <typename T, typename Compare = less<T>>
 class MinPriorityQueue {
 private:
-  priority_queue<Node, vector<Node>, CompareNodes> heap;
+  priority_queue<T, vector<T>, Compare> heap;
 
 public:
-  MinPriorityQueue(vector<Node> nodes = {});
-  void insert(const Node& value);
-  Node* extract_min();
-  Node get_min() const;
+  MinPriorityQueue(const vector<T>& nodes = {}, Compare comp = Compare());
+  void insert(const T& value);
+  T* extract_min();
+  T get_min() const;
   bool is_empty() const;
   size_t size() const;
 };

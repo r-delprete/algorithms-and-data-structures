@@ -4,7 +4,7 @@
 #include "classes/node.hpp"
 
 Node huffman(vector<Node> nodes) {
-  MinPriorityQueue queue(nodes);
+  MinPriorityQueue<Node, CompareNodes> queue(nodes);
 
   while (queue.size() > 1) {
     Node node;

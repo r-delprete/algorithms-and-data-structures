@@ -37,4 +37,13 @@ public:
   void swap(Node& other);
 };
 
+struct CompareNodes {
+  bool operator()(const Node& a, const Node& b) const {
+    if (a.get_frequency() != b.get_frequency()) {
+      return a.get_frequency() > b.get_frequency();  // Opposite sign for min-heap
+    }
+    return !a.is_combined() && b.is_combined();
+  }
+};
+
 #endif
