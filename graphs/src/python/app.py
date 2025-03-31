@@ -1,6 +1,7 @@
 from node import Node
 from graph import Graph
 import random
+import mst
 
 a = Node("A")
 b = Node("B")
@@ -48,4 +49,4 @@ for node in graph.nodes:
     print(f"{node.name}: {node.distance} - {node.end_visit}")
 
 print("\n")
-graph.print_mst(graph.kruskal())
+mst.print_mst(mst.kruskal(graph))
