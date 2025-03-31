@@ -20,7 +20,7 @@ Node huffman(vector<Node> nodes) {
     queue.insert(node);
   }
 
-  return queue.get_min();
+  return *(queue.extract_min());
 }
 
 int main(int argc, const char** argv) {

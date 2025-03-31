@@ -2,6 +2,7 @@
 #define MIN_PRIORITY_QUEUE_HPP
 
 #include <algorithm>
+#include <queue>
 #include <stdexcept>
 #include <vector>
 
