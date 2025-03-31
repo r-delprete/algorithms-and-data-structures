@@ -9,12 +9,12 @@ get_nodes_min_path_greater_K(graph, source_node, K) {
 
   for (node in graph.nodes) {
     node.predecessor = null;
-    node.d = inf;
+    node.distance = inf;
     node.color = white;
   }
 
   source_node.predecessor = null;
-  source_node.d = 0;
+  source_node.distance = 0;
   source_node.color = gray;
 
   queue = new queue();
@@ -26,7 +26,7 @@ get_nodes_min_path_greater_K(graph, source_node, K) {
     for (adj_node in node.adj) {
       if (adj_node.color == white) {
         adj_node.predecessor = node;
-        adj_node.d = node.d + 1;
+        adj_node.distance = node.distance + 1;
         adj_node.color = gray;
 
         queue.enqueue(adj_node);
@@ -37,7 +37,7 @@ get_nodes_min_path_greater_K(graph, source_node, K) {
   }
 
   for (node in graph.nodes) {
-    if (node.d > K) {
+    if (node.distance > K) {
       total_nodes++;
     }
   }

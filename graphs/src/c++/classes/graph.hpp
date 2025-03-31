@@ -34,10 +34,14 @@ public:
   Graph(vector<Node> nodes, vector<Edge> edges = {});
 
   // Getter
+  /**
+   * Function to get graph nodes
+   * @return Graph nodes
+   */
   vector<Node> get_nodes();
 
   /**
-   * DFS visit
+   * Function to do DFS visit
    */
   void dfs();
 };

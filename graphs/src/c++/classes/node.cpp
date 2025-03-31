@@ -20,7 +20,7 @@ int Node::get_distance() const { return distance; }
 int Node::get_end_visit() const { return end_visit; }
 int Node::get_rank() const { return rank; }
 int Node::get_key() const { return key; }
-const vector<pair<Node*, int>>& Node::get_adjacency_list() const { return adjacency_list; }
+vector<pair<Node*, int>> Node::get_adjacency_list() const { return adjacency_list; }
 
 void Node::set_color(Color new_color) { color = new_color; }
 void Node::set_parent(Node* new_parent) { parent = new_parent; }
@@ -32,6 +32,6 @@ void Node::set_adjacency_list(vector<pair<Node*, int>> new_adjacency_list) { adj
 
 void Node::get_node() { printf("Node(%s)", name.c_str()); }
 
-bool Node::operator<(const Node& other) const {
+bool Node::operator<(Node& other) const {
   return this->name < other.name;  // Compare node by name
 }

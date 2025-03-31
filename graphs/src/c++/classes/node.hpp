@@ -33,7 +33,7 @@ public:
   int get_end_visit() const;
   int get_rank() const;
   int get_key() const;
-  const vector<pair<Node*, int>>& get_adjacency_list() const;
+  vector<pair<Node*, int>> get_adjacency_list() const;
 
   // Setter
   void set_color(Color new_color);
@@ -47,7 +47,7 @@ public:
   // Print method
   void get_node();
 
-  bool operator<(const Node& other) const;
+  bool operator<(Node& other) const;
 };
 
 #endif  // NODE_HPP
