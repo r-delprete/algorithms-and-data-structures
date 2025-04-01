@@ -10,7 +10,7 @@ dfs(graph):
 
     for node in graph.nodes:
         node.color = white
-        node.parent = null
+        node.predecessor = null
         node.distance = 0
         node.end_visit = 0
         node.depth = 0
@@ -33,7 +33,7 @@ dfs_visit(node):
             cycle_length = node.depth - adj_node.depth + 1
         else if adj_node.color == white:
             adj_node.depth += 1
-            adj_node.parent = node
+            adj_node.predecessor = node
             cycle_length = max(cycle_length, dfs_visit(adj_node))
             
     node.color = black

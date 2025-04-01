@@ -1,8 +1,8 @@
 def delete(hash_table, element, size):
     """ 
-        Function to delete an item in a hash table.
-        
-        In the hash table, the element’s index will be marked as deleted with ‘#’.
+    Function to delete an item in a hash table.
+      
+    In the hash table, the element's index will be marked as deleted with '#'.
     """
     i = 0
     index = hash_function(element, i) # type: ignore

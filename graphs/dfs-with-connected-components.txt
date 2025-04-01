@@ -7,7 +7,7 @@ dfs (graph) {                                      // DFS function that computes
   stack = new stack();                             // Initialize a new stack to store nodes
   for (node in graph.nodes) {                      // Iterate over all nodes in the graph
     node.parent = null;                            // Set the parent of each node to null
-    node.d = 0;                                    // Initialize discovery time to 0
+    node.distance = 0;                                    // Initialize discovery time to 0
     node.color = white;                            // Set all nodes as unvisited (white)
   }
 
@@ -32,7 +32,7 @@ dfs (graph) {                                      // DFS function that computes
 
 dfs_visit_1(node, stack) {                         // DFS visit function for the original graph
   node.color = gray;                               // Mark the node as visited (gray)
-  node.d = time + 1;                               // Set the discovery time of the node
+  node.distance = time + 1;                               // Set the discovery time of the node
 
   for (adj_node in node.adj) {                     // Iterate over the adjacent nodes of the current node
     if (adj_node.color == white) {                 // If the adjacent node is unvisited
@@ -49,7 +49,7 @@ dfs_visit_1(node, stack) {                         // DFS visit function for the
 
 dfs_visit_2(node, t_graph) {                       // DFS visit function for the transposed graph
   node.color = gray;                               // Mark the node as visited (gray)
-  node.d = time + 1;                               // Set the discovery time of the node
+  node.distance = time + 1;                               // Set the discovery time of the node
 
   for (t_adj_node in node.t_adj_node) {            // Iterate over the adjacent nodes in the transposed graph
     if (t_adj_node.color == white) {               // If the adjacent node is unvisited

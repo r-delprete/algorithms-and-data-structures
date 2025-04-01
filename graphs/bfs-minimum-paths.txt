@@ -6,14 +6,14 @@ get_minimum_paths(graph, source_node) {
   minimum_paths: int = 0    // minimum paths below K;
 
   for (node in graph.nodes - source_node) {
-    node.d = inf;
+    node.distance = inf;
     node.color = white;
     node.predecessor = null;
     node.count = 0;         // minimum paths to reach node
   }
 
   source_node.color = gray;
-  source_node.d = 0;
+  source_node.distance = 0;
   source_node.predecessor = null;
   source_node.count = 1;
 
@@ -27,18 +27,18 @@ get_minimum_paths(graph, source_node) {
       if (adj_node.color == white) {
         adj_node.color = gray;
         adj_node.predecessor = node;
-        adj_node.d = node.d + 1;
+        adj_node.distance = node.distance + 1;
         adj_node.count = node.count;
         
         queue.enqueue(adj_node);
-      } else if (adj_node.d == node.d + 1) {
+      } else if (adj_node.distance == node.distance + 1) {
         adj_node.count += node.count;
       }
     }
 
     node.color = black;
 
-    if (node.d < K) {
+    if (node.distance < K) {
       minimum_paths += node.count;
     }
   }

@@ -8,12 +8,12 @@ self_loops: int = 0
 bfs(nodes, source_node) {
   for (node in nodes - source_node) {
     node.color = white;
-    node.d = inf;
+    node.distance = inf;
     node.predecessor = null;
   }
 
   source_node.color = gray;
-  source_node.d = 0;
+  source_node.distance = 0;
   source_node.predecessor = null;
 
   queue = new queue();
@@ -27,7 +27,7 @@ bfs(nodes, source_node) {
         self_loops++;
       } else if (adj_node.color == white) {
         adj_node.color = gray;
-        adj_node.d = d.node + 1;
+        adj_node.distance = d.node + 1;
         adj_node.predecessor = node;
 
         queue.enqueue(adj_node);
