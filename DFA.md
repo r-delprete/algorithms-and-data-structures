@@ -1,9 +1,10 @@
-# DFA definition
+# DFA (Automa a Stati Finiti Deterministico)
 
-Un DFA è un automa che, dopo aver letto una qualunque sequenza di input, si trova in un unico stato.
-È costituita dalla quintupla (Q, Σ, δ, q₀, F):
-- Q: insieme finito di stati
-- Σ: insieme finito di simboli in input
-- δ: funzione di stato δ: Q x Σ -> Q (accetta un qualsiasi stato QQ in combinazione con qualsiasi simbolo di input Σ, restituendo uno stato appartenente a Q)
-- q₀: stato iniziale incluso in Q
-- F: stati accettanti o finali inclusi in Q
+Un **DFA (Automa a Stati Finiti Deterministico)** è un automa che, dopo aver letto una qualunque sequenza di input, si trova in un unico stato.
+
+È costituita dalla quintupla ($Q$, $\Sigma$, $\delta$, $q_0$, $F$):
+- $Q$: insieme finito di stati
+- $\Sigma$: insieme finito di simboli in input
+- $\delta$: funzione di stato $\delta: Q \times \Sigma \rightarrow Q$ (accetta un qualsiasi stato $Q$ in combinazione con qualsiasi simbolo di input $\Sigma$, restituendo uno stato appartenente a $Q$)
+- $q_0$: stato iniziale incluso in $Q$
+- $F$: stati accettanti o finali inclusi in $Q$
