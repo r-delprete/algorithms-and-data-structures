@@ -230,7 +230,6 @@ cython_debug/
 .pypirc
 
 .vscode/c_cpp_properties.json
-.vscode/settings.json
 
 # Output di g++ e file di compilazione
 *.o
