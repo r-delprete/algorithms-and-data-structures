@@ -18,6 +18,6 @@ prim(graph, source_node):
         node = queue.extract_min()
 
         for adj_node in node.adj:
-            if queue.includes(adj_node) and graph.weight(node, adj_node) < adj_node.key:
+            if queue.includes(adj_node) and (node, adj_node).weight < adj_node.key:
                 adj_node.predecessor = node
-                adj_node.key = graph.weight(node, adj_node)    // decrease key
+                adj_node.key = (node, adj_node).weight    // decrease key

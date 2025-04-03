@@ -1,0 +1,37 @@
+/**
+ * Dato un grafo connesso non orientato pesato G = (V,E) con pesi w(u,v) 
+ * ed un vertice r appartenente V, si scriva in pseudocodice un algoritmo 
+ * che restituisca il nodo con la profondità massima del MST radicato in r
+ */
+
+prim(graph, root):
+    max_depth = 0
+    max_node = root
+
+    queue = new min_priority_queue();
+
+    for node in graph.nodes:
+        node.key = inf
+        node.predecessor = null
+        adj_node.distance = -1
+
+    root.key = 0
+    root.predecessor = null
+
+    for node in graph.nodes:
+        queue.add(node)
+
+    while !queue.is_empty():
+        node = queue.extract_min()
+
+        for adj_node in node.adj:
+            if queue.includes(adj_node) and (node, adj_node).weight < adj_node.key:
+                adj_node.predecessor = node
+                adj_node.key = (node, adj_node).weight
+                adj_node.distance = node.distance + 1
+
+                if adj_node.distance > max_depth
+                    max_depth = adj_node.distance
+                    max_node = adj_node
+
+    return max_node

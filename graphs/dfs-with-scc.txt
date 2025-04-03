@@ -1,0 +1,64 @@
+/**
+ * scc = strongly connected components
+ * t_graph = transposed graph (graph with reversed edges)
+ * 
+ * Dato un grafo G = (V,E) si scriva in pseudocodice un algoritmo che calcoli le componenti
+ * fortemente connesse del grafo. Si descriva lo pseudocodice di ogni funzione richiamata
+ */
+
+dfs (graph):                                        // DFS function that computes strongly connected components
+    stack = new stack()                             // Initialize a new stack to store nodes
+
+    for node in graph.nodes:                        // Iterate over all nodes in the graph
+        node.parent = null                          // Set the parent of each node to null
+        node.distance = 0                           // Initialize discovery time to 0
+        node.color = white                          // Set all nodes as unvisited (white)
+
+    for node in graph.nodes:                        // Iterate again over all nodes
+        if node.color == white:                     // If the node is unvisited
+            dfs_visit_1(node, stack)                // Perform DFS visit on node, pushing results to stack
+
+    t_graph = create_t_graph()                      // Create the transposed graph (reverse edges)
+
+    while !stack.is_empty():                        // While stack is not empty
+        node = stack.pop()                          // Pop a node from the stack
+
+        if node.color == white:                     // If the node is unvisited in the transposed graph
+            dfs_visit_2(node, t_graph)              // Perform DFS visit on the node in the transposed graph
+
+    scc_list = []
+
+    while !stack.empty():
+        node = stack.pop()
+
+        if node.color = white:
+              dfs_visit_2(node, t_graph, scc_list)
+
+
+dfs_visit_1(node, stack):                           // DFS visit function for the original graph
+    node.color = gray;                              // Mark the node as visited (gray)
+    node.distance = time + 1                        // Set the discovery time of the node
+
+    for adj_node in node.adj:                       // Iterate over the adjacent nodes of the current node
+        if adj_node.color == white:                 // If the adjacent node is unvisited
+            adj_node.parent = node                  // Set the parent of the adjacent node to the current node
+            dfs_visit_1(node, stack)                // Recursively call dfs_visit_1 on the adjacent node
+
+    node.color = black                              // Mark the node as fully processed (black)
+    node.f = time + 1                               // Set the finish time of the node
+
+    stack.push(node);                               // Push the node to the stack after visiting all its adjacent nodes
+
+
+dfs_visit_2(node, t_graph, scc_list):               // DFS visit function for the transposed graph
+    node.color = gray                               // Mark the node as visited (gray)
+    scc_list.push(node)
+    node.distance = time + 1                        // Set the discovery time of the node
+
+    for t_adj_node in node.t_adj:                   // Iterate over the adjacent nodes in the transposed graph
+        if t_adj_node.color == white:               // If the adjacent node is unvisited
+            t_adj_node.parent = node                // Set the parent of the adjacent node to the current node
+            dfs_visit_2(t_adj_node, t_graph)        // Recursively call dfs_visit_2 on the adjacent node
+
+    node.f = time + 1                               // Set the finish time of the node
+    node.color = black                              // Mark the node as fully processed (black)
