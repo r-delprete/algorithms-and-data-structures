@@ -47,7 +47,7 @@ public:
   // Print method
   void get_node();
 
-  bool operator<(Node& other) const;
+  bool operator<(const Node& other) const;
 };
 
 #endif  // NODE_HPP

@@ -32,6 +32,6 @@ void Node::set_adjacency_list(vector<pair<Node*, int>> new_adjacency_list) { adj
 
 void Node::get_node() { printf("Node(%s)", name.c_str()); }
 
-bool Node::operator<(Node& other) const {
+bool Node::operator<(const Node& other) const {
   return this->name < other.name;  // Compare node by name
 }
