@@ -35,14 +35,14 @@ int main(int argc, char **argv) {
   edges.push_back(Edge(e, g, 1 + rand() % 10));
   edges.push_back(Edge(f, g, 1 + rand() % 10));
 
-  map<Node, vector<pair<Node *, int>>> adj_list;
-  adj_list.insert({a, {{&b, 1}, {&d, 1}}});
-  adj_list.insert({b, {{&a, 1}, {&c, 1}}});
-  adj_list.insert({c, {{&b, 1}, {&e, 1}}});
-  adj_list.insert({d, {{&a, 1}, {&b, 1}, {&e, 1}, {&f, 1}}});
-  adj_list.insert({e, {{&b, 1}, {&c, 1}, {&d, 1}, {&f, 1}, {&g, 1}}});
-  adj_list.insert({f, {{&d, 1}, {&e, 1}, {&g, 1}}});
-  adj_list.insert({g, {{&e, 1}, {&f, 1}}});
+  map<Node, vector<Node *>> adj_list;
+  adj_list.insert({a, {&b, &d}});
+  adj_list.insert({b, {&a, &c}});
+  adj_list.insert({c, {&b, &e}});
+  adj_list.insert({d, {&a, &b, &e, &f}});
+  adj_list.insert({e, {&b, &c, &d, &f, &g}});
+  adj_list.insert({f, {&d, &e, &g}});
+  adj_list.insert({g, {&e, &f}});
 
   for (Node &node : nodes) {
     auto it = adj_list.find(node);

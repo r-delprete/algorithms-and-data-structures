@@ -1,3 +1,4 @@
 #include "edge.hpp"
 
-Edge::Edge(Node start_node, Node end_node, int weight) : start_node(start_node), end_node(end_node), weight(weight) {}
+Edge::Edge(Node source_node, Node destination_node, int weight, EdgeTypes type)
+    : source_node(source_node), destination_node(destination_node), weight(weight), type(type) {}

@@ -13,8 +13,6 @@
 
 using namespace std;
 
-enum class EdgeTypes : int { back = 0, forward = 1, cross = 2 };
-
 class Graph {
 private:
   vector<Node> nodes;

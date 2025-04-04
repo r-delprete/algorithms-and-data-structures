@@ -43,8 +43,7 @@ void Graph::dfs_visit(Node& node) {
   node.set_color(Color::gray);
   node.set_distance(time);
 
-  for (pair<Node*, int> adj_node_pair : node.get_adjacency_list()) {
-    Node* adj_node = adj_node_pair.first;
+  for (Node* adj_node : node.get_adjacency_list()) {
     if (adj_node->get_color() == Color::white) {
       adj_node->set_parent(&node);
       dfs_visit(*adj_node);
