@@ -1,0 +1,34 @@
+/**
+ * Dato un grafo non orientato G(V, E), implementare in pseudocodice un algoritmo ricorsivo
+ * che restituisca TRUE se in G è presente un ciclo Hamiltoniano e FALSE altrimenti.
+ */
+
+hamiltonian_cycle(graph):
+    path = []
+
+    for node in graph.nodes
+        path.push(node)
+        if recursive_hamiltonian_cycle(graph, path, node):
+            return true
+        path.pop_last()   // Backtracking: delete last element in list
+    
+    return false
+
+recursive_hamiltonian_cycle(graph, path, current_node):
+    if length(path) = length(graph.nodes):    // if path contains all graph vertices, it verifies if cycle can be closed
+        first = path[0]
+        if graph.edges.includes((current_node, first))
+            return true     // Hamiltonian cycle
+            
+        return false
+    
+    // Recursion: explore not visited adjacent nodes
+    for adj_node in current_node.adj:
+        if !path.includes(adj_node):
+            path.push(adj_node)
+            if recursive_hamiltonian_cycle(graph, path, adj_node):
+                return true
+            
+            path.pop_last()   // Backtracking: delete last element in list
+    
+    return false    // if no valid path found
