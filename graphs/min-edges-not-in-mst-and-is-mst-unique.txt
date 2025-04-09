@@ -10,7 +10,7 @@ kruskal(graph) {
     make_set(node);
   }
 
-  sorted_edges = sort(graph.edges)    // sort graph edges by weight
+  sorted_edges = sort(graph.edges)    // sort graph edges by weight no-descending
 
   for (edge in sorted_edges) {
     if (find_set(edge.first_node) != find_set(edge.second_node)) {

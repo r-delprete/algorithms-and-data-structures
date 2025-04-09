@@ -1,0 +1,25 @@
+initialize_single_source(graph, source):
+    for node in (graph.nodes - source):
+        node.d = infinite
+        node.predecessor = NIL
+
+    source.d = 0
+    source.predecessor = NIL
+
+relax(node1, node2, weights):
+    if node2.d > node1.d + weights(node1, node2):
+        node2.d = node1.d + weights(node1, node2)
+        node2.predecessor = NIL
+
+bellman_ford(graph, weights, source):
+    initialize_single_source(graph, source)
+
+    for i = 1 to |graph.nodes| - 1:
+        for (node1, node2) in graph.edges:
+            relax(node1, node2, weights)
+
+    for (node1, node2) in graph.edges:
+        if node2.d > node1.d + weights(node1, node2):
+            return false
+
+    return true

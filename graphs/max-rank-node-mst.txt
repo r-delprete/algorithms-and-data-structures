@@ -9,7 +9,7 @@ kruskal(graph):
     for node in graph.nodes:
         make_set(node)
 
-    sorted_edges = sort(graph.edges)    # sort edges by weight
+    sorted_edges = sort(graph.edges)    # sort edges by weight no-descending
 
     for edge in sorted_edges:
         if find_set(edge.start_node) != find_set(edge.end_node):
@@ -17,7 +17,6 @@ kruskal(graph):
             union(edge.start_node, edge.end_node)
 
     return mst
-
 
 get_max_rank_node(graph):
     mst = kruskal(graph)
