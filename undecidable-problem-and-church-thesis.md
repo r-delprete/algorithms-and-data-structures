@@ -1,7 +1,7 @@
 # Problema indecidibile
 
-I **problemi indecidibili** sono problemi che i **calcolatori non sono in grado di risolvere**,
-un esempio può essere il caso in cui un programma in grado di esaminare qualunque programma P, e dire se P, eseguito con I come input, stampa "Ciao Mondo".
+I **problemi indecidibili** sono problemi che i **calcolatori non sono in grado di risolvere**.
+Un esempio può essere il caso in cui un programma in grado di esaminare qualunque programma P, e dire se P, eseguito con I come input, stampa "Ciao Mondo".
 
 # Tesi di Church
 

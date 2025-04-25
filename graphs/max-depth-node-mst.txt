@@ -13,7 +13,7 @@ prim(graph, root):
     for node in graph.nodes:
         node.key = inf
         node.predecessor = null
-        adj_node.distance = -1
+        node.distance = -1
 
     root.key = 0
     root.predecessor = null
