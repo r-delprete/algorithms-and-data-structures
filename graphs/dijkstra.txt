@@ -16,11 +16,12 @@ dijkstra(graph, weights, source):
 
     set = empty_set
 
-    queue = graph.nodes   // min priority queue
+    queue = graph.nodes     // min priority queue
 
     while !queue.is_empty():
         node = queue.extract_min()
-        s <- s ∪ node
+        set <- set u node
 
         for adj_node in node.adj:
             relax(node, adj_node, weights)
+    

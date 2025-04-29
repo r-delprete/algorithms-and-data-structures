@@ -1,5 +1,5 @@
 /**
- * visita DFS che tiene conto anche di cappi e cicli di un grafo
+ * visita BFS che tiene conto anche di cappi e cicli di un grafo
  */
 
 cycles: int = 0
