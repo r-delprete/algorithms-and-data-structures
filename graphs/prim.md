@@ -18,13 +18,13 @@ prim(graph, source, weights):
 
     source.key = 0
 
-    queue = nodes
+    queue = graph.nodes
 
-    while queue is not empty:
+    while queue != ∅:
         node = queue.extract_min()
 
         for adj_node in node.adj:
-            if adj_node is in queue and weights(node, adj_node) < adj_node.key:
+            if adj_node ∈ queue and weights(node, adj_node) < adj_node.key:
                 adj_node.predecessor = node
                 adj_node.key = weights(node, adj_node)
 ```

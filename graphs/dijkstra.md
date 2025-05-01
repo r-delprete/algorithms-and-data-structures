@@ -18,7 +18,7 @@ dijkstra(graph, source, weights):
 
     queue = graph.nodes
 
-    while queue is not empty:
+    while queue != ∅:
         node = queue.extract_min()
 
         set = set ∪ node

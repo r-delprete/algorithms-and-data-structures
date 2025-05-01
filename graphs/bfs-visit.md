@@ -18,10 +18,10 @@ bfs(graph, source):
     source.d = 0
     source.predecessor = NIL
 
-    queue = empty_set
+    queue = ∅
     queue.push(source)
 
-    while queue is not empty:
+    while queue != ∅:
         node = queue.pop()
 
         for adj_node in node.adj:
