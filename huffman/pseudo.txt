@@ -5,16 +5,12 @@
 /**
  * @param nodes Nodes queue to encode
  */
+Huffman(nodes):
+  size = |nodes|
+  queue = nodes     // queue is a min priority queue
 
-Huffman(nodes: queue<Node>) -> Node:
-  size = queue.size()
-  queue = new min_priority_queue()
-
-  for (node in nodes):
-    queue.add(node)
-
-  for (i = 0 to size):
-    z = new Node()
+  for (i = 1 to size - 1):
+    z = new Node()      // allocate a new node
 
     z.left = queue.extract_min()
     z.right = queue.extract_min()
