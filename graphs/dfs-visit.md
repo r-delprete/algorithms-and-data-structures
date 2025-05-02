@@ -9,7 +9,7 @@
 ```
 time = 0
 
-dfs(graph)
+dfs(graph):
     for node in graph.nodes:
         node.predecessor = NIL
         node.d = 0
