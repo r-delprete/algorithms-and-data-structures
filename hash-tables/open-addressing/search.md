@@ -6,7 +6,6 @@ This is the hash table _open addressing_ **search** function pseudo-code
 
 - `hash_table`: hash table data structure
 - `element`: element to search
-- `size`: hash table size
 
 ## Output
 
@@ -18,7 +17,8 @@ Returns:
 ## Pseudo-code
 
 ```
-search(hash_table, element, size):
+search(hash_table, element):
+    size = length(hash_table)
     i = 0
 
     while i < size or hash_table[index] != NIL:
