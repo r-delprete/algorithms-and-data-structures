@@ -52,29 +52,4 @@ fractional_knapsack(weights, values, fractions, knapsackCapacity):
         k = k + 1
 
     return profit
-
-
-fractional_knapsack(weights, values, fractions, knapsackCapacity):
-    numItems = length(values)
-
-    for i = 0 to numItems:
-        fractions[i] = 0.0
-
-    profit = 0.0
-    capacity = knapsackCapacity
-
-    k = 1
-
-    while k <= numItems and capacity > 0.0:
-        if weights[k] < capacity:
-            fractions[k] = 1.0
-            capacity = capacity - weights[k]
-        else:
-            fractions[k] = capacity / weights[k]
-            capacity = 0.0
-
-        profit = profit + fractions[k] * values[k]
-        k = k + 1
-
-    return profit
 ```
