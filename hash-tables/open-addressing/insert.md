@@ -6,7 +6,6 @@ This is the hash table _open addressing_ **insert** function pseudo-code
 
 - `hash_table`: hash table data structure
 - `element`: element to insert
-- `size`: hash table size
 
 ## Output
 
@@ -18,7 +17,8 @@ Returns:
 ## Pseudo-code
 
 ```
-insert(hash_table, element, size):
+insert(hash_table, element):
+    size = length(hash_table)
     i = 0
 
     while i < size:
@@ -31,3 +31,7 @@ insert(hash_table, element, size):
 
     return 'overflow'
 ```
+
+### _Notes_
+
+If an hash table cell can be considered deleted with character `'#'`, the `if` condition `hash_table[index] == NIL` will change to `hash_table[index] == NIL or if hash_table[index] == '#'`

@@ -7,7 +7,6 @@ The **deleted element's index** will be marked as deleted with `#`.
 
 - `hash_table`: hash table data structure
 - `element`: element to insert
-- `size`: hash table size
 
 ## Output
 
@@ -19,7 +18,8 @@ Returns:
 ## Pseudo-code
 
 ```
-delete(hash_table, element, size):
+delete(hash_table, element):
+    size = length(hash_table)
     i = 0
     index = hash_function(element, i)
 
