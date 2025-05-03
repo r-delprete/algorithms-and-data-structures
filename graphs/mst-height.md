@@ -17,7 +17,7 @@ prim(graph, root, weights):
 
     queue = graph.nodes         // minimum priority queue
 
-    while not queue.is_empty():
+    while queue != ∅:
         node = queue.extract_min()
 
         for adj_node in node.adj:
