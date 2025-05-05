@@ -21,7 +21,7 @@ dijkstra(graph, source, weights):
     while queue != ∅:
         node = queue.extract_min()
 
-        set = set ∪ node
+        set <- set ∪ node
 
         for adj_node in node.adj:
             relax(node, adj_node, weights)
