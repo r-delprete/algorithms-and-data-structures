@@ -1,6 +1,6 @@
 # MST Height
 
-## Trace
+## Assignment description
 
 Dato un grafo non orientato, pesato, con radice R. Calcolare l'altezza del MST radicato in R.
 
