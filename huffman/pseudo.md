@@ -18,14 +18,14 @@ Huffman(nodes):
     queue = nodes
 
     for i = 1 to size - 1:
-        z = new Node()      // allocate a new node
+        z = allocate_node()
 
         z.left = queue.extract_min()
         z.right = queue.extract_min()
 
-        z.frequency = z.left.frequency + z.right.frequency
+        z.frequency = z.left.frequency + z.right.frequency;
 
-        queue.add(z)
+        queue.insert(z)
 
     return queue.extract_min()
 ```

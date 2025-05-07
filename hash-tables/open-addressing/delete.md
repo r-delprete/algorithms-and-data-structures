@@ -21,7 +21,7 @@ Returns:
 delete(hash_table, element):
     size = length(hash_table)
     i = 0
-    index = hash_function(element, i)
+    index = h(element, i)
 
     while hash_table[index] != NIL and i < size:
         if hash_table[index] != '#' and hash_table[index].key == element:
@@ -29,8 +29,8 @@ delete(hash_table, element):
 
             return 'element deleted'
 
-        i += 1
-        index = hash_function(element, i)
+        i++
+        index = h(element, i)
 
     return NIL
 ```

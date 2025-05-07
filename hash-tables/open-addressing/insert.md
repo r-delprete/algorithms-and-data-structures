@@ -22,12 +22,13 @@ insert(hash_table, element):
     i = 0
 
     while i < size:
+        index = h(element, i)
         if hash_table[index] == NIL:
             hash_table[index] = element
 
             return index
 
-        i += 1
+        i++
 
     return 'overflow'
 ```
