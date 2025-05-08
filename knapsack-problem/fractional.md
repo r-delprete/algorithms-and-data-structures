@@ -1,4 +1,4 @@
-# Knapsack 01 Problem
+# Fractional Knapsack Problem
 
 Suppose there is a thief who enters a store. He has a backpack of fixed size 𝑊. The goal is to fill the backpack in such a way that the total value of the items $v_i$ inside is as high as possible. Each item has a weight $w_i$ and a value $v_i$. The items can either be taken, left, or fractioned.
 
