@@ -8,7 +8,7 @@
 - `x1, x2`: exit times from the two lines.
 - `n`: number of stations.
 
-## Output parameters
+## Output
 
 - `f_opt`: minimum time required to complete the process.
 - `l_opt`: last line used in the optimal path.
