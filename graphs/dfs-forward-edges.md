@@ -13,7 +13,7 @@ dfs(graph, K):
     forward_edges = ∅
 
     for node in graph.nodes:
-        node.predecessor = null
+        node.predecessor = NIL
         node.distance = 0
         node.end_visit = 0
         node.color = white
