@@ -2,7 +2,7 @@
 
 ## Input parameters
 
-- `nodes`: nodes queue to encode
+- `nodes`: nodes to encode
 
 ## Output
 
