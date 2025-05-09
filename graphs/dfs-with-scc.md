@@ -12,7 +12,7 @@ Graph SCC
 
 ### Assignment
 
-Dato un grafo G = (V,E) si scriva in pseudo-codice un algoritmo che calcoli le componenti
+Dato un grafo $G = (V, E)$ si scriva in pseudo-codice un algoritmo che calcoli le componenti
 fortemente connesse del grafo. Si descriva lo pseudo-codice di ogni funzione richiamata
 
 ```
@@ -62,14 +62,17 @@ dfs_visit_1(node, stack):                           // DFS visit function for th
 dfs_visit_2(node, t_graph, scc):                    // DFS visit function for the transposed graph
     node.color = gray                               // Mark the node as visited (gray)
     scc = scc ∪ node
-    node.distance = time + 1                        // Set the discovery time of the node
+
+    time = time + 1
+    node.distance = time                            // Set the discovery time of the node
 
     for t_adj_node in node.adj:                     // Iterate over the adjacent nodes in the transposed graph
         if t_adj_node.color == white:               // If the adjacent node is unvisited
             t_adj_node.predecessor = node           // Set the predecessor of the adjacent node to the current node
             dfs_visit_2(t_adj_node, t_graph, scc)   // Recursively call dfs_visit_2 on the adjacent node
 
-    node.f = time + 1                               // Set the finish time of the node
+    time = time + 1
+    node.f = time                                   // Set the finish time of the node
     node.color = black                              // Mark the node as fully processed (black)
 ```
 
