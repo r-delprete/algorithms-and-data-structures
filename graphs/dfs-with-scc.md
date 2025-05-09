@@ -74,6 +74,18 @@ dfs_visit_2(node, t_graph, scc):                    // DFS visit function for th
     time = time + 1
     node.f = time                                   // Set the finish time of the node
     node.color = black                              // Mark the node as fully processed (black)
+
+create_t_graph(graph):                              // Function to create transposed graph
+    t_graph = new graph();
+
+    for node in graph.nodes:
+        t_graph.nodes.push(node);                   // Nodes copy into transposed graph
+
+    for node in graph.nodes:
+        for adj_node in node.adj:
+            t_graph.edges.push((adj_node, node));   // Reverse edge
+
+    return t_graph;
 ```
 
 ### _Notes_
