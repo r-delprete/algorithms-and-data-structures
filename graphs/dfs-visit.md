@@ -2,7 +2,7 @@
 
 ## Input parameters
 
-- `graph`: graph to execute the visit
+- `graph`: graph from which apply the visit
 
 ## Pseudo-code
 
