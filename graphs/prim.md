@@ -4,7 +4,7 @@
 
 ## Input parameters
 
-- `graph`: graph from which the MST is to be computed
+- `graph`: graph from which the MST has to be computed
 - `source`: source node to start building MST
 - `weights`: edges weights
 

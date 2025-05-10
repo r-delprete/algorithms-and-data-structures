@@ -27,7 +27,7 @@ kruskal(graph):
     return mst
 ```
 
-## `make_node`, `find_set` and `union` functions
+## `make_set`, `find_set` and `union` functions
 
 ### `make_set`
 
