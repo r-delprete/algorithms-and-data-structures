@@ -12,7 +12,7 @@ Returns the _MST (Minimum Spanning Tree)_ builded
 
 ```
 kruskal(graph):
-    mst = empty_set
+    mst = ∅
 
     for node in graph.nodes:
         make_set(node)
@@ -22,7 +22,7 @@ kruskal(graph):
     for (node1, node2) in sorted_edges
         if find_set(node1) != find_set(node2)
             union(node1, node2)
-            mst.add((node1, node2))         // add (node1, node2) edge to mst
+            mst = mst ∪ (node1, node2)         // add (node1, node2) edge to mst
 
     return mst
 ```

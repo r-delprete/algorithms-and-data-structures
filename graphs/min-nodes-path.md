@@ -22,12 +22,12 @@ Return the nodes number which path is greater than `K`
 bfs_visit(graph, source, K):
     for node in (graph.nodes - source):
         node.predecessor = NIL
-        node.distance = ∞
         node.color = white
+        node.distance = ∞
 
-    source.predecessor = NIL
-    source.distance = 0
     source.color = gray
+    source.distance = 0
+    source.predecessor = NIL
 
     queue = new queue()
     queue.enqueue(source)
@@ -37,18 +37,18 @@ bfs_visit(graph, source, K):
 
         for adj_node in node.adj:
             if adj_node.color == white:
-            adj_node.predecessor = node
-            adj_node.distance = node.distance + 1
-            adj_node.color = gray
+                adj_node.predecessor = node
+                adj_node.color = gray
+                adj_node.distance = node.distance + 1
 
-            queue.enqueue(adj_node)
+                queue.push(adj_node)
 
         node.color = black
 
     total_nodes = 0
 
     for node in graph.nodes:
-        if node.distance > K
+        if node.distance > K:
             total_nodes += 1
 
     return total_nodes

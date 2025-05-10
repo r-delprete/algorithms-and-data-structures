@@ -4,16 +4,22 @@
 
 Dato un grafo non orientato, pesato, con radice R. Calcolare l'altezza del MST radicato in R.
 
+## Input parameters
+
+- `graph`: graph from which the MST has to be computed
+- `source`: source node to start building MST
+- `weights`: edges weights
+
 ## Pseudo-code
 
 ```
-prim(graph, root, weights):
+prim(graph, source, weights):
     for node in graph.nodes:
         node.predecessor = NIL
-        node.key = inf
+        node.key = ∞
 
-    root.key = 0
-    root.predecessor = NIL
+    source.key = 0
+    source.predecessor = NIL
 
     queue = graph.nodes         // minimum priority queue
 
@@ -26,20 +32,20 @@ prim(graph, root, weights):
                 adj_node.key = weights(node, adj_node)    // decrease key
 
 
-bfs_visit(graph, root):
-    prim(graph, root)
+bfs_visit(graph, source):
+    prim(graph, source)
 
     max_height = 0
 
-    root.d = 0
-    root.predecessor = null
-    root.color = gray
+    source.d = 0
+    source.predecessor = NIL
+    source.color = gray
 
     queue = ∅
-    queue.append(root)
+    queue.enqueue(source)
 
     while queue != ∅:
-        node = queue.pop()
+        node = queue.dequeue()
 
         for adj_node in node.adj:
             if adj_node.color == white and node == adj_node.predecessor:
@@ -49,7 +55,7 @@ bfs_visit(graph, root):
                 if adj_node.d > max_height:
                     max_height = adj_node.d
 
-                queue.append(adj_node)
+                queue.enqueue(adj_node)
 
         node.color = black
 
