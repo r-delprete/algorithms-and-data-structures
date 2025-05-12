@@ -4,6 +4,14 @@ Dato un grafo orientato G = (V, E) ed un intero K appartenente $R^+$
 si scriva un algoritmo in pseudo-codice
 che restituisca la lista degli archi in avanti del grafo
 
+## Input parameters
+
+- `graph`: graph from which apply the visit
+
+## Output
+
+Returns forward egdes list
+
 ## Pseudo-code
 
 ```
@@ -29,14 +37,14 @@ dfs_visit(node, K, forward_edges):
     time += 1
     node.distance = time
 
-        for adj_node in node.adj:
-            if adj_node.color == white:
-                adj_node.predecessor = node
-                dfs_visit(adj_node, K)
-            else if adj_node == black and node.distance < adj_node.distance:
-                forward_edges <- forward_edges ∪ (node, adj_node)    // push edge into list
+    for adj_node in node.adj:
+        if adj_node.color == white:
+            adj_node.predecessor = node
+            dfs_visit(adj_node, K)
+        else if adj_node == black and node.distance < adj_node.distance:
+            forward_edges <- forward_edges ∪ (node, adj_node)    // push edge into list
 
-        time += 1
-        node.end_visit = time
-        node.color = black
+    time += 1
+    node.end_visit = time
+    node.color = black
 ```

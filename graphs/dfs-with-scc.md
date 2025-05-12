@@ -1,19 +1,20 @@
 # DFS (Depth-First-Search) visit with Strongly Connected Components (SCC)
 
+## Assignment
+
+Dato un grafo $G = (V, E)$ si scriva in pseudo-codice un algoritmo che calcoli le componenti
+fortemente connesse del grafo. Si descriva lo pseudo-codice di ogni funzione richiamata
+Graph SCC
+
 ## Input parameters
 
 - `graph`: graph from which apply the visit
 
 ## Output
 
-Graph SCC
+Returns graph SCC
 
 ## Pseudo-code
-
-### Assignment
-
-Dato un grafo $G = (V, E)$ si scriva in pseudo-codice un algoritmo che calcoli le componenti
-fortemente connesse del grafo. Si descriva lo pseudo-codice di ogni funzione richiamata
 
 ```
 time = 0
