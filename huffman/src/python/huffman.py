@@ -17,5 +17,12 @@ def huffman(nodes: List[Node]) -> Node:
       
     return print(f"root: {queue.peek()}")
   
-nodes = [Node("Z", 1), Node("W", 2), Node("Y", 3), Node("V", 6), Node("X", 8)]
+nodes = [
+    Node("A", 5), 
+    Node("B", 10), 
+    Node("C", 15), 
+    Node("D", 20), 
+    Node("E", 25),
+    Node("F", 25)
+]
 huffman(nodes)
