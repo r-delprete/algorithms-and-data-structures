@@ -3,6 +3,14 @@
 Definire un algoritmo ricorsivo che, dato un grafo $G$ con funzione peso $W: E \rightarrow R$,
 conta il numero di nodi nel più lungo ciclo di $G$
 
+## Input parameters
+
+- `graph`: graph from which apply the visit
+
+## Output
+
+Returns the graph maximum cycle length
+
 ## Pseudo-code
 
 ```
