@@ -1,27 +1,90 @@
-# algorithms-and-data-structures
-Repository about Algoritmi e Strutture Dati of University of Naples "Parthenope"
+<h1 align="center"> 🖥️ Algorithms and Data Structures </h1>
 
-## Huffman
+<p align="center">Repository for Algorithms and Data Structures at the University of Naples "Parthenope"</p>
 
-Into huffman folder there are two project
+## 📌 Table of Contents
 
-### Python project
+- [📌 Table of Contents](#-table-of-contents)
+- [💻 Built with](#-built-with)
+  - [C++](#c)
+  - [Python](#python)
+- [🚀 Projects](#-projects)
+  - [Graph](#graph)
+  - [Hash Tables](#hash-tables)
+  - [Huffman Coding](#huffman-coding)
+- [Knapsack Problem](#knapsack-problem)
+- [LCS (Longest Common Subsequence)](#lcs-longest-common-subsequence)
+- [Sorting Algorithms](#sorting-algorithms)
+- [Assembly Chain](#assembly-chain)
+- [Optimal Substructure](#optimal-substructure)
+- [Turing Machine](#turing-machine)
+- [Undecidable Problems and Church's Thesis](#undecidable-problems-and-churchs-thesis)
 
-To run this project execute the command:
+## 💻 Built with
 
-```sh
-python3 huffman.py
-```
+### C++
 
-### C++ project
+- Requires `g++` compiler.
+- Recommended: [MSYS2 Installation Guide](https://www.msys2.org/).
+- Standard used: **C++11**
 
-To run this project execute:
+### Python
 
-#### Windows
-```ps1
-./execute.ps1
-```
-#### MacOS/Linux
-```sh
-./execute.sh
-```
+- Requires **Python 3.12 or newer**.
+- Download it [here](https://www.python.org/downloads/).
+
+## 🚀 Projects
+
+### Graph
+
+- **Python Project**: Run with `python3 app.py`.
+- **C++ Project**:
+
+  - **Windows**: Execute with `./execute.ps1`.
+  - **macOS/Linux**: Execute with `./execute.sh`.
+
+- **Pseudo-codes**: Contains various graph-related pseudo-codes.
+
+### Hash Tables
+
+- Located in `hash-tables/open-addressing` folder.
+- Includes [Insert](hash-tables/open-addressing/insert.md), [Delete](hash-tables/open-addressing/delete.md), and [Search](hash-tables/open-addressing/search.md) pseudo-code functions.
+
+### Huffman Coding
+
+- **Python Project**: Run with `python3 huffman.py`.
+- **C++ Project**:
+
+  - **Windows**: Execute with `./execute.ps1`.
+  - **macOS/Linux**: Execute with `./execute.sh`.
+
+## Knapsack Problem
+
+- Includes [0/1 Problem](knapsack-problem/01.md) and [Fractional Problem](knapsack-problem/fractional.md) pseudo-code.
+
+## LCS (Longest Common Subsequence)
+
+- Contains:
+
+  - [Exercises File](lcs/exercises.xlsx)
+  - [Python Script](lcs/app.py) for LCS calculation.
+
+## Sorting Algorithms
+
+- Directory with various sorting algorithms.
+
+## [Assembly Chain](assembly-chain.md)
+
+- Contains the Assembly Chain algorithm pseudo-code.
+
+## [Optimal Substructure](optimal-substructure.md)
+
+- Includes an optimal substructure pseudo-code.
+
+## [Turing Machine](turing-machine.md)
+
+- Definition and explanation of Turing Machines.
+
+## [Undecidable Problems and Church's Thesis](undecidable-problem-and-church-thesis.md)
+
+- Definitions of undecidable problems and Church's Thesis.
