@@ -41,10 +41,11 @@ dfs_visit(node):
 
     for adj_node in node.adj:
         if adj_node.color == gray:
-            cycle_length = node.depth - adj_node.depth + 1
+            cycle_length = max(cycle_length, node.depth - adj_node.depth + 1)
         else if adj_node.color == white:
             adj_node.depth = node.depth + 1
             adj_node.predecessor = node
+            cycle_length = max(cycle_length, dfs_visit(node))
 
     node.color = black
     time += 1
