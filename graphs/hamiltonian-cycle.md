@@ -36,7 +36,7 @@ recursive_hamiltonian_cycle(graph, path, current_node):
     // Recursion: explore not visited adjacent nodes
     for adj_node in current_node.adj:
         if adj_node ∉ path:
-            path = path ∪ node
+            path = path ∪ adj_node
             if recursive_hamiltonian_cycle(graph, path, adj_node):
                 return true
 
