@@ -16,6 +16,7 @@
 - [LCS (Longest Common Subsequence)](#lcs-longest-common-subsequence)
 - [Sorting Algorithms](#sorting-algorithms)
 - [Assembly Chain](#assembly-chain)
+- [DFA](#dfa)
 - [Optimal Substructure](#optimal-substructure)
 - [Turing Machine](#turing-machine)
 - [Undecidable Problems and Church's Thesis](#undecidable-problems-and-churchs-thesis)
@@ -76,6 +77,10 @@
 ## [Assembly Chain](assembly-chain.md)
 
 - Contains the Assembly Chain algorithm pseudo-code.
+
+## [DFA](DFA.md)
+
+- Definition and explanation of DFA.
 
 ## [Optimal Substructure](optimal-substructure.md)
 
