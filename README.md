@@ -10,8 +10,9 @@
   - [Python](#python)
 - [🚀 Projects](#-projects)
   - [Graph](#graph)
-  - [Hash Tables](#hash-tables)
   - [Huffman Coding](#huffman-coding)
+  - [Max Heap](#max-heap)
+- [Hash Tables](#hash-tables)
 - [Knapsack Problem](#knapsack-problem)
 - [LCS (Longest Common Subsequence)](#lcs-longest-common-subsequence)
 - [Sorting Algorithms](#sorting-algorithms)
@@ -46,11 +47,6 @@
 
 - **Pseudo-codes**: Contains various graph-related pseudo-codes.
 
-### Hash Tables
-
-- Located in `hash-tables/open-addressing` folder.
-- Includes [Insert](hash-tables/open-addressing/insert.md), [Delete](hash-tables/open-addressing/delete.md), and [Search](hash-tables/open-addressing/search.md) pseudo-code functions.
-
 ### Huffman Coding
 
 - **Python Project**: Run with `python3 huffman.py`.
@@ -58,6 +54,20 @@
 
   - **Windows**: Execute with `./execute.ps1`.
   - **macOS/Linux**: Execute with `./execute.sh`.
+
+### Max Heap
+
+Located in [max-heap folder](heap/src/c++/max-heap)
+
+- **C++ Project**:
+
+  - **Windows**: Execute with `./execute.ps1`.
+  - **macOS/Linux**: Execute with `./execute.sh`.
+
+## Hash Tables
+
+- Located in `hash-tables/open-addressing` folder.
+- Includes [Insert](hash-tables/open-addressing/insert.md), [Delete](hash-tables/open-addressing/delete.md), and [Search](hash-tables/open-addressing/search.md) pseudo-code functions.
 
 ## Knapsack Problem
 
