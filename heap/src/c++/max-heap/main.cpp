@@ -3,7 +3,7 @@
 int main(int argc, char **argv) {
   vector<int> data = {4, 10, 3, 5, 1};
 
-  Max_Heap max_heap(data);
+  MaxHeap max_heap(data);
 
   cout << "Max heap builded: ";
   max_heap.print_heap();
