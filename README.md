@@ -17,7 +17,7 @@
 - [Knapsack Problem](#knapsack-problem)
 - [LCS (Longest Common Subsequence)](#lcs-longest-common-subsequence)
 - [Sorting Algorithms](#sorting-algorithms)
-- [Assembly Chain](#assembly-chain)
+- [Fastest way](#fastest-way)
 - [DFA](#dfa)
 - [Optimal Substructure](#optimal-substructure)
 - [Turing Machine](#turing-machine)
@@ -94,9 +94,9 @@ Located in [tree/binary-search-tree folder](trees/binary-search-tree/src/c++/)
 
 - Directory with various sorting algorithms.
 
-## [Assembly Chain](assembly-chain.md)
+## [Fastest way](fastest-way.md)
 
-- Contains the Assembly Chain algorithm pseudo-code.
+- Contains the Fastest way algorithm pseudo-code.
 
 ## [DFA](DFA.md)
 

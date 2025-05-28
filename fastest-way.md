@@ -1,4 +1,4 @@
-# Assembly chain algorithm
+# Fastest way algorithm
 
 ## Input parameters
 
