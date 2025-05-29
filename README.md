@@ -13,6 +13,7 @@
   - [Huffman Coding](#huffman-coding)
   - [Max Heap](#max-heap)
   - [Binary Search Tree](#binary-search-tree)
+  - [Red-Black Tree](#red-black-tree)
 - [Hash Tables](#hash-tables)
 - [Knapsack Problem](#knapsack-problem)
 - [LCS (Longest Common Subsequence)](#lcs-longest-common-subsequence)
@@ -68,6 +69,15 @@ Located in [max-heap folder](heap/src/c++/max-heap)
 ### Binary Search Tree
 
 Located in [tree/binary-search-tree folder](trees/binary-search-tree/src/c++/)
+
+- **C++ Project**:
+
+  - **Windows**: Execute with `./execute.ps1`.
+  - **macOS/Linux**: Execute with `./execute.sh`.
+
+### Red-Black Tree
+
+Located in [tree/red-black folder](trees/red-black/src/c++/)
 
 - **C++ Project**:
 

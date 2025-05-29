@@ -12,16 +12,16 @@ private:
   Node* root;
 
   void transplant(Node* root_to_sub, Node* root_sub) {
-    if (root_to_sub->get_parent() == nullptr) {
+    if (root_to_sub->parent == nullptr) {
       this->set_root(root_sub);
-    } else if (root_to_sub == root_to_sub->get_parent()->get_left()) {
-      root_to_sub->get_parent()->set_left(root_sub);
+    } else if (root_to_sub == root_to_sub->parent->left) {
+      root_to_sub->parent->left = root_sub;
     } else {
-      root_to_sub->get_parent()->set_right(root_sub);
+      root_to_sub->parent->right = root_sub;
     }
 
     if (root_sub != nullptr) {
-      root_sub->set_parent(root_to_sub->get_parent());
+      root_sub->parent = root_to_sub->parent;
     }
   };
 
@@ -39,80 +39,80 @@ public:
   void inorder_visit(Node* node) {
     if (node == nullptr) return;
 
-    inorder_visit(node->get_left());
-    node->print_node();
-    inorder_visit(node->get_right());
+    inorder_visit(node->left);
+    node->print();
+    inorder_visit(node->right);
   };
 
   void preorder_visit(Node* node) {
     if (node == nullptr) return;
 
-    node->print_node();
-    preorder_visit(node->get_left());
-    preorder_visit(node->get_right());
+    node->print();
+    preorder_visit(node->left);
+    preorder_visit(node->right);
   };
 
   void postorder_visit(Node* node) {
     if (node == nullptr) return;
 
-    postorder_visit(node->get_right());
-    postorder_visit(node->get_left());
-    node->print_node();
+    postorder_visit(node->right);
+    postorder_visit(node->left);
+    node->print();
   };
 
   Node* tree_search(Node* node, int key) {
-    if (node == nullptr || key == node->get_key()) {
+    if (node == nullptr || key == node->key) {
       return node;
     }
 
-    if (key < node->get_key()) {
-      return tree_search(node->get_left(), key);
+    if (key < node->key) {
+      return tree_search(node->left, key);
     } else {
-      return tree_search(node->get_right(), key);
+      return tree_search(node->right, key);
     }
   };
 
   Node* tree_minimum(Node* node) {
-    while (node->get_left() != nullptr) {
-      node = node->get_left();
+    while (node->left != nullptr) {
+      node = node->left;
     }
 
     return node;
   };
 
   Node* tree_maximum(Node* node) {
-    while (node->get_right() != nullptr) {
-      node = node->get_right();
+    while (node->right != nullptr) {
+      node = node->right;
     }
 
     return node;
   };
 
   Node* tree_successor(Node* node) {
-    if (node->get_right() != nullptr) {
-      return tree_minimum(node->get_right());
+    if (node->right != nullptr) {
+      return tree_minimum(node->right);
     }
 
-    Node* successor = node->get_parent();
+    Node* successor = node->parent;
 
-    while (successor != nullptr && node == successor->get_right()) {
+    while (successor != nullptr && node == successor->right) {
       node = successor;
-      successor = successor->get_parent();
+      successor = successor->parent;
     }
 
     return successor;
   };
 
   Node* tree_predecessor(Node* node) {
-    if (node->get_left() != nullptr) {
-      return tree_maximum(node->get_left());
+    if (node->left != nullptr) {
+      return tree_maximum(node->left);
     }
 
-    Node* predecessor = node->get_parent();
+    Node* predecessor = node->parent;
 
-    while (predecessor != nullptr && node == predecessor->get_left()) {
+    while (predecessor != nullptr && node == predecessor->left) {
       node = predecessor;
-      predecessor = predecessor->get_parent();
+      predecessor = predecessor->parent;
     }
 
     return predecessor;
@@ -125,40 +125,40 @@ public:
     while (tracker != nullptr) {
       new_parent = tracker;
 
-      if (node->get_key() < tracker->get_key()) {
-        tracker = tracker->get_left();
+      if (node->key < tracker->key) {
+        tracker = tracker->left;
       } else {
-        tracker = tracker->get_right();
+        tracker = tracker->right;
       }
     }
 
-    node->set_parent(new_parent);
+    node->parent = new_parent;
     if (new_parent == nullptr) {
       root = node;
-    } else if (node->get_key() < new_parent->get_key()) {
-      new_parent->set_left(node);
+    } else if (node->key < new_parent->key) {
+      new_parent->left = node;
     } else {
-      new_parent->set_right(node);
+      new_parent->right = node;
     }
   };
 
   void tree_delete(Node* node) {
-    if (node->get_left() == nullptr) {
-      transplant(node, node->get_right());
-    } else if (node->get_right() == nullptr) {
-      transplant(node, node->get_left());
+    if (node->left == nullptr) {
+      transplant(node, node->right);
+    } else if (node->right == nullptr) {
+      transplant(node, node->left);
     } else {
-      Node* tmp = tree_minimum(node->get_right());
+      Node* tmp = tree_minimum(node->right);
 
-      if (tmp->get_parent() != node) {
-        transplant(tmp, tmp->get_right());
-        tmp->set_right(node->get_right());
-        node->get_right()->set_parent(tmp);
+      if (tmp->parent != node) {
+        transplant(tmp, tmp->right);
+        tmp->right = node->right;
+        node->right->parent = tmp;
       }
 
       transplant(node, tmp);
-      tmp->set_left(node->get_left());
-      tmp->get_left()->set_parent(tmp);
+      tmp->left = node->left;
+      tmp->left->parent = tmp;
     }
   };
 
@@ -167,19 +167,19 @@ public:
       cout << prefix;
 
       cout << (is_left ? "├── " : "└── ");
-      cout << node->get_key() << endl;
+      cout << node->key << endl;
 
-      print_tree(node->get_left(), prefix + (is_left ? "│   " : "    "), true);
+      print_tree(node->left, prefix + (is_left ? "│   " : "    "), true);
 
-      print_tree(node->get_right(), prefix + (is_left ? "│   " : "    "), false);
+      print_tree(node->right, prefix + (is_left ? "│   " : "    "), false);
     }
   };
 
   void delete_subtree(Node* node) {
     if (node == nullptr) return;
 
-    delete_subtree(node->get_left());
-    delete_subtree(node->get_right());
+    delete_subtree(node->left);
+    delete_subtree(node->right);
     delete node;
   }
 };
