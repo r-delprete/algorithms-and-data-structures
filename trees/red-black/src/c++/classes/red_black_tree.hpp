@@ -7,20 +7,19 @@ using namespace std;
 
 class RedBlackTree {
 private:
-  Node* root = nullptr;
+  Node* root;
+  Node* nil;
 
   void fix_insert(Node* node) {
     node->color = Color::red;
 
-    while (node != root && node->parent != nullptr && node->parent->color == Color::red) {
+    while (node != root && node->parent->color == Color::red) {
       Node* grandparent = node->parent->parent;
-
-      if (grandparent == nullptr) break;
 
       if (node->parent == grandparent->left) {
         Node* uncle = grandparent->right;
 
-        if (uncle != nullptr && uncle->color == Color::red) {
+        if (uncle->color == Color::red) {
           node->parent->color = Color::black;
           uncle->color = Color::black;
           grandparent->color = Color::red;
@@ -37,7 +36,7 @@ private:
       } else {
         Node* uncle = grandparent->left;
 
-        if (uncle != nullptr && uncle->color == Color::red) {
+        if (uncle->color == Color::red) {
           node->parent->color = Color::black;
           uncle->color = Color::black;
           grandparent->color = Color::red;
@@ -57,189 +56,227 @@ private:
     root->color = Color::black;
   }
 
-public:
-  RedBlackTree(Node* root = nullptr) : root(root) {};
-  ~RedBlackTree() {
-    cout << endl << "Destroying tree..." << endl;
-    delete_subtree(root);
-    cout << "Tree destroyed" << endl;
-  };
+  void transplant(Node* u, Node* v) {
+    if (u->parent == nil) {
+      root = v;
+    } else if (u == u->parent->left) {
+      u->parent->left = v;
+    } else {
+      u->parent->right = v;
+    }
+    v->parent = u->parent;
+  }
 
-  Node* get_root() const { return root; };
-  void set_root(Node* new_root) { root = new_root; };
+  void fix_delete(Node* x) {
+    while (x != root && x->color == Color::black) {
+      if (x == x->parent->left) {
+        Node* w = x->parent->right;
+        if (w->color == Color::red) {
+          w->color = Color::black;
+          x->parent->color = Color::red;
+          left_rotate(x->parent);
+          w = x->parent->right;
+        }
+
+        if (w->left->color == Color::black && w->right->color == Color::black) {
+          w->color = Color::red;
+          x = x->parent;
+        } else {
+          if (w->right->color == Color::black) {
+            w->left->color = Color::black;
+            w->color = Color::red;
+            right_rotate(w);
+            w = x->parent->right;
+          }
+          w->color = x->parent->color;
+          x->parent->color = Color::black;
+          w->right->color = Color::black;
+          left_rotate(x->parent);
+          x = root;
+        }
+      } else {
+        Node* w = x->parent->left;
+        if (w->color == Color::red) {
+          w->color = Color::black;
+          x->parent->color = Color::red;
+          right_rotate(x->parent);
+          w = x->parent->left;
+        }
+
+        if (w->right->color == Color::black && w->left->color == Color::black) {
+          w->color = Color::red;
+          x = x->parent;
+        } else {
+          if (w->left->color == Color::black) {
+            w->right->color = Color::black;
+            w->color = Color::red;
+            left_rotate(w);
+            w = x->parent->left;
+          }
+          w->color = x->parent->color;
+          x->parent->color = Color::black;
+          w->left->color = Color::black;
+          right_rotate(x->parent);
+          x = root;
+        }
+      }
+    }
+    x->color = Color::black;
+  }
+
+public:
+  RedBlackTree() {
+    nil = new Node;
+    nil->color = Color::black;
+    nil->left = nil->right = nil->parent = nil;
+    root = nil;
+  }
+
+  ~RedBlackTree() {
+    delete_subtree(root);
+    delete nil;
+  }
+
+  Node* get_root() const { return root; }
+  Node* get_nil() const { return nil; }
 
   void inorder_visit(Node* node) {
-    if (node == nullptr) return;
-
+    if (node == nil) return;
     inorder_visit(node->left);
     node->print();
     inorder_visit(node->right);
-  };
+  }
 
   void preorder_visit(Node* node) {
-    if (node == nullptr) return;
-
+    if (node == nil) return;
     node->print();
     preorder_visit(node->left);
     preorder_visit(node->right);
-  };
+  }
 
   void postorder_visit(Node* node) {
-    if (node == nullptr) return;
-
-    postorder_visit(node->right);
+    if (node == nil) return;
     postorder_visit(node->left);
+    postorder_visit(node->right);
     node->print();
-  };
+  }
 
   Node* tree_search(Node* node, int key) {
-    if (node == nullptr || key == node->key) {
-      return node;
+    while (node != nil && key != node->key) {
+      if (key < node->key)
+        node = node->left;
+      else
+        node = node->right;
     }
-
-    if (key < node->key) {
-      return tree_search(node->left, key);
-    } else {
-      return tree_search(node->right, key);
-    }
-  };
+    return node;
+  }
 
   Node* tree_minimum(Node* node) {
-    while (node->left != nullptr) {
-      node = node->left;
-    }
-
+    while (node->left != nil) node = node->left;
     return node;
-  };
+  }
 
   Node* tree_maximum(Node* node) {
-    while (node->right != nullptr) {
-      node = node->right;
-    }
-
+    while (node->right != nil) node = node->right;
     return node;
-  };
+  }
 
-  Node* tree_successor(Node* node) {
-    if (node->right != nullptr) {
-      return tree_minimum(node->right);
+  void left_rotate(Node* x) {
+    Node* y = x->right;
+    x->right = y->left;
+    if (y->left != nil) y->left->parent = x;
+    y->parent = x->parent;
+    if (x->parent == nil)
+      root = y;
+    else if (x == x->parent->left)
+      x->parent->left = y;
+    else
+      x->parent->right = y;
+    y->left = x;
+    x->parent = y;
+  }
+
+  void right_rotate(Node* x) {
+    Node* y = x->left;
+    x->left = y->right;
+    if (y->right != nil) y->right->parent = x;
+    y->parent = x->parent;
+    if (x->parent == nil)
+      root = y;
+    else if (x == x->parent->right)
+      x->parent->right = y;
+    else
+      x->parent->left = y;
+    y->right = x;
+    x->parent = y;
+  }
+
+  void tree_insert(Node* z) {
+    Node* y = nil;
+    Node* x = root;
+    while (x != nil) {
+      y = x;
+      if (z->key < x->key)
+        x = x->left;
+      else
+        x = x->right;
     }
+    z->parent = y;
+    if (y == nil)
+      root = z;
+    else if (z->key < y->key)
+      y->left = z;
+    else
+      y->right = z;
+    z->left = z->right = nil;
+    z->color = Color::red;
+    fix_insert(z);
+  }
 
-    Node* successor = node->parent;
+  void tree_delete(Node* z) {
+    Node* y = z;
+    Node* x;
+    Color y_original_color = y->color;
 
-    while (successor != nullptr && node == successor->right) {
-      node = successor;
-      successor = successor->parent;
+    if (z->left == nil) {
+      x = z->right;
+      transplant(z, z->right);
+    } else if (z->right == nil) {
+      x = z->left;
+      transplant(z, z->left);
+    } else {
+      y = tree_minimum(z->right);
+      y_original_color = y->color;
+      x = y->right;
+      if (y->parent == z)
+        x->parent = y;
+      else {
+        transplant(y, y->right);
+        y->right = z->right;
+        y->right->parent = y;
+      }
+      transplant(z, y);
+      y->left = z->left;
+      y->left->parent = y;
+      y->color = z->color;
     }
-
-    return successor;
-  };
-
-  Node* tree_predecessor(Node* node) {
-    if (node->left != nullptr) {
-      return tree_maximum(node->left);
-    }
-
-    Node* predecessor = node->parent;
-
-    while (predecessor != nullptr && node == predecessor->left) {
-      node = predecessor;
-      predecessor = predecessor->parent;
-    }
-
-    return predecessor;
-  };
-
-  void print_tree(Node* node, string prefix = "", bool is_left = true) {
-    if (node != nullptr) {
-      cout << prefix;
-
-      cout << (is_left ? "├── " : "└── ");
-      node->print();
-
-      print_tree(node->left, prefix + (is_left ? "│   " : "    "), true);
-
-      print_tree(node->right, prefix + (is_left ? "│   " : "    "), false);
-    }
-  };
+    if (y_original_color == Color::black) fix_delete(x);
+  }
 
   void delete_subtree(Node* node) {
-    if (node == nullptr) return;
-
+    if (node == nil) return;
     delete_subtree(node->left);
     delete_subtree(node->right);
     delete node;
-  };
-
-  void left_rotate(Node* node) {
-    Node* y = node->right;
-    node->right = y->left;
-
-    if (y->left != nullptr) {
-      y->left->parent = node;
-    }
-
-    y->parent = node->parent;
-
-    if (node->parent == nullptr) {
-      root = y;
-    } else if (node == node->parent->left) {
-      node->parent->left = y;
-    } else {
-      node->parent->right = y;
-    }
-
-    y->left = node;
-    node->parent = y;
   }
 
-  void right_rotate(Node* node) {
-    Node* y = node->left;
-    node->left = y->right;
-
-    if (y->right != nullptr) {
-      y->right->parent = node;
-    }
-
-    y->parent = node->parent;
-
-    if (node->parent == nullptr) {
-      root = y;
-    } else if (node == node->parent->left) {
-      node->parent->left = y;
-    } else {
-      node->parent->right = y;
-    }
-
-    y->right = node;
-    node->parent = y;
+  void print_tree(Node* node, string prefix = "", bool is_left = true) {
+    if (node == nil) return;
+    cout << prefix << (is_left ? "├── " : "└── ");
+    node->print();
+    print_tree(node->left, prefix + (is_left ? "│   " : "    "), true);
+    print_tree(node->right, prefix + (is_left ? "│   " : "    "), false);
   }
-
-  void tree_insert(Node* node) {
-    Node* new_parent = nullptr;
-    Node* tracker = root;
-
-    while (tracker != nullptr) {
-      new_parent = tracker;
-
-      if (node->key < tracker->key) {
-        tracker = tracker->left;
-      } else {
-        tracker = tracker->right;
-      }
-    }
-
-    node->parent = new_parent;
-    if (new_parent == nullptr) {
-      root = node;
-    } else if (node->key < new_parent->key) {
-      new_parent->left = node;
-    } else {
-      new_parent->right = node;
-    }
-
-    fix_insert(node);
-  };
 };
 
 #endif

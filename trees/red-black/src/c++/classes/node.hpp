@@ -15,6 +15,7 @@ struct Node {
   Node* parent = nullptr;
   Color color;
 
+  Node() {}
   Node(int key, Node* left = nullptr, Node* right = nullptr, Node* parent = nullptr, Color color = Color::red)
       : key(key), left(left), right(right), parent(parent), color(color) {};
 
