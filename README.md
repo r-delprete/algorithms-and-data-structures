@@ -21,6 +21,7 @@
 - [Fastest way](#fastest-way)
 - [DFA](#dfa)
 - [Optimal Substructure](#optimal-substructure)
+- [P and NP Problems](#p-and-np-problems)
 - [Turing Machine](#turing-machine)
 - [Undecidable Problems and Church's Thesis](#undecidable-problems-and-churchs-thesis)
 
@@ -115,6 +116,10 @@ Located in [tree/red-black folder](trees/red-black/src/c++/)
 ## [Optimal Substructure](optimal-substructure.md)
 
 - Includes an optimal substructure pseudo-code.
+
+## [P and NP Problems](p-np-problems.md)
+
+- Includes definitions about P and NP problems.
 
 ## [Turing Machine](turing-machine.md)
 
