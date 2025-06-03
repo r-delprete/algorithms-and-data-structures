@@ -16,9 +16,13 @@
 
 ### Definizione classi
 
-$P = \{∃x: \{0, 1\}^* : A(x) = 1\}$
+```math
+P = \left\{∃x: \left\{0, 1\right\}^* : A\left(x\right) = 1\right\}
+```
 
-$NP = \{∃x: \{0, 1\}^*, ∃y: |y| = O(|x|ᵏ) : A(x, y) = 1\}$
+```math
+NP = \left\{∃x: \left\{0, 1\right\}^*, ∃y: |y| = O\left(|x|ᵏ\right) : A\left(x, y\right) = 1\right\}
+```
 
 ### Dimostrazione P ⊆ NP
 
@@ -30,14 +34,14 @@ Possiamo concludere dicendo che $P ⊆ NP$.
 
 ### Definizione classe problemi NP-completi
 
-$$
+```math
 \left\{
 \begin{array}{l}
 L ∈ NP \\
 ∀ L' ∈ NPC → L' \leq_p L
 \end{array}
 \right\}
-$$
+```
 
 ### Dimostrazione
 
@@ -54,15 +58,15 @@ Stiamo dicendo che se $L'$ si può calcolare in tempo polinomiale, anche tutti g
 
 ### Definizione classe problemi NP-completi
 
-$$
+```math
 \left\{
 \begin{array}{l}
 L ∈ NP \\
 ∀ L' ∈ NPC → L' \leq_p L
 \end{array}
 \right\}
-$$
+```
 
 ### Dimostrazione
 
-Supponiamo che $∃ L ∈ P$ e $∃ L ∈ NP$. Per qualsiasi $L' ∈ NP$, per definizione, si ha che $L' \leq_p L$. Quindi $L' ∈ P$.
+Supponiamo che $∃ L ∈ P$ e $∃ L ∈ NP$. Per qualsiasi $L' ∈ NP$, per definizione, si ha che $L' \leq_p L$. Quindi $L' ∈ P$
