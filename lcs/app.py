@@ -1,6 +1,6 @@
 from typing import List
 
-def lcs(first_string, second_string):
+def lcs(first_string: str, second_string: str):
   m = len(first_string)
   n = len(second_string)
   dp = [[0] * (n + 1) for _ in range(m + 1)]
