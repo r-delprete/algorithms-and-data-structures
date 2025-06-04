@@ -87,7 +87,7 @@ Located in [tree/red-black folder](trees/red-black/src/c++/)
 
 ## Hash Tables
 
-- Located in `hash-tables/open-addressing` folder.
+- Located in [hash-tables/open-addressing](hash-tables/open-addressing/) folder.
 - Includes [Insert](hash-tables/open-addressing/insert.md), [Delete](hash-tables/open-addressing/delete.md), and [Search](hash-tables/open-addressing/search.md) pseudo-code functions.
 
 ## Knapsack Problem
@@ -101,7 +101,7 @@ Located in [tree/red-black folder](trees/red-black/src/c++/)
   - [Exercises File](lcs/exercises.xlsx)
   - [Python Script](lcs/app.py) for LCS calculation.
 
-## Sorting Algorithms
+## [Sorting Algorithms](sorting-algorithms/)
 
 - Directory with various sorting algorithms.
 

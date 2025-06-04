@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Project compilation
-g++ -std=c++11 -g main.cpp ./classes/node.cpp ./classes/min_priority_queue.cpp -o main
+g++ -std=c++11 main.cpp -o main
 
 # Verify compilation result
 if [ $? -eq 0 ]; then
@@ -10,6 +10,7 @@ if [ $? -eq 0 ]; then
     
     # Run program builded
     ./main
+    echo ""
 else
     echo ""
     echo "Error in compiling!"

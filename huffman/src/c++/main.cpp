@@ -1,7 +1,6 @@
 #include <iostream>
 
-#include "classes/min_priority_queue.hpp"
-#include "classes/node.hpp"
+#include "./classes/min_priority_queue.hpp"
 
 Node huffman(vector<Node> nodes) {
   MinPriorityQueue<Node, CompareNodes> queue(nodes);

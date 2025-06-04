@@ -1,3 +1,10 @@
 {
-  "recommendations": ["ms-vscode.cpptools", "esbenp.prettier-vscode"]
+  "recommendations": [
+    "ms-vscode.cpptools",
+    "esbenp.prettier-vscode",
+    "ms-python.vscode-pylance",
+    "ms-python.python",
+    "ms-python.debugpy",
+    "kevinrose.vsc-python-indent"
+  ]
 }
