@@ -1,12 +1,8 @@
 #include <cstdlib>
 #include <ctime>
-#include <iostream>
 #include <map>
-#include <vector>
 
-#include "classes/edge.hpp"
-#include "classes/graph.hpp"
-#include "classes/node.hpp"
+#include "./classes/graph.hpp"
 
 using namespace std;
 

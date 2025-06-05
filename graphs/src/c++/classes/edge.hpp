@@ -13,7 +13,8 @@ private:
   EdgeTypes type = EdgeTypes::none;
 
 public:
-  Edge(Node source_node, Node destination_node, int weight, EdgeTypes type = EdgeTypes::none);
+  Edge(Node source_node, Node destination_node, int weight, EdgeTypes type = EdgeTypes::none)
+      : source_node(source_node), destination_node(destination_node), weight(weight), type(type) {}
 };
 
 #endif
