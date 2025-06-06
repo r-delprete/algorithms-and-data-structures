@@ -23,11 +23,14 @@ delete(hash_table, element):
     i = 0
     index = h(element, i)
 
-    while hash_table[index] != NIL and i < size:
-        if hash_table[index] != '#' and hash_table[index].key == element:
-            hash_table[index] = '#'
+    while i < size:
+        if hash_table[index] == NIL:
+            return NIL
 
+        if hash_table[index] == element:
+            hash_table[index] = '#'
             return 'element deleted'
+
 
         i++
         index = h(element, i)

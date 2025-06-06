@@ -12,6 +12,7 @@ This is the hash table _open addressing_ **insert** function pseudo-code
 Returns:
 
 - `overflow` if element cannot be inserted
+- `NIL` if element already exists
 - _inserted element index_ if it has added successfully.
 
 ## Pseudo-code
@@ -23,9 +24,12 @@ insert(hash_table, element):
 
     while i < size:
         index = h(element, i)
+
+        if hash_table[index] == element:
+            return NIL
+
         if hash_table[index] == NIL:
             hash_table[index] = element
-
             return index
 
         i++
