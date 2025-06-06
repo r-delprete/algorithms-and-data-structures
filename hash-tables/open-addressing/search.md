@@ -20,10 +20,13 @@ Returns:
 search(hash_table, element):
     size = length(hash_table)
     i = 0
-    index = 0
 
-    while i < size or hash_table[index] != NIL:
+    while i < size:
         index = h(element, i)
+
+        if hash_table[index] == NIL:
+            return NIL
+
         if hash_table[index] == element:
             return index
 
