@@ -21,9 +21,10 @@ Returns:
 delete(hash_table, element):
     size = length(hash_table)
     i = 0
-    index = h(element, i)
 
     while i < size:
+        index = h(element, i)
+
         if hash_table[index] == NIL:
             return NIL
 
@@ -33,7 +34,6 @@ delete(hash_table, element):
 
 
         i++
-        index = h(element, i)
 
     return NIL
 ```
