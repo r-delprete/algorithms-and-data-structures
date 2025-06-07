@@ -1,7 +1,7 @@
 # Macchina di Turing
 
 La **macchina di Turing** è un automa a stati finiti con nastro infinito su cui si può leggere e scrivere dati.
-Viene definita dalla settupla $M = (Q, \Sigma, \Gamma, \delta, q_0, \beta, F)$:
+Viene definita dalla settupla $M = \left(Q, \Sigma, \Gamma, \delta, q_0, \beta, F\right)$:
 
 - $Q$: insieme finito degli stati del controllo
 - $\Sigma$: insieme finito dei simboli in input
