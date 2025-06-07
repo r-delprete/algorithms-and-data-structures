@@ -31,8 +31,8 @@ F(x, y, memo):
         return memo[x][y]
 
     val1 = F(x - 1, y - 1, memo) + 1
-    val2 = F(x - 1, y)
-    val3 = F(x, y - 1)
+    val2 = F(x - 1, y, memo)
+    val3 = F(x, y - 1, memo)
 
     result = max(val1, val2, val3)
 
