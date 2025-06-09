@@ -1,6 +1,6 @@
 # Assignment description
 
-Dato un grafo orientato G = (V, E) ed un intero K appartenente $R^+$
+Dato un grafo orientato $G = (V, E)$ ed un intero $K$ appartenente $R^+$
 si scriva un algoritmo in pseudo-codice
 che restituisca la lista degli archi in avanti del grafo
 
@@ -33,7 +33,7 @@ dfs(graph, K):
     return forward_edges
 
 dfs_visit(node, K, forward_edges):
-    node.color = white
+    node.color = gray
     time += 1
     node.distance = time
 

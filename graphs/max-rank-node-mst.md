@@ -18,7 +18,7 @@ Return the maximum rank node in MST
 ## Pseudo-codice
 
 ```
-prim (graph, source, weights):
+prim(graph, source, weights):
     for node in graph.nodes:
         node.predecessor = NIL
         node.key = ∞

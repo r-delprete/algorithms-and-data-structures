@@ -23,7 +23,7 @@ dfs (graph):                                        // DFS function that compute
     stack = ∅                                       // Initialize a new stack to store nodes
 
     for node in graph.nodes:                        // Iterate over all nodes in the graph
-        node.predecessor = NIL                           // Set the predecessor of each node to NIL
+        node.predecessor = NIL                      // Set the predecessor of each node to NIL
         node.distance = 0                           // Initialize discovery time to 0
         node.color = white                          // Set all nodes as unvisited (white)
 
@@ -92,7 +92,5 @@ create_t_graph(graph):                              // Function to create transp
 ### _Notes_
 
 - `scc_list`: all SCC
-- `scc`: representing the current strongly connected component
-  being constructed. Nodes added to this list are part of
-  the same SCC
+- `scc`: representing the current strongly connected component being constructed. Nodes added to this list are part ofthe same SCC
 - `t_graph`: transposed graph (graph with reversed edges)

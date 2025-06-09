@@ -13,7 +13,7 @@
 ```
 prim(graph, source, weights):
     for node in graph.nodes:
-        node.key = inf
+        node.key = ∞
         node.predecessor = NIL
 
     source.key = 0

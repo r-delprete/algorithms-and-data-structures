@@ -17,10 +17,12 @@ Returns `true` if in input graph there's an Hamiltonian cycle, `false` otherwise
 hamiltonian_cycle(graph):
     path = ∅
 
-    for node in graph.nodes
+    for node in graph.nodes:
         path = path ∪ node
+
         if recursive_hamiltonian_cycle(graph, path, node):
             return true
+
         path.pop_last()   // Backtracking: delete last element in list
 
     return false
@@ -28,6 +30,7 @@ hamiltonian_cycle(graph):
 recursive_hamiltonian_cycle(graph, path, current_node):
     if length(path) = length(graph.nodes):    // if path contains all graph vertices, it verifies if cycle can be closed
         first = path[0]
+
         if (current_node, first) ∈ graph.edges:
             return true     // Hamiltonian cycle
 
@@ -37,6 +40,7 @@ recursive_hamiltonian_cycle(graph, path, current_node):
     for adj_node in current_node.adj:
         if adj_node ∉ path:
             path = path ∪ adj_node
+
             if recursive_hamiltonian_cycle(graph, path, adj_node):
                 return true
 
