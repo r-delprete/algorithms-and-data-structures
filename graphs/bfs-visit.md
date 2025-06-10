@@ -11,7 +11,7 @@
 bfs(graph, source):
     for node in (graph.nodes - source):
         node.color = white
-        node.d = inf
+        node.d = ∞
         node.predecessor = NIL
 
     source.color = gray

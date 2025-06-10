@@ -50,7 +50,7 @@ This function initializes the distances and predecessors for all nodes in the gr
 initialize_single_source(graph, source):
     for node in (graph.nodes - source):
         node.predecessor = NIL
-        node.d = inf
+        node.d = ∞
 
     source.predecessor = NIL
     source.d = 0
