@@ -80,11 +80,10 @@ create_t_graph(graph):                              // Function to create transp
     t_graph = new graph();
 
     for node in graph.nodes:
-        t_graph.nodes.push(node);                   // Nodes copy into transposed graph
+        t_graph.nodes.insert(node);                   // Nodes copy into transposed graph
 
-    for node in graph.nodes:
-        for adj_node in node.adj:
-            t_graph.edges.push((adj_node, node));   // Reverse edge
+    for (node1, node2) in graph.edges:
+        t_graph.edges.insert((node2, node1));   // Reverse edge
 
     return t_graph;
 ```
