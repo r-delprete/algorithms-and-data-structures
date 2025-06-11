@@ -17,11 +17,11 @@
 ### Definizione classi
 
 ```math
-P = \left\{\exist x: \left\{0, 1\right\}^* : A\left(x\right) = 1\right\}
+P = \left\{\exists x: \left\{0, 1\right\}^* : A\left(x\right) = 1\right\}
 ```
 
 ```math
-NP = \left\{\exist x: \left\{0, 1\right\}^*, \exist y: |y| = O\left(|x|^k\right) : A\left(x, y\right) = 1\right\}
+NP = \left\{\exists x: \left\{0, 1\right\}^*, \exists y: |y| = O\left(|x|^k\right) : A\left(x, y\right) = 1\right\}
 ```
 
 ### Dimostrazione P ⊆ NP
@@ -45,12 +45,12 @@ L \in NP \\
 
 ### Dimostrazione
 
-Supponiamo che il linguaggio $L \notin P$, ciò implica che $L$ non è calcolabile in tempo polinomiale. Vogliamo dimostrare che gli altri problemi $L' \in NP → \exist L' \notin P$.
+Supponiamo che il linguaggio $L \notin P$, ciò implica che $L$ non è calcolabile in tempo polinomiale. Vogliamo dimostrare che gli altri problemi $L' \in NP → \exists L' \notin P$.
 Se ne trovo uno non calcolabile in tempo polinomiale, allora tutti gli altri della stessa classe non sono risolvibili in tempo polinomiale.
 
-Supponiamo che $\exist L \notin P$.
+Supponiamo che $\exists L \notin P$.
 
-Supponiamo, per assurdo, che $\exist L' \in NP$ e $\exist L' \in P$, ossia supponiamo che esista un linguaggio $L'$ risolvibile in tempo polinomiale. Questo comporta che se $L' \in P$ e $L' \in NP$, allora oer definizione tutti gli altri problemi $L \in NP$ sono $L \leq_p L'$ e quindi $L' \in P$ ma anche $L \in P$.
+Supponiamo, per assurdo, che $\exists L' \in NP$ e $\exists L' \in P$, ossia supponiamo che esista un linguaggio $L'$ risolvibile in tempo polinomiale. Questo comporta che se $L' \in P$ e $L' \in NP$, allora oer definizione tutti gli altri problemi $L \in NP$ sono $L \leq_p L'$ e quindi $L' \in P$ ma anche $L \in P$.
 
 Stiamo dicendo che se $L'$ si può calcolare in tempo polinomiale, anche tutti gli altri problemi possono essere calcolati in tempo polinomiale. Ciò significa che $L$, la quale abbiamo supposto che non appartenga alla classe dei problemi $P$, è riducibile in tempo polinomiale a $L'$, per cui ci appartiene. Quindi, questo è un assurdo e $L \in P$.
 
@@ -69,4 +69,4 @@ L \in NP \\
 
 ### Dimostrazione
 
-Supponiamo che $\exist L \in P$ e $\exist L \in NP$. Per qualsiasi $L' \in NP$, per definizione, si ha che $L' \leq_p L$. Quindi $L' \in P$
+Supponiamo che $\exists L \in P$ e $\exists L \in NP$. Per qualsiasi $L' \in NP$, per definizione, si ha che $L' \leq_p L$. Quindi $L' \in P$
