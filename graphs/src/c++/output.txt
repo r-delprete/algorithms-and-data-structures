@@ -1,0 +1,5 @@
+Node: 0 (predecessor: NULL), distance: 0
+Node: 1 (predecessor: 0, distance: 1), distance: 1
+Node: 2 (predecessor: 0, distance: 1), distance: 1
+Node: 3 (predecessor: 1, distance: 2), distance: 2
+Node: 4 (predecessor: 1, distance: 2), distance: 2

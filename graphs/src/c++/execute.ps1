@@ -1,5 +1,5 @@
 # Project compilation
-g++ -std=c++11 -g main.cpp -o main.exe
+g++ -std=c++11 main.cpp -o main.exe
 
 # Verify compilation result
 if ($?) {

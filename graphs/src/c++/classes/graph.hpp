@@ -1,95 +1,184 @@
 #ifndef GRAPH_HPP
 #define GRAPH_HPP
 
-#include <climits>
+#include <fstream>
+#include <iostream>
+#include <queue>
 
-#include "edge.hpp"
-#include "node.hpp"
-
-using namespace std;
+#include "./edge.hpp"
 
 class Graph {
 private:
-  vector<Node> nodes;
-  int time = 0;
-  int loops;
-  int cycles;
-  map<EdgeTypes, int> edges_type_count;
-  vector<Edge> edges;
+  std::vector<Node*> nodes;
+  std::vector<Edge*> edges;
+  int tot_nodes, tot_edges;
 
-  void make_set(Node& node) {
-    node.set_parent(&node);
-    node.set_rank(0);
-  }
-
-  Node* find_set(Node& node) {
-    if (node.get_parent() != &node) {
-      node.set_parent(find_set(*node.get_parent()));
-    }
-
-    return node.get_parent();
-  }
-
-  void do_union(Node& node1, Node& node2) {
-    Node* root1 = find_set(node1);
-    Node* root2 = find_set(node2);
-
-    if (root1 != root2) {
-      if (root1->get_rank() < root2->get_rank()) {
-        root1->set_parent(root2);
-      } else if (root2->get_rank() < root1->get_rank()) {
-        root2->set_parent(root1);
-      } else if (root1->get_rank() == root2->get_rank()) {
-        root2->set_parent(root1);
-        root1->set_key(root1->get_key() + 1);
-      }
-    }
-  }
-
-  void dfs_visit(Node& node) {
-    ++time;
-
-    node.set_color(Color::gray);
-    node.set_distance(time);
-
-    for (Node* adj_node : node.get_adjacency_list()) {
-      if (adj_node->get_color() == Color::white) {
-        adj_node->set_parent(&node);
-        dfs_visit(*adj_node);
-      }
-    }
-
-    ++time;
-    node.set_color(Color::black);
-    node.set_end_visit(time);
-  }
+  struct CompareNodes {
+    bool operator()(Node* node1, Node* node2) { return node1->distance > node2->distance; }
+  };
 
 public:
-  // Constructor
-  Graph(vector<Node> nodes, vector<Edge> edges = {}) : nodes(nodes), edges(edges) {}
+  Graph(std::ifstream& input_file) {
+    input_file >> tot_nodes >> tot_edges;
 
-  // Getter
-  /**
-   * Function to get graph nodes
-   * @return Graph nodes
-   */
-  vector<Node> get_nodes() { return nodes; }
+    for (int i = 0; i < tot_nodes; i++) insert_node(new Node(i));
 
-  /**
-   * Function to do DFS visit
-   */
-  void dfs() {
-    for (Node& node : nodes) {
-      node.set_parent(nullptr);
-      node.set_distance(INT_MAX);
-      node.set_end_visit(INT_MAX);
+    for (int i = 0; i < tot_edges; i++) {
+      int node1, node2, weight;
+      input_file >> node1 >> node2 >> weight;
+
+      Node* src = get_node(node1);
+      Node* dest = get_node(node2);
+
+      if (src && dest)
+        insert_edge(new Edge(src, dest, weight));
+      else
+        std::cerr << "Cannot add edge because node " << node1 << " and/or " << node2 << " doesn't exists" << std::endl;
     }
 
-    for (Node& node : nodes) {
-      if (node.get_color() == Color::white) {
-        dfs_visit(node);
+    input_file.close();
+  }
+  void insert_node(Node* node) {
+    nodes.push_back(node);
+    if (nodes.size() > tot_nodes) tot_nodes = nodes.size();
+  }
+
+  Node* get_node(int data) {
+    for (auto& node : nodes) {
+      if (node->data == data) return node;
+    }
+
+    return nullptr;
+  }
+
+  void insert_edge(Edge* edge) {
+    edges.push_back(edge);
+
+    edge->src->adj.push_back(edge->dest);
+    edge->dest->adj.push_back(edge->src);
+
+    if (edges.size() > tot_edges) tot_edges = edges.size();
+  }
+
+  Edge* get_edge(Node* node1, Node* node2) {
+    for (auto& edge : edges) {
+      if ((edge->src == node1 && edge->dest == node2) || (edge->src == node2 && edge->dest == node1)) return edge;
+    }
+
+    return nullptr;
+  }
+
+  void bfs(Node* src, std::ofstream& out) {
+    for (auto& node : nodes) {
+      node->color = Color::white;
+      node->distance = INT_MAX;
+      node->predecessor = nullptr;
+    }
+
+    src->color = Color::gray;
+    src->distance = 0;
+    src->predecessor = nullptr;
+
+    std::queue<Node*> q;
+    q.push(src);
+
+    while (!q.empty()) {
+      Node* node = q.front();
+      q.pop();
+
+      for (auto& adj_node : node->adj) {
+        if (adj_node->color == Color::white) {
+          adj_node->predecessor = node;
+          adj_node->distance = node->distance + 1;
+          adj_node->color = Color::gray;
+          q.push(adj_node);
+        }
+      }
+
+      node->color = Color::black;
+    }
+
+    for (auto& node : nodes) {
+      node->predecessor
+          ? out << "Node: " << node->data << " (predecessor: " << node->predecessor->data
+                << ", distance: " << node->distance << "), distance: " << node->distance << std::endl
+          : out << "Node: " << node->data << " (predecessor: NULL), distance: " << node->distance << std::endl;
+    }
+    out.close();
+  }
+
+  void prim(Node* src) {
+    for (auto& node : nodes) {
+      node->predecessor = nullptr;
+      node->distance = INT_MAX;
+    }
+
+    src->distance = 0;
+    std::vector<bool> in_mst(tot_nodes, false);
+    std::priority_queue<Node*, std::vector<Node*>, CompareNodes> pq;
+    pq.push(src);
+
+    while (!pq.empty()) {
+      Node* node = pq.top();
+      pq.pop();
+      in_mst[node->data] = true;
+
+      for (auto& adj_node : node->adj) {
+        Edge* edge = get_edge(node, adj_node);
+
+        if (!in_mst[adj_node->data] && adj_node->distance > edge->weight) {
+          adj_node->distance = edge->weight;
+          adj_node->predecessor = node;
+          pq.push(adj_node);
+        }
       }
     }
+  }
+
+  void print_mst() {
+    std::cout << std::endl << "Minimum Spanning Tree" << std::endl;
+    for (auto& node : nodes) {
+      node->predecessor
+          ? std::cout << "Node: " << node->data << " (predecessor: " << node->predecessor->data
+                      << ", distance: " << node->distance << "), distance: " << node->distance << std::endl
+          : std::cout << "Node: " << node->data << " (predecessor: NULL), distance: " << node->distance << std::endl;
+    }
+  }
+
+  bool is_binary() {
+    for (auto& node : nodes) {
+      int children = 0;
+
+      for (auto& adj_node : node->adj) {
+        if (adj_node != node->predecessor) {
+          children++;
+        }
+      }
+
+      if (children > 2) return false;
+    }
+
+    return true;
+  }
+
+  bool is_complete_binary() {
+    bool is_leaf = false;
+
+    for (auto& node : nodes) {
+      std::vector<Node*> children;
+
+      for (auto& adj_node : node->adj) {
+        if (adj_node != node->predecessor) {
+          children.push_back(adj_node);
+        }
+      }
+
+      if (children.size() < 2) is_leaf = true;
+
+      if (is_leaf && !children.empty()) return false;
+    }
+
+    return true;
   }
 };
 
