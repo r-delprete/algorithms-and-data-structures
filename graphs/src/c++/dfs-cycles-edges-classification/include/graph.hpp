@@ -13,12 +13,13 @@ private:
   std::vector<Edge*> edges;
   int tot_nodes, tot_edges, time, cycles_count;
 
-  void dfs_visit(Node* node, std::vector<Node*> path) {
+  void dfs_visit(Node* node, std::vector<Node*>& path) {
     node->set_color(Color::gray);
-    path.push_back(node);
 
-    time += 1;
+    time++;
     node->set_start_discovery(time);
+
+    path.push_back(node);
 
     for (auto& adj : node->get_adj_list()) {
       Edge* edge = get_edge(node, adj);
@@ -50,14 +51,15 @@ private:
       }
     }
 
-    time += 1;
+    time++;
     node->set_end_visit(time);
     node->set_color(Color::black);
+
     path.pop_back();
   }
 
 public:
-  Graph(std::ifstream& input_file) {
+  Graph(std::ifstream& input_file) : time(0) {
     input_file >> tot_nodes >> tot_edges;
 
     for (int i = 0; i < tot_nodes; i++) insert_node(new Node(i));
@@ -106,7 +108,6 @@ public:
     edges.push_back(edge);
 
     edge->get_source()->add_adjacent(edge->get_destination());
-    edge->get_destination()->add_adjacent(edge->get_source());
 
     if (edges.size() > tot_edges) tot_edges = edges.size();
   }

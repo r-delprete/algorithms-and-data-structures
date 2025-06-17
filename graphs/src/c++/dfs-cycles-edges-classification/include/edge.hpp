@@ -16,7 +16,7 @@ private:
   EdgeType type;
 
 public:
-  Edge(Node* src, Node* dest, int weight) : src(src), dest(dest), weight(weight) {}
+  Edge(Node* src, Node* dest, int weight) : src(src), dest(dest), weight(weight), type(EdgeType::tree) {}
 
   Node* get_source() { return src; }
   Node* get_destination() { return dest; }
@@ -37,6 +37,7 @@ public:
         return "forward edge";
         break;
       default:
+        return "";
         break;
     }
   }
@@ -47,8 +48,8 @@ public:
   void set_type(EdgeType new_type) { type = new_type; }
 
   void print() {
-    std::cout << "(src: " << src->get_data() << " -> dest: " << dest->get_data() << "), weight: " << weight
-              << std::endl;
+    std::cout << "(src: " << src->get_data() << " -> dest: " << dest->get_data() << ") - weight: " << weight
+              << " - type: " << print_type() << std::endl;
   }
 };
 
