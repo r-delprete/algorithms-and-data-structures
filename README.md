@@ -10,6 +10,7 @@
   - [Python](#python)
 - [🚀 Projects](#-projects)
   - [Graph](#graph)
+  - [Open Addressing Hash Tables](#open-addressing-hash-tables)
   - [Huffman Coding](#huffman-coding)
   - [Max Heap](#max-heap)
   - [Binary Search Tree](#binary-search-tree)
@@ -49,6 +50,13 @@
   - **macOS/Linux**: Execute with `./execute.sh`.
 
 - **Pseudo-codes**: Contains various graph-related pseudo-codes.
+
+### Open Addressing Hash Tables
+
+- **C++ Project**:
+
+  - **Windows**: Execute with `./execute.ps1`.
+  - **macOS/Linux**: Execute with `./execute.sh`.
 
 ### Huffman Coding
 
