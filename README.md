@@ -12,8 +12,11 @@
   - [Graph](#graph)
     - [Python Project](#python-project)
     - [C++ projects](#c-projects)
-  - [Open Addressing Hash Tables](#open-addressing-hash-tables)
-    - [C++ Project](#c-project)
+      - [BFS with MST and check if BF tree is complete binary and if MST is binary](#bfs-with-mst-and-check-if-bf-tree-is-complete-binary-and-if-mst-is-binary)
+      - [DFS with cycles count and edges classification](#dfs-with-cycles-count-and-edges-classification)
+  - [Hash Tables](#hash-tables)
+    - [Open Addressing](#open-addressing)
+      - [C++ Project](#c-project)
   - [Huffman Coding](#huffman-coding)
     - [Python Project](#python-project-1)
     - [C++ Project](#c-project-1)
@@ -26,13 +29,16 @@
   - [Red-Black Tree](#red-black-tree)
     - [C++ Project](#c-project-4)
 - [📄 Pseudo-codes](#-pseudo-codes)
-  - [Hash tables](#hash-tables)
-    - [Open Addressing](#open-addressing)
+  - [Graphs](#graphs)
+  - [Hash tables](#hash-tables-1)
+    - [Open Addressing](#open-addressing-1)
+  - [Huffman](#huffman)
   - [Knapsack Problem](#knapsack-problem)
   - [LCS – Longest Common Subsequence](#lcs--longest-common-subsequence)
   - [Sorting Algorithms](#sorting-algorithms)
   - [Fastest way](#fastest-way)
   - [Optimal Substructure](#optimal-substructure)
+  - [SJF – Shortest Job First](#sjf--shortest-job-first)
 - [📗 Theory definitions](#-theory-definitions)
   - [DFA](#dfa)
   - [P and NP Problems](#p-and-np-problems)
@@ -62,18 +68,21 @@ Run with `python3 app.py`.
 
 #### [C++ projects](graphs/src/c++)
 
-1. **[BFS with MST and check if BF tree is complete binary and if MST is binary](graphs/src/c++/bfs-prim-binary-complete-binary/)**:
-   - **Windows**: Execute with `./execute.ps1`.
-   - **macOS/Linux**: Execute with `./execute.sh`.
-2. **[DFS with cycles count and edges classification](graphs/src/c++/dfs-cycles-edges-classification/)**:
-   - **Windows**: Execute with `./execute.ps1`.
-   - **macOS/Linux**: Execute with `./execute.sh`.
+##### [BFS with MST and check if BF tree is complete binary and if MST is binary](graphs/src/c++/bfs-prim-binary-complete-binary/)
 
-- **Pseudo-codes**: Contains various graph-related pseudo-codes.
+- **Windows**: Execute with `./execute.ps1`.
+- **macOS/Linux**: Execute with `./execute.sh`.
 
-### [Open Addressing Hash Tables](hash-tables/open-addressing/src/)
+##### [DFS with cycles count and edges classification](graphs/src/c++/dfs-cycles-edges-classification/)
 
-#### [C++ Project](hash-tables/open-addressing/src/c++)
+- **Windows**: Execute with `./execute.ps1`.
+- **macOS/Linux**: Execute with `./execute.sh`.
+
+### Hash Tables
+
+#### [Open Addressing](hash-tables/open-addressing/src/)
+
+##### [C++ Project](hash-tables/open-addressing/src/c++)
 
 - **Windows**: Execute with `./execute.ps1`.
 - **macOS/Linux**: Execute with `./execute.sh`.
@@ -118,11 +127,19 @@ Run with `python3 app.py`.
 
 ## 📄 Pseudo-codes
 
-### Hash tables
+### [Graphs](graphs/)
+
+- Contains various graph-related pseudo-codes.
+
+### [Hash tables](hash-tables/)
 
 #### [Open Addressing](hash-tables/open-addressing/)
 
-- Includes [Insert](hash-tables/open-addressing/insert.md), [Delete](hash-tables/open-addressing/delete.md), and [Search](hash-tables/open-addressing/search.md) pseudo-code functions.
+- Includes [insert](hash-tables/open-addressing/insert.md), [delete](hash-tables/open-addressing/delete.md), and [search](hash-tables/open-addressing/search.md) pseudo-codes functions.
+
+### [Huffman](huffman/)
+
+- Contains [huffman pseudo-code](huffman/pseudo.md).
 
 ### [Knapsack Problem](knapsack-problem/)
 
@@ -130,9 +147,7 @@ Run with `python3 app.py`.
 
 ### [LCS – Longest Common Subsequence](lcs/)
 
-Contains:
-
-- [Exercises File](lcs/exercises.xlsx)
+- Contains [exercises File](lcs/exercises.xlsx)
 
 ### [Sorting Algorithms](sorting-algorithms/)
 
@@ -145,6 +160,10 @@ Contains:
 ### [Optimal Substructure](optimal-substructure.md)
 
 - Includes an optimal substructure pseudo-code.
+
+### [SJF – Shortest Job First](sjf.md)
+
+- Includes _SJF (Shortest Job First_) pseudo-code.
 
 ## 📗 Theory definitions
 
