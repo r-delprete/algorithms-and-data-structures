@@ -27,15 +27,14 @@ public:
   void set_left(Node* left) { left = left; }
   void set_right(Node* right) { right = right; }
 
-  // string get_node(int level = 0) {
-  //   string indent(level * 2, ' ');
-  //   string left = (left_child != nullptr) ? "\n" + indent + "├─ Left: " + left_child->get_node(level + 1) : "";
-  //   string right = (right_child != nullptr) ? "\n" + indent + "└─ Right: " + right_child->get_node(level + 1) : "";
+  string get_node(int level = 0) {
+    string indent(level * 2, ' ');
+    string left_str = (left != nullptr) ? "\n" + indent + "├─ Left: " + left->get_node(level + 1) : "";
+    string right_str = (right != nullptr) ? "\n" + indent + "└─ Right: " + right->get_node(level + 1) : "";
 
-  //   return indent + (symbol != '\0' ? "symbol: " + symbol + " - " : "") + "frequency: " + to_string(frequency) + left
-  //   +
-  //          right;
-  // }
+    return indent + (symbol != '\0' ? "symbol: " + string(1, symbol) + " - " : "") +
+           "frequency: " + to_string(frequency) + left_str + right_str;
+  }
 
   bool operator<(Node& other) { return frequency < other.frequency; }
 
