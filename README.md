@@ -10,21 +10,34 @@
   - [Python](#python)
 - [🚀 Projects](#-projects)
   - [Graph](#graph)
+    - [Python Project](#python-project)
+    - [C++ projects](#c-projects)
   - [Open Addressing Hash Tables](#open-addressing-hash-tables)
+    - [C++ Project](#c-project)
   - [Huffman Coding](#huffman-coding)
+    - [Python Project](#python-project-1)
+    - [C++ Project](#c-project-1)
   - [Max Heap](#max-heap)
+    - [C++ Project](#c-project-2)
+  - [LCS – Longest Common Sequence](#lcs--longest-common-sequence)
+    - [Python Project](#python-project-2)
   - [Binary Search Tree](#binary-search-tree)
+    - [C++ Project](#c-project-3)
   - [Red-Black Tree](#red-black-tree)
-- [Hash Tables](#hash-tables)
-- [Knapsack Problem](#knapsack-problem)
-- [LCS (Longest Common Subsequence)](#lcs-longest-common-subsequence)
-- [Sorting Algorithms](#sorting-algorithms)
-- [Fastest way](#fastest-way)
-- [DFA](#dfa)
-- [Optimal Substructure](#optimal-substructure)
-- [P and NP Problems](#p-and-np-problems)
-- [Turing Machine](#turing-machine)
-- [Undecidable Problems and Church's Thesis](#undecidable-problems-and-churchs-thesis)
+    - [C++ Project](#c-project-4)
+- [📄 Pseudo-codes](#-pseudo-codes)
+  - [Hash tables](#hash-tables)
+    - [Open Addressing](#open-addressing)
+  - [Knapsack Problem](#knapsack-problem)
+  - [LCS – Longest Common Subsequence](#lcs--longest-common-subsequence)
+  - [Sorting Algorithms](#sorting-algorithms)
+  - [Fastest way](#fastest-way)
+  - [Optimal Substructure](#optimal-substructure)
+- [📗 Theory definitions](#-theory-definitions)
+  - [DFA](#dfa)
+  - [P and NP Problems](#p-and-np-problems)
+  - [Turing Machine](#turing-machine)
+  - [Undecidable Problems and Church's Thesis](#undecidable-problems-and-churchs-thesis)
 
 ## 💻 Built with
 
@@ -41,98 +54,112 @@
 
 ## 🚀 Projects
 
-### Graph
+### [Graph](graphs/src/)
 
-- **Python Project**: Run with `python3 app.py`.
-- **C++ Project**:
+#### [Python Project](graphs/src/python/)
 
-  - **Windows**: Execute with `./execute.ps1`.
-  - **macOS/Linux**: Execute with `./execute.sh`.
+Run with `python3 app.py`.
+
+#### [C++ projects](graphs/src/c++)
+
+1. **[BFS with MST and check if BF tree is complete binary and if MST is binary](graphs/src/c++/bfs-prim-binary-complete-binary/)**:
+   - **Windows**: Execute with `./execute.ps1`.
+   - **macOS/Linux**: Execute with `./execute.sh`.
+2. **[DFS with cycles count and edges classification](graphs/src/c++/dfs-cycles-edges-classification/)**:
+   - **Windows**: Execute with `./execute.ps1`.
+   - **macOS/Linux**: Execute with `./execute.sh`.
 
 - **Pseudo-codes**: Contains various graph-related pseudo-codes.
 
-### Open Addressing Hash Tables
+### [Open Addressing Hash Tables](hash-tables/open-addressing/src/)
 
-- **C++ Project**:
+#### [C++ Project](hash-tables/open-addressing/src/c++)
 
-  - **Windows**: Execute with `./execute.ps1`.
-  - **macOS/Linux**: Execute with `./execute.sh`.
+- **Windows**: Execute with `./execute.ps1`.
+- **macOS/Linux**: Execute with `./execute.sh`.
 
-### Huffman Coding
+### [Huffman Coding](huffman/src/)
 
-- **Python Project**: Run with `python3 huffman.py`.
-- **C++ Project**:
+#### [Python Project](huffman/src/python/)
 
-  - **Windows**: Execute with `./execute.ps1`.
-  - **macOS/Linux**: Execute with `./execute.sh`.
+Run with `python3 huffman.py`.
 
-### Max Heap
+#### [C++ Project](huffman/src/c++/)
 
-Located in [max-heap folder](heap/src/c++/max-heap)
+- **Windows**: Execute with `./execute.ps1`.
+- **macOS/Linux**: Execute with `./execute.sh`.
 
-- **C++ Project**:
+### [Max Heap](heap/src/c++/max-heap)
 
-  - **Windows**: Execute with `./execute.ps1`.
-  - **macOS/Linux**: Execute with `./execute.sh`.
+#### C++ Project
 
-### Binary Search Tree
+- **Windows**: Execute with `./execute.ps1`.
+- **macOS/Linux**: Execute with `./execute.sh`.
 
-Located in [tree/binary-search-tree folder](trees/binary-search-tree/src/c++/)
+### [LCS – Longest Common Sequence](lcs/)
 
-- **C++ Project**:
+#### Python Project
 
-  - **Windows**: Execute with `./execute.ps1`.
-  - **macOS/Linux**: Execute with `./execute.sh`.
+Run with `python3 app.py`.
 
-### Red-Black Tree
+### [Binary Search Tree](trees/binary-search-tree/src/)
 
-Located in [tree/red-black folder](trees/red-black/src/c++/)
+#### [C++ Project](trees/binary-search-tree/src/c++/)
 
-- **C++ Project**:
+- **Windows**: Execute with `./execute.ps1`.
+- **macOS/Linux**: Execute with `./execute.sh`.
 
-  - **Windows**: Execute with `./execute.ps1`.
-  - **macOS/Linux**: Execute with `./execute.sh`.
+### [Red-Black Tree](trees/red-black/src/)
 
-## Hash Tables
+#### [C++ Project](trees/red-black/src/c++/)
 
-- Located in [hash-tables/open-addressing](hash-tables/open-addressing/) folder.
+- **Windows**: Execute with `./execute.ps1`.
+- **macOS/Linux**: Execute with `./execute.sh`.
+
+## 📄 Pseudo-codes
+
+### Hash tables
+
+#### [Open Addressing](hash-tables/open-addressing/)
+
 - Includes [Insert](hash-tables/open-addressing/insert.md), [Delete](hash-tables/open-addressing/delete.md), and [Search](hash-tables/open-addressing/search.md) pseudo-code functions.
 
-## Knapsack Problem
+### [Knapsack Problem](knapsack-problem/)
 
 - Includes [0/1 Problem](knapsack-problem/01.md) and [Fractional Problem](knapsack-problem/fractional.md) pseudo-code.
 
-## LCS (Longest Common Subsequence)
+### [LCS – Longest Common Subsequence](lcs/)
 
-- Contains:
+Contains:
 
-  - [Exercises File](lcs/exercises.xlsx)
-  - [Python Script](lcs/app.py) for LCS calculation.
+- [Exercises File](lcs/exercises.xlsx)
 
-## [Sorting Algorithms](sorting-algorithms/)
+### [Sorting Algorithms](sorting-algorithms/)
 
 - Directory with various sorting algorithms.
 
-## [Fastest way](fastest-way.md)
+### [Fastest way](fastest-way.md)
 
 - Contains the Fastest way algorithm pseudo-code.
 
-## [DFA](DFA.md)
-
-- Definition and explanation of DFA.
-
-## [Optimal Substructure](optimal-substructure.md)
+### [Optimal Substructure](optimal-substructure.md)
 
 - Includes an optimal substructure pseudo-code.
 
-## [P and NP Problems](p-np-problems.md)
+## 📗 Theory definitions
+
+### [DFA](DFA.md)
+
+- Definition and explanation of DFA.
+
+### [P and NP Problems](p-np-problems.md)
 
 - Includes definitions about P and NP problems.
 
-## [Turing Machine](turing-machine.md)
+### [Turing Machine](turing-machine.md)
 
 - Definition and explanation of Turing Machines.
 
-## [Undecidable Problems and Church's Thesis](undecidable-problem-and-church-thesis.md)
+### [Undecidable Problems and Church's Thesis](undecidable-problem-and-church-thesis.md)
 
 - Definitions of undecidable problems and Church's Thesis.
