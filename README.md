@@ -88,9 +88,9 @@ Run with `python3 app.py`.
 
 ### Hash Tables
 
-#### [Concatenation](hash-tables/concatenation/src/)
+#### [Concatenation](hash-tables/chaining/src/)
 
-##### [C++ Project](hash-tables/concatenation/src/c++)
+##### [C++ Project](hash-tables/chaining/src/c++)
 
 - **Windows**: Execute with `./execute.ps1`.
 - **macOS/Linux**: Execute with `./execute.sh`.
