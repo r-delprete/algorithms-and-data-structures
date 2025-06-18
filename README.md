@@ -16,19 +16,21 @@
       - [DFS with cycles count and edges classification](#dfs-with-cycles-count-and-edges-classification)
       - [Topological order](#topological-order)
   - [Hash Tables](#hash-tables)
-    - [Open Addressing](#open-addressing)
+    - [Concatenation](#concatenation)
       - [C++ Project](#c-project)
+    - [Open Addressing](#open-addressing)
+      - [C++ Project](#c-project-1)
   - [Huffman Coding](#huffman-coding)
     - [Python Project](#python-project-1)
-    - [C++ Project](#c-project-1)
-  - [Max Heap](#max-heap)
     - [C++ Project](#c-project-2)
+  - [Max Heap](#max-heap)
+    - [C++ Project](#c-project-3)
   - [LCS – Longest Common Sequence](#lcs--longest-common-sequence)
     - [Python Project](#python-project-2)
   - [Binary Search Tree](#binary-search-tree)
-    - [C++ Project](#c-project-3)
-  - [Red-Black Tree](#red-black-tree)
     - [C++ Project](#c-project-4)
+  - [Red-Black Tree](#red-black-tree)
+    - [C++ Project](#c-project-5)
 - [📄 Pseudo-codes](#-pseudo-codes)
   - [Graphs](#graphs)
   - [Hash tables](#hash-tables-1)
@@ -85,6 +87,13 @@ Run with `python3 app.py`.
 - **macOS/Linux**: Execute with `./execute.sh`.
 
 ### Hash Tables
+
+#### [Concatenation](hash-tables/concatenation/src/)
+
+##### [C++ Project](hash-tables/concatenation/src/c++)
+
+- **Windows**: Execute with `./execute.ps1`.
+- **macOS/Linux**: Execute with `./execute.sh`.
 
 #### [Open Addressing](hash-tables/open-addressing/src/)
 

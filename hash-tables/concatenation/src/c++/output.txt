@@ -1,0 +1,10 @@
+Index: 0 -> [key: 0 - value: ciao]
+Index: 1 -> empty bucket
+Index: 2 -> [key: 12 - value: uva]
+Index: 3 -> empty bucket
+Index: 4 -> empty bucket
+Index: 5 -> [key: 5 - value: pippo] -> [key: 15 - value: pluto]
+Index: 6 -> [key: 6 - value: mamma]
+Index: 7 -> empty bucket
+Index: 8 -> [key: 8 - value: mela]
+Index: 9 -> empty bucket
