@@ -14,6 +14,7 @@
     - [C++ projects](#c-projects)
       - [BFS with MST and check if BF tree is complete binary and if MST is binary](#bfs-with-mst-and-check-if-bf-tree-is-complete-binary-and-if-mst-is-binary)
       - [DFS with cycles count and edges classification](#dfs-with-cycles-count-and-edges-classification)
+      - [Topological order](#topological-order)
   - [Hash Tables](#hash-tables)
     - [Open Addressing](#open-addressing)
       - [C++ Project](#c-project)
@@ -74,6 +75,11 @@ Run with `python3 app.py`.
 - **macOS/Linux**: Execute with `./execute.sh`.
 
 ##### [DFS with cycles count and edges classification](graphs/src/c++/dfs-cycles-edges-classification/)
+
+- **Windows**: Execute with `./execute.ps1`.
+- **macOS/Linux**: Execute with `./execute.sh`.
+
+##### [Topological order](graphs/src/c++/topological-order/)
 
 - **Windows**: Execute with `./execute.ps1`.
 - **macOS/Linux**: Execute with `./execute.sh`.
