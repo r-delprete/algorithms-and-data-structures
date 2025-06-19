@@ -1,36 +1,25 @@
 #include "./include/binary_search_tree.hpp"
 
+using namespace std;
+
 int main() {
-  BinarySearchTree tree;
+  ifstream in("input.txt");
+  ofstream out("output.txt");
 
-  tree.tree_insert(new Node(15));
-  tree.tree_insert(new Node(6));
-  tree.tree_insert(new Node(18));
-  tree.tree_insert(new Node(3));
-  tree.tree_insert(new Node(7));
-  tree.tree_insert(new Node(17));
-  tree.tree_insert(new Node(20));
+  BinarySearchTree bst(in);
+  cout << "Tree root: " << bst.get_root()->get_info();
 
-  cout << "Tree structure:" << endl;
-  tree.print_tree(tree.get_root());
-  cout << endl;
+  out << std::endl << "Preorder visit" << std::endl;
+  bst.preorder_visit_in_file(bst.get_root(), out);
 
-  cout << endl << "Inorder visit:" << endl;
-  tree.inorder_visit(tree.get_root());
+  Node* x = bst.search(bst.get_root(), 15);
+  bst.print_predecessor_in_file(x, out);
 
-  cout << endl << "Preorder visit:" << endl;
-  tree.preorder_visit(tree.get_root());
+  x = bst.search(bst.get_root(), 15);
+  bst.print_successor_in_file(x, out);
 
-  cout << endl << "Postorder visit:" << endl;
-  tree.preorder_visit(tree.get_root());
-
-  Node* node = tree.tree_search(tree.get_root(), 6);
-  if (node != nullptr) {
-    tree.tree_delete(node);
-    cout << endl << "post-delete: " << endl;
-    tree.print_tree(tree.get_root());
-    cout << endl;
-  }
+  in.close();
+  out.close();
 
   return 0;
 }
