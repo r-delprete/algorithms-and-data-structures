@@ -1,4 +1,4 @@
-#include "./include/max_heap.hpp"
+#include "./include/min_heap.hpp"
 
 using namespace std;
 
@@ -6,18 +6,18 @@ int main(int argc, char** argv) {
   ifstream input_file("input.txt");
   ofstream output_file("output.txt");
 
-  MaxHeap mh(input_file);
+  MinHeap mh(input_file);
 
   mh.print_in_file(output_file);
   mh.print();
 
-  mh.increase_key(10, 22);
-  cout << endl << "After increase key:" << endl;
+  mh.decrease_key(25, 14);
+  cout << endl << "After decrease key:" << endl;
   mh.print();
 
-  int* max = mh.extract_max();
+  int* min = mh.extract_min();
 
-  if (max) cout << endl << "Maximum value: " << *max << endl;
+  if (min) cout << endl << "Minimum value: " << *min << endl;
 
   mh.heap_sort();
 

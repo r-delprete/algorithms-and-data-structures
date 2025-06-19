@@ -25,12 +25,14 @@
     - [C++ Project](#c-project-2)
   - [Max Heap](#max-heap)
     - [C++ Project](#c-project-3)
+  - [Min Heap](#min-heap)
+    - [C++ Project](#c-project-4)
   - [LCS – Longest Common Sequence](#lcs--longest-common-sequence)
     - [Python Project](#python-project-2)
   - [Binary Search Tree](#binary-search-tree)
-    - [C++ Project](#c-project-4)
-  - [Red-Black Tree](#red-black-tree)
     - [C++ Project](#c-project-5)
+  - [Red-Black Tree](#red-black-tree)
+    - [C++ Project](#c-project-6)
 - [📄 Pseudo-codes](#-pseudo-codes)
   - [Graphs](#graphs)
   - [Hash tables](#hash-tables-1)
@@ -114,6 +116,13 @@ Run with `python3 huffman.py`.
 - **macOS/Linux**: Execute with `./execute.sh`.
 
 ### [Max Heap](heap/src/c++/max-heap)
+
+#### C++ Project
+
+- **Windows**: Execute with `./execute.ps1`.
+- **macOS/Linux**: Execute with `./execute.sh`.
+
+### [Min Heap](heap/src/c++/min-heap)
 
 #### C++ Project
 
