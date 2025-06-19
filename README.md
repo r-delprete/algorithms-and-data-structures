@@ -7,32 +7,20 @@
 - [📌 Table of Contents](#-table-of-contents)
 - [💻 Built with](#-built-with)
   - [C++](#c)
-  - [Python](#python)
 - [🚀 Projects](#-projects)
   - [Graph](#graph)
-    - [Python Project](#python-project)
-    - [C++ projects](#c-projects)
-      - [BFS with MST and check if BF tree is complete binary and if MST is binary](#bfs-with-mst-and-check-if-bf-tree-is-complete-binary-and-if-mst-is-binary)
-      - [DFS with cycles count and edges classification](#dfs-with-cycles-count-and-edges-classification)
-      - [Topological order](#topological-order)
+    - [BFS with MST and check if BF tree is complete binary and if MST is binary](#bfs-with-mst-and-check-if-bf-tree-is-complete-binary-and-if-mst-is-binary)
+    - [DFS with cycles count and edges classification](#dfs-with-cycles-count-and-edges-classification)
+    - [Topological order](#topological-order)
   - [Hash Tables](#hash-tables)
     - [Concatenation](#concatenation)
-      - [C++ Project](#c-project)
     - [Open Addressing](#open-addressing)
-      - [C++ Project](#c-project-1)
   - [Huffman Coding](#huffman-coding)
-    - [Python Project](#python-project-1)
-    - [C++ Project](#c-project-2)
   - [Max Heap](#max-heap)
-    - [C++ Project](#c-project-3)
   - [Min Heap](#min-heap)
-    - [C++ Project](#c-project-4)
   - [LCS – Longest Common Sequence](#lcs--longest-common-sequence)
-    - [Python Project](#python-project-2)
   - [Binary Search Tree](#binary-search-tree)
-    - [C++ Project](#c-project-5)
   - [Red-Black Tree](#red-black-tree)
-    - [C++ Project](#c-project-6)
 - [📄 Pseudo-codes](#-pseudo-codes)
   - [Graphs](#graphs)
   - [Hash tables](#hash-tables-1)
@@ -58,32 +46,21 @@
 - Recommended: [MSYS2 Installation Guide](https://www.msys2.org/).
 - Standard used: **C++11**
 
-### Python
-
-- Requires **Python 3.12 or newer**.
-- Download it [here](https://www.python.org/downloads/).
-
 ## 🚀 Projects
 
 ### [Graph](graphs/src/)
 
-#### [Python Project](graphs/src/python/)
-
-Run with `python3 app.py`.
-
-#### [C++ projects](graphs/src/c++)
-
-##### [BFS with MST and check if BF tree is complete binary and if MST is binary](graphs/src/c++/bfs-prim-binary-complete-binary/)
+#### [BFS with MST and check if BF tree is complete binary and if MST is binary](graphs/src/bfs-prim-binary-complete-binary/)
 
 - **Windows**: Execute with `./execute.ps1`.
 - **macOS/Linux**: Execute with `./execute.sh`.
 
-##### [DFS with cycles count and edges classification](graphs/src/c++/dfs-cycles-edges-classification/)
+#### [DFS with cycles count and edges classification](graphs/src/dfs-cycles-edges-classification/)
 
 - **Windows**: Execute with `./execute.ps1`.
 - **macOS/Linux**: Execute with `./execute.sh`.
 
-##### [Topological order](graphs/src/c++/topological-order/)
+#### [Topological order](graphs/src/topological-order/)
 
 - **Windows**: Execute with `./execute.ps1`.
 - **macOS/Linux**: Execute with `./execute.sh`.
@@ -92,59 +69,40 @@ Run with `python3 app.py`.
 
 #### [Concatenation](hash-tables/chaining/src/)
 
-##### [C++ Project](hash-tables/chaining/src/c++)
-
 - **Windows**: Execute with `./execute.ps1`.
 - **macOS/Linux**: Execute with `./execute.sh`.
 
 #### [Open Addressing](hash-tables/open-addressing/src/)
-
-##### [C++ Project](hash-tables/open-addressing/src/c++)
 
 - **Windows**: Execute with `./execute.ps1`.
 - **macOS/Linux**: Execute with `./execute.sh`.
 
 ### [Huffman Coding](huffman/src/)
 
-#### [Python Project](huffman/src/python/)
+- **Windows**: Execute with `./execute.ps1`.
+- **macOS/Linux**: Execute with `./execute.sh`.
 
-Run with `python3 huffman.py`.
-
-#### [C++ Project](huffman/src/c++/)
+### [Max Heap](heap/src/max-heap)
 
 - **Windows**: Execute with `./execute.ps1`.
 - **macOS/Linux**: Execute with `./execute.sh`.
 
-### [Max Heap](heap/src/c++/max-heap)
-
-#### C++ Project
+### [Min Heap](heap/src/min-heap)
 
 - **Windows**: Execute with `./execute.ps1`.
 - **macOS/Linux**: Execute with `./execute.sh`.
 
-### [Min Heap](heap/src/c++/min-heap)
-
-#### C++ Project
+### [LCS – Longest Common Sequence](lcs/src/)
 
 - **Windows**: Execute with `./execute.ps1`.
 - **macOS/Linux**: Execute with `./execute.sh`.
-
-### [LCS – Longest Common Sequence](lcs/)
-
-#### Python Project
-
-Run with `python3 app.py`.
 
 ### [Binary Search Tree](trees/binary-search-tree/src/)
-
-#### [C++ Project](trees/binary-search-tree/src/c++/)
 
 - **Windows**: Execute with `./execute.ps1`.
 - **macOS/Linux**: Execute with `./execute.sh`.
 
 ### [Red-Black Tree](trees/red-black/src/)
-
-#### [C++ Project](trees/red-black/src/c++/)
 
 - **Windows**: Execute with `./execute.ps1`.
 - **macOS/Linux**: Execute with `./execute.sh`.

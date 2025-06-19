@@ -1,4 +1,4 @@
-#include "./classes/huffman.hpp"
+#include "./include/huffman.hpp"
 
 int main(int argc, const char** argv) {
   string filename = "input.txt";
