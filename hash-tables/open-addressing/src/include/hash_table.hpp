@@ -37,8 +37,6 @@ public:
   }
 
   void insert(Item<K, V>* element) {
-    int i = 0;
-
     for (int i = 0; i < size; i++) {
       int index = linear_hashing(element->get_key(), i);
 
