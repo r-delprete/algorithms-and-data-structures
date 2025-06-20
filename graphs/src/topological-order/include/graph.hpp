@@ -120,8 +120,6 @@ public:
         std::cerr << "Cannot add edge because node " << node1_data << " and/or " << node2_data << " doesn't exists"
                   << std::endl;
     }
-
-    input_file.close();
   }
 
   void insert_node(Node* node) {
@@ -176,8 +174,6 @@ public:
 
       output_file << node->get_node_info() << std::endl;
     }
-
-    output_file.close();
   }
 
   void bellman_ford(Node* src, Node* dest) {

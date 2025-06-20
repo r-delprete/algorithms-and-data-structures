@@ -28,5 +28,8 @@ int main(int argc, char** argv) {
   else
     graph.dijkstra(src);
 
+  input_file.close();
+  output_file.close();
+
   return 0;
 }
