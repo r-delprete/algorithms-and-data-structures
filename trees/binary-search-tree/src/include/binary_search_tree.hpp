@@ -68,7 +68,7 @@ public:
     if (node->get_left()) return tree_maximum(node->get_left());
 
     Node* y = node->get_parent();
-    while (y && node == y->get_parent()) {
+    while (y && node == y->get_left()) {
       node = y;
       y = y->get_parent();
     }
@@ -109,6 +109,47 @@ public:
       return search(node->get_left(), key);
     else
       return search(node->get_right(), key);
+  }
+
+  void build_huffman_table(Node* node, string path) {
+    if (!node) return;
+
+    if (!node->get_left() && !node->get_right() && node->get_huffman_char() != '*')
+      huffman_map[node->get_huffman_char()] = path;
+    build_huffman_table(node->get_left(), path + "0");
+    build_huffman_table(node->get_right(), path + "1");
+  }
+
+  string encode(string input_string) {
+    string encoded;
+
+    for (auto c : input_string) {
+      if (huffman_map.find(c) != huffman_map.end())
+        encoded += huffman_map[c];
+      else {
+        cerr << "Character " << c << " not found in huffman table" << endl;
+        return "";
+      }
+    }
+
+    return encoded;
+  }
+
+  string decode(string encoded) {
+    Node* current = root;
+    string decoded;
+
+    for (auto bit : encoded) {
+      if (bit == '0')
+        current = current->get_left();
+      else if (bit == '1')
+        current = current->get_right();
+
+      if (!current->get_left() && !current->get_right()) {
+        decoded += current->get_huffman_char();
+        current = root;
+      }
+    }
   }
 };
 
