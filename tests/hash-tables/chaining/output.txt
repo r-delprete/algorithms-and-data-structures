@@ -1,0 +1,24 @@
+Index 0 -> [key: 0 - value: ciao]
+Index 1 -> empty list
+Index 2 -> [key: 12 - value: uva]
+Index 3 -> empty list
+Index 4 -> empty list
+Index 5 -> [key: 5 - value: pippo] -> [key: 15 - value: pluto]
+Index 6 -> [key: 6 - value: mamma]
+Index 7 -> empty list
+Index 8 -> [key: 8 - value: mela]
+Index 9 -> empty list
+
+
+After delete
+Index 0 -> [key: 0 - value: ciao]
+Index 1 -> empty list
+Index 2 -> [key: 12 - value: uva]
+Index 3 -> empty list
+Index 4 -> empty list
+Index 5 -> [key: 5 - value: pippo] -> [key: 15 - value: pluto]
+Index 6 -> [key: 6 - value: mamma]
+Index 7 -> empty list
+Index 8 -> empty list
+Index 9 -> empty list
+

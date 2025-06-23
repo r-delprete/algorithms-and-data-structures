@@ -10,34 +10,24 @@ private:
   int size;
 
   void build_min_heap() {
-    for (int i = size / 2; i >= 0; i--) min_heapify(i);
+    for (int i = size / 2; i >= 0; i--) heapify(i);
   }
 
-  void min_heapify(int index) {
-    int min = index;
-    int left = 2 * index + 1, right = 2 * index + 2;
+  void heapify(int index) {
+    int min = index, left = 2 * index + 1, right = 2 * index + 2;
 
-    if (left < size && data[left] < data[min]) min = left;
-    if (right < size && data[right] < data[min]) min = right;
+    if (left < size && data[min] > data[left]) min = left;
+    if (right < size && data[min] > data[right]) min = right;
 
     if (min != index) {
-      swap(data[min], data[index]);
-      min_heapify(min);
+      swap(data[index], data[min]);
+      heapify(min);
     }
-  }
-
-  int* search(int key) {
-    for (int i = 0; i < data.size(); i++) {
-      if (data[i] == key) return new int(i);
-    }
-
-    cerr << "Key " << key << " not found" << endl;
-    return nullptr;
   }
 
   void shift_up(int index) {
     while (index > 0 && data[(index - 1) / 2] > data[index]) {
-      swap(data[(index - 1) / 2], data[index]);
+      swap(data[index], data[(index - 1) / 2]);
       index = (index - 1) / 2;
     }
   }
@@ -51,17 +41,9 @@ public:
     build_min_heap();
   }
 
-  void heap_sort() {
-    for (int i = size - 1; i >= 0; i--) {
-      swap(data[0], data[i]);
-      size--;
-      min_heapify(0);
-    }
-  }
-
   int* extract_min() {
     if (data.empty()) {
-      cerr << "Heap is empty" << endl;
+      cerr << endl << "Heap is empty" << endl;
       return nullptr;
     }
 
@@ -69,41 +51,60 @@ public:
     swap(data[0], data[size - 1]);
     data.pop_back();
     size--;
+    heapify(0);
 
+    cout << endl << "Heap minimum element: " << *min << endl;
     return min;
   }
 
-  void print() {
+  int* search(int key) {
     for (int i = 0; i < data.size(); i++) {
-      cout << "Index: " << i << " - Value: " << data[i] << endl;
+      if (data[i] == key) {
+        cout << endl << "Element with key " << key << " found at index " << i << endl;
+        return new int(i);
+      }
     }
-    cout << endl;
-  }
 
-  void print(ostream& output_file) {
-    for (int i = 0; i < data.size(); i++) {
-      output_file << "Index: " << i << " - Value: " << data[i] << endl;
-    }
-    output_file << endl;
+    cerr << endl << "Element with key " << key << " not found" << endl;
+    return nullptr;
   }
 
   void decrease_key(int old_key, int new_key) {
     if (new_key > old_key) {
-      cerr << "New key is greater than old key" << endl;
+      cerr << endl << "Old key is greater than new key" << endl;
       return;
     }
 
     int* index = search(old_key);
 
-    if (!index) {
-      cerr << "Old key index " << old_key << " not found";
+    if (index) {
+      data[*index] = new_key;
+      shift_up(*index);
+      cout << endl << "Decreased key " << old_key << " to " << new_key << endl;
       return;
     }
+  }
 
-    data[*index] = new_key;
-    shift_up(*index);
+  void heap_sort() {
+    build_min_heap();
 
-    cout << "Decreased key " << old_key << " to " << new_key << endl;
+    for (int i = size - 1; i >= 0; i--) {
+      swap(data[0], data[i]);
+      size--;
+      heapify(0);
+    }
+  }
+
+  void print() {
+    for (int i = 0; i < data.size(); i++) {
+      cout << "Index: " << i << " -> " << " key: " << data[i] << endl;
+    }
+  }
+
+  void print(ofstream& output_file) {
+    for (int i = 0; i < data.size(); i++) {
+      output_file << "Index: " << i << " -> " << " key: " << data[i] << endl;
+    }
   }
 };
 
@@ -112,26 +113,19 @@ int main(void) {
   ofstream output_file("output.txt");
 
   MinHeap h(input_file);
-
   h.print();
   h.print(output_file);
 
-  int* min = h.extract_min();
-  min ? cout << "Min value: " << *min << endl : cerr << "Min value not found" << endl;
-  min ? output_file << "Min value: " << *min << endl : cerr << "Min value not found" << endl;
-  cout << endl;
-  output_file << endl;
-
-  int old_key = 15, new_key = 1;
-  h.decrease_key(old_key, new_key);
+  h.extract_min();
+  cout << endl << "After minimum extraction" << endl;
   h.print();
-  output_file << "After decreasing " << old_key << " to " << new_key << endl;
-  h.print(output_file);
 
-  cout << "After heap sort" << endl;
-  output_file << "After heap sort" << endl;
+  h.decrease_key(25, 10);
+
   h.heap_sort();
+  cout << endl << "After heap sort" << endl;
   h.print();
+  output_file << endl << "After heap sort" << endl;
   h.print(output_file);
 
   input_file.close();
