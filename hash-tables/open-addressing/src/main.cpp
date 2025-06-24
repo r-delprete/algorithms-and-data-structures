@@ -9,17 +9,14 @@ int main(int argc, char** argv) {
   Hash_Table<int, string> ht(input_file, 10);
 
   ht.print();
+  ht.print(output_file);
 
-  ht.print_in_file(output_file);
-
-  int key_searched = 6;
-  Item<int, string>* item = ht.search(6);
-
-  if (item)
-    cout << endl << "Item with key " << key_searched << " found! Value: " << item->get_value() << endl << endl;
-  else
-    cerr << endl << "Item with key " << key_searched << "not found" << endl << endl;
-
+  ht.search(6);
   ht.delete_element(12);
   ht.print();
+
+  input_file.close();
+  output_file.close();
+
+  return 0;
 }
