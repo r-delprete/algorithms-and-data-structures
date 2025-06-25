@@ -1,6 +1,0 @@
-Inorder visit
-Node: 5
-Node: 10
-Node: 15
-Node: 30
-Node: 40
