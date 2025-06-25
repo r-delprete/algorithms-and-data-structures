@@ -11,15 +11,7 @@ int main(int argc, char** argv) {
   ht.print();
   ht.print_in_file(output_file);
 
-  int key_searched = 6;
-  Item<int, string>* item = ht.search(6);
-
-  item ? cout << endl
-              << "Item with key " << key_searched << " found! Value " << item->get_value() << endl
-              << endl
-       : cout << endl
-              << "Item with key " << key_searched << " not found";
-
+  ht.search(6);
   ht.delete_element(12);
   ht.print();
 
