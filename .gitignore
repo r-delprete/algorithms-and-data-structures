@@ -239,3 +239,6 @@ cython_debug/
 *.app
 .dSYM/
 .vscode/settings.json
+
+# tests folder
+tests/
