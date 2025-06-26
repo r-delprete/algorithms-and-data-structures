@@ -5,6 +5,8 @@
 #include <fstream>
 #include <iostream>
 #include <list>
+#include <sstream>
+#include <string>
 #include <vector>
 
 #include "item.hpp"
@@ -19,33 +21,52 @@ private:
   HashingFunction fn = divide;
 
   int h(K key) {
-    int ret = 0;
-
     switch (fn) {
       case HashingFunction::multiply: {
         double prod = ((sqrt(5) - 1) / 2) * key;
         double frac = prod - floor(prod);
-        ret = size * frac;
-        break;
+        return size * frac;
       }
-      default: {
-        ret = key % size;
-        break;
-      }
+      default:
+        return key % size;
     }
-
-    return ret;
   }
 
 public:
-  Hash_Table(int size, std::ifstream& input_file, HashingFunction fn = divide) : size(size) {
+  Hash_Table(int size, std::ifstream& input, bool complex_input = false, HashingFunction fn = divide) : size(size) {
     ht.resize(size);
     set_hashing_function(fn);
 
-    K key;
-    V value;
-    while (input_file >> key >> value) insert(new Item<K, V>(key, value));
-    input_file.close();
+    if (complex_input) {
+      std::string line;
+      while (std::getline(input, line)) {
+        size_t open_bracket_pos = line.find("<"), close_bracket_pos = line.find(">");
+        std::string formatted = line.substr(open_bracket_pos + 1, close_bracket_pos - open_bracket_pos - 1);
+        size_t comma_pos = formatted.find(",");
+
+        std::istringstream stream(formatted.substr(0, comma_pos));
+        K key;
+        stream >> key;
+        stream.clear();
+
+        stream.str(formatted.substr(comma_pos + 1));
+        V value;
+        getline(stream, value);
+        stream.clear();
+
+        insert(new Item<K, V>(key, value));
+      }
+    } else {
+      K key;
+      V value;
+      while (input >> key >> value) insert(new Item<K, V>(key, value));
+    }
+  }
+
+  ~Hash_Table() {
+    for (auto& list : ht) {
+      for (auto& item : list) delete item;
+    }
   }
 
   void set_hashing_function(HashingFunction fn) {
@@ -93,37 +114,21 @@ public:
     return;
   }
 
-  void print_in_file(std::ofstream& output_file) {
+  void print(std::string title = "Hash table", std::ostream& out = std::cout) {
+    out << title << std::endl;
     for (int i = 0; i < size; i++) {
-      output_file << "Index: " << i;
+      out << "Index: " << i;
 
       if (ht[i].empty())
-        output_file << " -> empty bucket" << std::endl;
+        out << " -> empty bucket" << std::endl;
       else {
         for (auto& item : ht[i]) {
-          output_file << " -> [key: " << item->get_key() << " - value: " << item->get_value() << "]";
+          out << " -> [key: " << item->get_key() << " - value: " << item->get_value() << "]";
         }
-
-        output_file << std::endl;
+        out << std::endl;
       }
     }
-
-    output_file.close();
-  }
-
-  void print() {
-    for (int i = 0; i < size; i++) {
-      std::cout << "Index: " << i;
-
-      if (ht[i].empty())
-        std::cout << " -> empty bucket" << std::endl;
-      else {
-        for (auto& item : ht[i]) {
-          std::cout << " -> [key: " << item->get_key() << " - value: " << item->get_value() << "]";
-        }
-        std::cout << std::endl;
-      }
-    }
+    out << std::endl;
   }
 };
 
