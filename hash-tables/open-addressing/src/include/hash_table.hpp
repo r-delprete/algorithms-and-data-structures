@@ -1,62 +1,101 @@
-#ifndef HASH_TABLE_HPP
-#define HASH_TABLE_HPP
-
+#include <cmath>
 #include <fstream>
 #include <iostream>
+#include <sstream>
 #include <string>
 #include <vector>
 
 #include "item.hpp"
 
-enum HashingFunction { linear, quadratic, double_hash };
+enum HashFunction { linear, quadratic, double_hash };
+
+struct LoadFromFileInfo {
+  std::ifstream input;
+  std::string key_value_delim;
+  std::string pre_key_char;
+  std::string post_value_char;
+
+  LoadFromFileInfo(std::string input_filename, std::string key_value_delim = " ", std::string pre_key_char = "<",
+                   std::string post_value_char = ">")
+      : key_value_delim(key_value_delim), pre_key_char(pre_key_char), post_value_char(post_value_char) {
+    input = std::ifstream(input_filename);
+  }
+
+  ~LoadFromFileInfo() { input.close(); }
+};
 
 template <typename K, typename V>
-class Hash_Table {
+class HashTable {
 private:
   std::vector<Item<K, V>*> data;
   int size;
-  HashingFunction fn = linear;
+  HashFunction fn;
 
   int h(K key, int index) {
     switch (fn) {
-      case quadratic: {
-        return (key + index + index * index) % size;
-      }
-
-      case double_hash: {
+      case HashFunction::quadratic:
+        return (key + index * int(std::pow(index, 2))) % size;
+      case HashFunction::double_hash: {
         int hash1 = key % size;
         int hash2 = 1 + (key % (size - 1));
         return (hash1 + index * hash2) % size;
       }
-
       default:
         return (key + index) % size;
     }
   }
 
-public:
-  Hash_Table(std::ifstream& input_file, int size) : size(size) {
-    data.resize(size, nullptr);
-    K key;
-    V value;
+  std::string fn_to_string(HashFunction fn) {
+    return fn == HashFunction::double_hash ? "DOUBLE HASHING" : fn == HashFunction::quadratic ? "QUADRATIC" : "LINEAR";
+  }
 
-    while (input_file >> key >> value) {
+public:
+  HashTable(int size, HashFunction fn = HashFunction::linear) : size(size), fn(fn) { data.resize(size, nullptr); }
+
+  HashTable(int size, LoadFromFileInfo* file_info, HashFunction fn = HashFunction::linear) : size(size), fn(fn) {
+    data.resize(size, nullptr);
+    load_from_file(file_info);
+  }
+
+  void load_from_file(LoadFromFileInfo* file_info) {
+    std::string line;
+    while (getline(file_info->input, line)) {
+      std::string formatted = line;
+
+      if (!file_info->pre_key_char.empty()) {
+        size_t start = line.find(file_info->pre_key_char);
+        if (start != std::string::npos) formatted = line.substr(start + file_info->pre_key_char.length());
+      }
+
+      if (!file_info->post_value_char.empty()) {
+        size_t end = formatted.find(file_info->post_value_char);
+        if (end != std::string::npos) formatted = formatted.substr(0, end);
+      }
+
+      std::size_t delim_pos = formatted.find(file_info->key_value_delim);
+
+      std::string key_str = formatted.substr(0, delim_pos);
+      std::string value_str = formatted.substr(delim_pos + file_info->key_value_delim.length());
+
+      std::istringstream key_stream(key_str);
+      K key;
+      key_stream >> key;
+
+      V value;
+      std::istringstream value_stream(value_str);
+      getline(value_stream, value);
+
       insert(new Item<K, V>(key, value));
     }
   }
 
-  void set_hashing_function(HashingFunction fn) {
-    if (this->fn == fn) return;
+  ~HashTable() {
+    for (auto& item : data) delete item;
+  }
 
-    std::cout << "Changing hashing function from "
-              << (this->fn == HashingFunction::quadratic     ? "QUADRATIC"
-                  : this->fn == HashingFunction::double_hash ? "DOUBLE HASHING"
-                                                             : "LINEAR")
-              << " to "
-              << (fn == HashingFunction::quadratic     ? "QUADRATIC"
-                  : fn == HashingFunction::double_hash ? "DOUBLE HASHING"
-                                                       : "LINEAR")
-              << std::endl;
+  void set_hash_function(HashFunction fn) {
+    if (this->fn == fn) return;
+    std::cout << "Changing hash function from " << fn_to_string(this->fn) << " to " << fn_to_string(fn) << std::endl;
     this->fn = fn;
   }
 
@@ -64,13 +103,7 @@ public:
     for (int i = 0; i < size; i++) {
       int index = h(item->get_key(), i);
 
-      if (data[index] && data[index]->get_key() == item->get_key()) {
-        std::cerr << "Item [Key: " << item->get_key() << " - Value: " << item->get_value() << "] already inserted"
-                  << std::endl;
-        return;
-      }
-
-      if (data[index] == nullptr) {
+      if (!data[index]) {
         data[index] = item;
         return;
       }
@@ -81,72 +114,51 @@ public:
   }
 
   Item<K, V>* search(K key) {
-    int i = 0;
-
-    for (int i = 0; i < size; i++) {
-      int index = h(key, i);
-
-      if (data[index] == nullptr) {
-        std::cerr << "Item not found in position " << index << std::endl;
-        return nullptr;
-      }
-
-      if (data[index]->get_key() == key) {
-        std::cout << "Item [Key: " << data[index]->get_key() << " - Value: " << data[index]->get_value()
-                  << "] found at position " << index << std::endl;
-        return data[index];
-      }
-    }
-
-    std::cerr << "Element not found" << std::endl;
-    return nullptr;
-  }
-
-  void delete_element(K key) {
     for (int i = 0; i < size; i++) {
       int index = h(key, i);
 
       if (!data[index]) {
-        std::cerr << "Item not found in position " << index << std::endl;
-        return;
+        std::cerr << "Key " << key << " not found at position " << index << std::endl;
+        return nullptr;
       }
 
       if (data[index]->get_key() == key) {
-        auto item = data[index];
-        data[index] = nullptr;
-        std::cout << "Item [Key: " << item->get_key() << " - Value: " << item->get_value() << "] deleted" << std::endl;
+        std::cout << "Found key " << key << " at position " << index << std::endl;
+        return data[index];
+      }
+    }
 
+    std::cerr << "Key " << key << " not found" << std::endl;
+    return nullptr;
+  }
+
+  void delete_item(K key) {
+    for (int i = 0; i < size; i++) {
+      int index = h(key, i);
+
+      Item<K, V>* item = search(key);
+
+      if (item && data[index]->get_key() == item->get_key()) {
+        data[index] = nullptr;
+        std::cout << "Deleted item [Key: " << item->get_key() << " - Value: " << item->get_value() << "]" << std::endl;
         return;
       }
     }
 
-    std::cerr << "Item with key " << key << " not deleted" << std::endl;
+    std::cerr << "Cannot delete item with key " << key << std::endl;
     return;
   }
 
-  void print() {
+  void print(std::string message = "Hash table\n", std::ostream& out = std::cout) {
+    out << message;
     for (int i = 0; i < size; i++) {
-      std::cout << "Index: " << i;
-      if (data[i])
-        std::cout << " -> [Key: " << data[i]->get_key() << " - Value: " << data[i]->get_value() << "]";
-      else
-        std::cout << " empty";
-      std::cout << std::endl;
-    }
-    std::cout << std::endl;
-  }
+      out << "Index " << i;
 
-  void print(std::ofstream& output_file) {
-    for (int i = 0; i < size; i++) {
-      output_file << "Index: " << i;
       if (data[i])
-        output_file << " -> [Key: " << data[i]->get_key() << " - Value: " << data[i]->get_value() << "]";
+        out << " => [Key: " << data[i]->get_key() << " - Value: " << data[i]->get_value() << "]" << std::endl;
       else
-        output_file << " empty";
-      output_file << std::endl;
+        out << " => empty" << std::endl;
     }
-    output_file << std::endl;
+    out << std::endl;
   }
 };
-
-#endif  // HASH_TABLE_HPP

@@ -3,20 +3,32 @@
 using namespace std;
 
 int main(int argc, char** argv) {
-  ifstream input_file("input.txt");
-  ofstream output_file("output.txt");
+  ofstream output("output.txt");
 
-  Hash_Table<int, string> ht(input_file, 10);
+  LoadFromFileInfo* input_exam_info = new LoadFromFileInfo("exam_input_example.txt", ",");
+  LoadFromFileInfo* input_info = new LoadFromFileInfo("input.txt", " ", "", "");
 
-  ht.print();
-  ht.print(output_file);
+  HashTable<int, string> ht_exam(15, input_exam_info);
+  HashTable<int, string> ht(20, input_info);
+
+  ht_exam.print("Exam hash table\n");
+  ht_exam.print("Exam hash table\n", output);
+
+  ht.print("Hash table\n");
+  ht.print("Hash table\n", output);
 
   ht.search(6);
-  ht.delete_element(12);
-  ht.print();
+  ht_exam.search(12);
 
-  input_file.close();
-  output_file.close();
+  cout << endl;
+  ht_exam.delete_item(12);
+  ht_exam.print("\nAfter delete\n");
+  ht_exam.print("After delete\n", output);
+
+  output.close();
+
+  delete input_exam_info;
+  delete input_info;
 
   return 0;
 }

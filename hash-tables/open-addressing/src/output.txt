@@ -1,11 +1,56 @@
-Index: 0 -> [Key: 0 - Value: ciao]
-Index: 1 empty
-Index: 2 -> [Key: 12 - Value: uva]
-Index: 3 empty
-Index: 4 empty
-Index: 5 -> [Key: 5 - Value: pippo]
-Index: 6 -> [Key: 6 - Value: mamma]
-Index: 7 -> [Key: 15 - Value: pluto]
-Index: 8 -> [Key: 8 - Value: mela]
-Index: 9 empty
+Exam hash table
+Index 0 => [Key: 0 - Value: ciao]
+Index 1 => [Key: 15 - Value: pluto]
+Index 2 => empty
+Index 3 => empty
+Index 4 => empty
+Index 5 => [Key: 5 - Value: pippo pluto cazzo]
+Index 6 => [Key: 6 - Value: mamma]
+Index 7 => empty
+Index 8 => [Key: 8 - Value: mela]
+Index 9 => empty
+Index 10 => empty
+Index 11 => empty
+Index 12 => [Key: 12 - Value: uva]
+Index 13 => empty
+Index 14 => empty
+
+Hash table
+Index 0 => [Key: 0 - Value: ciao]
+Index 1 => empty
+Index 2 => empty
+Index 3 => empty
+Index 4 => empty
+Index 5 => [Key: 5 - Value: pippo]
+Index 6 => [Key: 6 - Value: mamma]
+Index 7 => empty
+Index 8 => [Key: 8 - Value: mela]
+Index 9 => empty
+Index 10 => empty
+Index 11 => empty
+Index 12 => [Key: 12 - Value: uva]
+Index 13 => empty
+Index 14 => empty
+Index 15 => [Key: 15 - Value: pluto]
+Index 16 => empty
+Index 17 => empty
+Index 18 => empty
+Index 19 => empty
+
+After delete
+Index 0 => [Key: 0 - Value: ciao]
+Index 1 => [Key: 15 - Value: pluto]
+Index 2 => empty
+Index 3 => empty
+Index 4 => empty
+Index 5 => [Key: 5 - Value: pippo pluto cazzo]
+Index 6 => [Key: 6 - Value: mamma]
+Index 7 => empty
+Index 8 => [Key: 8 - Value: mela]
+Index 9 => empty
+Index 10 => empty
+Index 11 => empty
+Index 12 => empty
+Index 13 => empty
+Index 14 => empty
 
