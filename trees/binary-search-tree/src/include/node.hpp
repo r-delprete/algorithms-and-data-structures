@@ -1,3 +1,7 @@
+#ifndef NODE_HPP
+#define NODE_HPP
+
+#include <climits>
 #include <iostream>
 
 template <typename T>
@@ -5,10 +9,18 @@ class Node {
 private:
   T key;
   char character;
+  int frequency;
   Node<T>*parent, *left, *right;
 
 public:
-  Node(T key, char character = '*') : key(key), character(character) { parent = left = right = nullptr; }
+  Node(T key, char character = '*', int frequency = INT_MAX) : key(key), character(character), frequency(frequency) {
+    parent = left = right = nullptr;
+  }
+
+  Node(char character = '*', int frequency = INT_MAX, Node<T>* parent = nullptr, Node<T>* left = nullptr,
+       Node<T>* right = nullptr)
+      : character(character), frequency(frequency), parent(parent), left(left), right(right) {}
+
   ~Node() {
     delete left;
     delete right;
@@ -16,12 +28,14 @@ public:
 
   T get_key() { return key; }
   char get_character() { return character; }
+  int get_frequency() { return frequency; }
   Node<T>*& get_left() { return left; }
   Node<T>*& get_right() { return right; }
   Node<T>*& get_parent() { return parent; }
 
   void set_key(T key) { this->key = key; }
   void set_character(char character) { this->character = character; }
+  void set_frequencu(int frequency) { this->frequency = frequency; }
   void set_left(Node<T>* left) { this->left = left; }
   void set_right(Node<T>* right) { this->right = right; }
   void set_parent(Node<T>* parent) { this->parent = parent; }
@@ -49,4 +63,8 @@ public:
 
     out << std::endl;
   }
+
+  bool is_leaf() { return !left && !right; }
 };
+
+#endif

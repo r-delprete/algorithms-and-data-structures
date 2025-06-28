@@ -1,4 +1,5 @@
 #include "./include/binary_search_tree.hpp"
+#include "./include/huffman.hpp"
 
 using namespace std;
 
@@ -21,6 +22,16 @@ int main() {
   } else
     "Node not found";
   cout << endl;
+
+  Huffman<int> h(in);
+  h.print_codes();
+  string huffman_input_str = "ACE";
+  cout << "Huffman input string: " << huffman_input_str << endl << "\t";
+  cout << "- ";
+  h.print_encode(huffman_input_str);
+  cout << "\t";
+  cout << "- ";
+  h.print_decode(h.encode(huffman_input_str));
 
   in.close();
   out.close();

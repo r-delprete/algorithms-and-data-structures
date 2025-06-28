@@ -1,3 +1,6 @@
+#ifndef BINARY_SEARCH_TREE_HPP
+#define BINARY_SEARCH_TREE_HPP
+
 #include <fstream>
 #include <sstream>
 #include <string>
@@ -9,7 +12,7 @@ enum VisitType { inorder, preorder, postorder };
 template <typename T>
 class BinarySearchTree {
 private:
-  Node<T>* root;
+  Node<T>* root = nullptr;
 
   void insert_recursive(Node<T>*& start, Node<T>* node) {
     if (!start) {
@@ -59,15 +62,18 @@ private:
   }
 
 public:
-  BinarySearchTree() : root(nullptr) {}
+  BinarySearchTree() {}
 
-  BinarySearchTree(std::ifstream& input) : root(nullptr) { load(input); }
+  BinarySearchTree(std::ifstream& input) { load(input); }
 
   ~BinarySearchTree() { delete_subtree(root); }
 
   Node<T>* get_root() { return root; }
 
   void load(std::ifstream& input) {
+    input.clear();
+    input.seekg(0, std::ios::beg);
+
     std::string line;
     while (std::getline(input, line)) {
       std::string formatted = line;
@@ -139,7 +145,7 @@ public:
     if (node->get_left()) return tree_maximum(node->get_left());
 
     Node<T>* y = node->get_parent();
-    while (y && y->get_left()) {
+    while (y && node == y->get_left()) {
       node = y;
       y = y->get_parent();
     }
@@ -156,7 +162,7 @@ public:
     if (node->get_right()) return tree_minimum(node->get_right());
 
     Node<T>* y = node->get_parent();
-    while (y && y->get_right()) {
+    while (y && node == y->get_right()) {
       node = y;
       y = y->get_parent();
     }
@@ -203,3 +209,5 @@ public:
     return search(node->get_right(), key);
   }
 };
+
+#endif
