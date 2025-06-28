@@ -1,55 +1,52 @@
-#ifndef NODE_HPP
-#define NODE_HPP
-
 #include <iostream>
-#include <string>
 
+template <typename T>
 class Node {
 private:
-  int key;
-  char huffman_char;
-  Node* left;
-  Node* right;
-  Node* parent;
+  T key;
+  char character;
+  Node<T>*parent, *left, *right;
 
 public:
-  Node(int key, char huffman_char)
-      : key(key), huffman_char(huffman_char), left(nullptr), right(nullptr), parent(nullptr) {}
+  Node(T key, char character = '*') : key(key), character(character) { parent = left = right = nullptr; }
+  ~Node() {
+    delete left;
+    delete right;
+  }
 
-  int get_key() { return key; }
-  char get_huffman_char() { return key; }
-  Node* get_left() { return left; }
-  Node* get_right() { return right; }
-  Node* get_parent() { return parent; }
+  T get_key() { return key; }
+  char get_character() { return character; }
+  Node<T>*& get_left() { return left; }
+  Node<T>*& get_right() { return right; }
+  Node<T>*& get_parent() { return parent; }
 
-  void set_key(int new_key) { key = new_key; }
-  void set_huffman_char(int new_huffman_char) { huffman_char = new_huffman_char; }
-  void set_left(Node* new_left) { left = new_left; }
-  void set_right(Node* new_right) { right = new_right; }
-  void set_parent(Node* new_parent) { parent = new_parent; }
+  void set_key(T key) { this->key = key; }
+  void set_character(char character) { this->character = character; }
+  void set_left(Node<T>* left) { this->left = left; }
+  void set_right(Node<T>* right) { this->right = right; }
+  void set_parent(Node<T>* parent) { this->parent = parent; }
 
-  std::string get_info() {
-    std::string result = "Node: " + std::to_string(key) + " - Character: " + huffman_char + " - [Parent: ";
+  void print(std::ostream& out = std::cout) {
+    out << "(Key: " << key << " - Character: " << character << ")";
+
+    out << " - Parent: ";
     if (parent)
-      result += std::to_string(parent->key);
+      out << "(Key: " << parent->get_key() << " - Character: " << parent->get_character() << ")";
     else
-      result += "NULL";
+      out << "(NULL)";
 
-    result += " - Left: ";
+    out << " - Left: ";
     if (left)
-      result += std::to_string(left->key);
+      out << "(Key: " << left->get_key() << " - Character: " << left->get_character() << ")";
     else
-      result += "NULL";
+      out << "(NULL)";
 
-    result += " - Right: ";
+    out << " - Right: ";
     if (right)
-      result += std::to_string(right->key);
+      out << "(Key: " << right->get_key() << " - Character: " << right->get_character() << ")";
     else
-      result += "NULL";
+      out << "(NULL)";
 
-    result += "]\n";
-    return result;
+    out << std::endl;
   }
 };
-
-#endif  // NODE_HPP

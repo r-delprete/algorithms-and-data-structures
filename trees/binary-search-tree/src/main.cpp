@@ -6,17 +6,21 @@ int main() {
   ifstream in("input.txt");
   ofstream out("output.txt");
 
-  BinarySearchTree bst(in);
-  cout << "Tree root: " << bst.get_root()->get_info();
+  BinarySearchTree<int> bst(in);
+  bst.visit(VisitType::preorder);
 
-  out << std::endl << "Preorder visit" << std::endl;
-  bst.preorder_visit_in_file(bst.get_root(), out);
+  cout << endl;
+  bst.print_predecessor(bst.get_root());
 
-  Node* x = bst.search(bst.get_root(), 15);
-  bst.print_predecessor_in_file(x, out);
-
-  x = bst.search(bst.get_root(), 15);
-  bst.print_successor_in_file(x, out);
+  int key_search = 5;
+  cout << endl << "Searching node with key " << key_search << "..." << endl;
+  Node<int>* node_search = bst.search(bst.get_root(), key_search);
+  if (node_search) {
+    cout << "Node found => ";
+    node_search->print();
+  } else
+    "Node not found";
+  cout << endl;
 
   in.close();
   out.close();
