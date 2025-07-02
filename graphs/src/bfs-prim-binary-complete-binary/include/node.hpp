@@ -29,6 +29,15 @@ public:
   void set_predecessor(Node* new_predecessor) { predecessor = new_predecessor; }
   void set_distance(int new_distance) { distance = new_distance; }
   void add_adjacent(Node* node) { adj.push_back(node); }
+
+  std::string get_info() {
+    if (predecessor) {
+      return "Node: " + std::to_string(data) + " => (predecessor: " + std::to_string(predecessor->data) +
+             ") - distance: " + std::to_string(distance);
+    }
+
+    return "Node: " + std::to_string(data) + " => (predecessor: NULL) - distance: " + std::to_string(distance);
+  }
 };
 
 #endif  // NODE_HPP

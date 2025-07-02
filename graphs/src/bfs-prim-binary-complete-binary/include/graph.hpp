@@ -4,8 +4,11 @@
 #include <fstream>
 #include <iostream>
 #include <queue>
+#include <sstream>
+#include <unordered_set>
 
-#include "./edge.hpp"
+#include "edge.hpp"
+#include "node.hpp"
 
 class Graph {
 private:
@@ -13,73 +16,103 @@ private:
   std::vector<Edge*> edges;
   int tot_nodes, tot_edges;
 
-  struct CompareNodes {
-    bool operator()(Node* node1, Node* node2) { return node1->get_distance() > node2->get_distance(); }
+  struct Compare {
+    bool operator()(Node* node1, Node* node2) { return node1->get_data() > node2->get_data(); }
   };
 
 public:
-  Graph(std::ifstream& input_file) {
-    input_file >> tot_nodes >> tot_edges;
+  Graph() {}
+
+  Graph(std::ifstream& input) { load(input); }
+
+  ~Graph() {
+    for (auto& node : nodes) delete node;
+    for (auto& edge : edges) delete edge;
+  }
+
+  void load(std::ifstream& input) {
+    std::string totals_token;
+    std::getline(input, totals_token);
+    if (totals_token.front() == '<') totals_token = totals_token.substr(1);
+    if (totals_token.back() == '>') totals_token.pop_back();
+
+    for (char& c : totals_token) c = c == ',' ? ' ' : c;
+    std::istringstream stream(totals_token);
+    stream >> tot_nodes >> tot_edges;
+    stream.clear();
 
     for (int i = 0; i < tot_nodes; i++) insert_node(new Node(i));
 
-    for (int i = 0; i < tot_edges; i++) {
-      int node1, node2, weight;
-      input_file >> node1 >> node2 >> weight;
+    std::string line;
+    while (std::getline(input, line)) {
+      if (line.front() == '<') line = line.substr(1);
+      if (line.back() == '>') line.pop_back();
 
-      Node* src = get_node(node1);
-      Node* dest = get_node(node2);
+      for (char& c : line) c = c == ',' ? ' ' : c;
+      stream.str(line);
 
-      if (src && dest)
-        insert_edge(new Edge(src, dest, weight));
-      else
-        std::cerr << "Cannot add edge because node " << node1 << " and/or " << node2 << " doesn't exists" << std::endl;
+      int src_data, dest_data, weight;
+      stream >> src_data >> dest_data >> weight;
+
+      Node *src = get_node(src_data), *dest = get_node(dest_data);
+      if (src && dest) insert_edge(new Edge(src, dest, weight));
+      stream.clear();
     }
-
-    input_file.close();
   }
+
   void insert_node(Node* node) {
     nodes.push_back(node);
-    if (nodes.size() > tot_nodes) tot_nodes = nodes.size();
-  }
-
-  Node* get_node(int data) {
-    for (auto& node : nodes) {
-      if (node->get_data() == data) return node;
-    }
-
-    return nullptr;
+    tot_nodes = tot_nodes < nodes.size() ? nodes.size() : tot_nodes;
   }
 
   void insert_edge(Edge* edge) {
-    edges.push_back(edge);
-
     edge->get_source()->add_adjacent(edge->get_destination());
     edge->get_destination()->add_adjacent(edge->get_source());
-
-    if (edges.size() > tot_edges) tot_edges = edges.size();
+    edges.push_back(edge);
+    tot_edges = tot_edges < edges.size() ? edges.size() : tot_edges;
   }
 
-  Edge* get_edge(Node* node1, Node* node2) {
-    for (auto& edge : edges) {
-      if ((edge->get_source() == node1 && edge->get_destination() == node2) ||
-          (edge->get_source() == node2 && edge->get_destination() == node1))
-        return edge;
+  Node* get_node(int node_data) {
+    for (auto& node : nodes) {
+      if (node->get_data() == node_data) return node;
     }
 
+    std::cerr << "Cannot find node (" << node_data << ")" << std::endl;
     return nullptr;
   }
 
-  void bfs(Node* src, std::ofstream& out) {
+  Edge* get_edge(Node* src, Node* dest) {
+    for (auto& edge : edges) {
+      if ((edge->get_source() == src && edge->get_destination() == dest) ||
+          (edge->get_source() == dest && edge->get_destination() == src))
+        return edge;
+    }
+
+    std::cerr << "Edge (" << src->get_data() << ") -> (" << dest->get_data() << ") not found" << std::endl;
+    return nullptr;
+  }
+
+  void print(std::ostream& out = std::cout, std::string message = "Graph") {
+    out << message << std::endl;
+
+    out << "Nodes" << std::endl;
+    for (auto& node : nodes) out << node->get_info() << std::endl;
+    out << std::endl;
+
+    out << "Edges" << std::endl;
+    for (auto& edge : edges) out << edge->get_info() << std::endl;
+    out << std::endl;
+  }
+
+  void bfs(Node* src) {
     for (auto& node : nodes) {
       node->set_color(Color::white);
-      node->set_distance(INT_MAX);
       node->set_predecessor(nullptr);
+      node->set_distance(INT_MAX);
     }
 
     src->set_color(Color::gray);
     src->set_distance(0);
-    src->set_predecessor(nullptr);
 
     std::queue<Node*> q;
     q.push(src);
@@ -88,75 +121,60 @@ public:
       Node* node = q.front();
       q.pop();
 
-      for (auto& adj_node : node->get_adj_list()) {
-        if (adj_node->get_color() == Color::white) {
-          adj_node->set_predecessor(node);
-          adj_node->set_distance(node->get_distance() + 1);
-          adj_node->set_color(Color::gray);
-          q.push(adj_node);
+      for (auto& adj : node->get_adj_list()) {
+        if (adj->get_color() == Color::white) {
+          adj->set_color(Color::gray);
+          adj->set_predecessor(node);
+          adj->set_distance(node->get_distance() + 1);
+          q.push(adj);
         }
       }
 
       node->set_color(Color::black);
     }
-
-    for (auto& node : nodes) {
-      node->get_predecessor()
-          ? out << "Node: " << node->get_data() << " (predecessor: " << node->get_predecessor()->get_data()
-                << ", distance: " << node->get_distance() << "), distance: " << node->get_distance() << std::endl
-          : out << "Node: " << node->get_data() << " (predecessor: NULL), distance: " << node->get_distance()
-                << std::endl;
-    }
-    out.close();
   }
 
   void prim(Node* src) {
     for (auto& node : nodes) {
-      node->set_predecessor(nullptr);
       node->set_distance(INT_MAX);
+      node->set_predecessor(nullptr);
     }
 
     src->set_distance(0);
-    std::vector<bool> in_mst(tot_nodes, false);
-    std::priority_queue<Node*, std::vector<Node*>, CompareNodes> pq;
+
+    std::priority_queue<Node*, std::vector<Node*>, Compare> pq;
     pq.push(src);
+
+    std::unordered_set<Node*> in_mst;
 
     while (!pq.empty()) {
       Node* node = pq.top();
       pq.pop();
-      in_mst[node->get_data()] = true;
+      in_mst.insert(node);
 
-      for (auto& adj_node : node->get_adj_list()) {
-        Edge* edge = get_edge(node, adj_node);
-
-        if (!in_mst[adj_node->get_data()] && adj_node->get_distance() > edge->get_weight()) {
-          adj_node->set_distance(edge->get_weight());
-          adj_node->set_predecessor(node);
-          pq.push(adj_node);
+      for (auto& adj : node->get_adj_list()) {
+        Edge* edge = get_edge(node, adj);
+        if (!in_mst.count(adj) && adj->get_distance() > edge->get_weight()) {
+          adj->set_predecessor(node);
+          adj->set_distance(edge->get_weight());
+          pq.push(adj);
         }
       }
     }
   }
 
-  void print_mst() {
-    std::cout << std::endl << "Minimum Spanning Tree" << std::endl;
-    for (auto& node : nodes) {
-      node->get_predecessor()
-          ? std::cout << "Node: " << node->get_data() << " (predecessor: " << node->get_predecessor()->get_data()
-                      << ", distance: " << node->get_distance() << "), distance: " << node->get_distance() << std::endl
-          : std::cout << "Node: " << node->get_data() << " (predecessor: NULL), distance: " << node->get_distance()
-                      << std::endl;
-    }
+  void print_mst(std::ostream& out = std::cout, std::string message = "Minimum Spanning Tree") {
+    out << message << std::endl;
+    for (auto& node : nodes) out << node->get_info() << std::endl;
+    out << std::endl;
   }
 
   bool is_binary() {
     for (auto& node : nodes) {
       int children = 0;
 
-      for (auto& adj_node : node->get_adj_list()) {
-        if (adj_node != node->get_predecessor()) {
-          children++;
-        }
+      for (auto& adj : node->get_adj_list()) {
+        if (adj != node->get_predecessor()) children++;
       }
 
       if (children > 2) return false;
@@ -171,10 +189,8 @@ public:
     for (auto& node : nodes) {
       std::vector<Node*> children;
 
-      for (auto& adj_node : node->get_adj_list()) {
-        if (adj_node != node->get_predecessor()) {
-          children.push_back(adj_node);
-        }
+      for (auto& adj : node->get_adj_list()) {
+        if (adj != node->get_predecessor()) children.push_back(adj);
       }
 
       if (children.size() < 2) is_leaf = true;
@@ -186,4 +202,4 @@ public:
   }
 };
 
-#endif  // GRAPH_HPP
+#endif
