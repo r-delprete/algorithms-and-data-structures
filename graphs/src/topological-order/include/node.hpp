@@ -36,14 +36,14 @@ public:
   void add_adjacent(Node* node) { adj_list.push_back(node); }
   void set_color(Color new_color) { color = new_color; }
 
-  std::string get_node_info() {
+  std::string get_info() {
     if (predecessor) {
-      return "Node: " + std::to_string(data) + " - (predecessor: " + std::to_string(predecessor->data) +
+      return "Node: " + std::to_string(data) + " => (predecessor: " + std::to_string(predecessor->data) +
              ") - start visit: " + std::to_string(start_discovery) + " - end visit: " + std::to_string(end_visit);
     }
 
     return "Node: " + std::to_string(data) +
-           " - (predecessor: NULL) - start visit: " + std::to_string(start_discovery) +
+           " => (predecessor: NULL) - start visit: " + std::to_string(start_discovery) +
            " - end visit: " + std::to_string(end_visit);
   }
 };
