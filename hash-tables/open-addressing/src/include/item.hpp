@@ -1,5 +1,6 @@
 #ifndef ITEM_HPP
 #define ITEM_HPP
+#include <string>
 
 template <typename K, typename V>
 class Item {
@@ -13,8 +14,10 @@ public:
   K get_key() { return key; }
   V get_value() { return value; }
 
-  void set_key(K new_key) { key = new_key; }
-  void set_value(V new_value) { value = new_value; }
+  void set_key(K key) { this->key = this->key; }
+  void set_value(V value) { this->value = value; }
+
+  void print(std::ostream& out = std::cout) { out << "[Key: " << key << " - Value: " << value << "]"; }
 };
 
 #endif  // ITEM_HPP
