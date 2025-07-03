@@ -31,6 +31,12 @@ public:
   }
 
   void load(std::ifstream& input) {
+    input.clear();
+    input.seekg(0, std::ios::beg);
+
+    nodes.clear();
+    edges.clear();
+
     std::string totals_token;
     std::getline(input, totals_token);
     if (totals_token.front() == '<') totals_token = totals_token.substr(1);

@@ -3,106 +3,115 @@
 
 #include <fstream>
 #include <iostream>
+#include <memory>
+#include <sstream>
+#include <string>
 #include <vector>
 
 class MinHeap {
-private:
-  std::vector<int> data;
+  std::vector<std::unique_ptr<int>> data;
   int size;
 
-  void min_heapify(int index) {
-    int left = 2 * index + 1;
-    int right = 2 * index + 2;
-    int min = index;
+  void build_heap() {
+    for (int i = size / 2; i >= 0; i--) heapify(i, size);
+  }
 
-    if (left < size && data[left] < data[min]) min = left;
-    if (right < size && data[right] < data[min]) min = right;
+  void heapify(int index, int size) {
+    int min = index, left = 2 * index + 1, right = 2 * index + 2;
+
+    if (left < size && *data[min] > *data[left]) min = left;
+    if (right < size && *data[min] > *data[right]) min = right;
 
     if (min != index) {
-      std::swap(data[min], data[index]);
-      min_heapify(min);
+      std::swap(data[index], data[min]);
+      heapify(min, size);
     }
   }
 
-  void build_min_heap() {
-    for (int i = size / 2; i >= 0; i--) min_heapify(i);
+  int search(int item) {
+    for (int i = 0; i < data.size(); i++) {
+      if (*data[i] == item) return i;
+    }
+
+    std::cerr << "[Search error] => Item " << item << " not found" << std::endl;
+    return -1;
   }
 
   void shift_up(int index) {
-    while (index > 0 && data[(index - 1) / 2] > data[index]) {
+    while (index > 0 && *data[(index - 1) / 2] > *data[index]) {
       std::swap(data[index], data[(index - 1) / 2]);
       index = (index - 1) / 2;
     }
   }
 
-  int search(int key) {
-    for (int i = 0; i < data.size(); i++) {
-      if (data[i] == key) return i;
-    }
-
-    return -1;
-  }
-
 public:
-  MinHeap(std::ifstream& input_file) {
-    int value;
-    while (input_file >> value) data.push_back(value);
-    input_file.close();
+  MinHeap() {}
 
+  MinHeap(std::ifstream& input) { load(input); }
+
+  void load(std::ifstream& input) {
+    std::string line;
+    std::getline(input, line);
+    line = line.front() == '<' ? line.substr(1) : line;
+    if (line.back() == '>') line.pop_back();
+    for (auto& c : line) c = c == ',' ? ' ' : c;
+
+    std::istringstream stream(line);
+    int item;
+    while (stream >> item) insert(std::unique_ptr<int>(new int(item)));
+    stream.clear();
+
+    build_heap();
+  }
+
+  void insert(std::unique_ptr<int> item) {
+    data.push_back(std::move(item));
     size = data.size();
-
-    build_min_heap();
+    shift_up(size - 1);
   }
 
-  void print() {
-    for (auto& value : data) std::cout << value << "\t";
-    std::cout << std::endl;
-  }
-
-  void print_in_file(std::ofstream& output_file) {
-    for (auto& value : data) output_file << value << "\t";
-    output_file << std::endl;
-
-    output_file.close();
-  }
-
-  void decrease_key(int old_key, int new_key) {
-    if (new_key > old_key) {
-      std::cerr << "New key is greater than old key" << std::endl;
-      return;
+  std::unique_ptr<int> extract_min() {
+    if (data.empty()) {
+      std::cerr << "[extract_min error] => Heap is empty" << std::endl;
+      return nullptr;
     }
 
-    int index = search(old_key);
+    std::unique_ptr<int> min = std::move(data[0]);
+    std::swap(data[0], data[size - 1]);
+    size--;
+    data.pop_back();
+    heapify(0, size);
 
-    if (index == -1) return;
-
-    data[index] = new_key;
-    shift_up(index);
+    return min;
   }
 
   void heap_sort() {
-    build_min_heap();
+    build_heap();
 
     for (int i = size - 1; i >= 0; i--) {
       std::swap(data[0], data[i]);
       size--;
-      min_heapify(0);
+      heapify(0, i);
     }
   }
 
-  int* extract_min() {
-    if (size == 0) {
-      std::cerr << "Heap is empty" << std::endl;
-      return nullptr;
+  void decrease_key(int old_value, int new_value) {
+    if (new_value > old_value) {
+      std::cerr << "[decrease_key error] => New value is greater than old value" << std::endl;
+      return;
     }
 
-    int* min = new int(data[0]);
-    std::swap(data[0], data[size - 1]);
-    size--;
-    data.pop_back();
-    min_heapify(0);
+    int index = search(old_value);
+    if (index != -1) {
+      data[index].reset(new int(new_value));
+      shift_up(index);
+    }
+  }
 
-    return min;
+  void print(std::string message = "Heap", std::ostream& out = std::cout) {
+    out << message << std::endl;
+    for (const auto& value : data) out << *value << "\t";
+    out << std::endl;
   }
 };
 

@@ -3,26 +3,28 @@
 using namespace std;
 
 int main(int argc, char** argv) {
-  ifstream input_file("input.txt");
-  ofstream output_file("output.txt");
+  ifstream input("input.txt");
+  ifstream input2("input2.txt");
+  ofstream output("output.txt");
 
-  MinHeap mh(input_file);
+  MinHeap heap(input);
+  MinHeap heap2(input2);
 
-  mh.print_in_file(output_file);
-  mh.print();
+  heap.print("Heap with easiest input");
+  heap2.print("\nHeap with hardest input");
 
-  mh.decrease_key(25, 14);
-  cout << endl << "After decrease key:" << endl;
-  mh.print();
+  unique_ptr<int> min = heap.extract_min();
 
-  int* min = mh.extract_min();
+  cout << endl << "Minimum value (easiest input) => ";
+  min ? cout << *min : cout << "NULL";
+  cout << endl;
 
-  if (min) cout << endl << "Minimum value: " << *min << endl;
+  heap2.decrease_key(20, 1);
+  heap2.print("\nAfter decrease key");
 
-  mh.heap_sort();
-
-  cout << endl << "After heap sort:" << endl;
-  mh.print();
+  input.close();
+  input2.close();
+  output.close();
 
   return 0;
 }

@@ -4,6 +4,7 @@
 #include <algorithm>
 #include <fstream>
 #include <iostream>
+#include <sstream>
 
 #include "edge.hpp"
 
@@ -59,25 +60,51 @@ private:
   }
 
 public:
-  Graph(std::ifstream& input_file) : time(0) {
-    input_file >> tot_nodes >> tot_edges;
+  Graph() : time(0) {}
+
+  Graph(std::ifstream& input) : time(0) { load(input); }
+
+  ~Graph() {
+    for (auto& node : nodes) delete node;
+    for (auto& edge : edges) delete edge;
+  }
+
+  void load(std::ifstream& input) {
+    input.clear();
+    input.seekg(0, std::ios::beg);
+
+    nodes.clear();
+    edges.clear();
+
+    std::string totals_token;
+    std::getline(input, totals_token);
+    totals_token = totals_token.front() == '<' ? totals_token.substr(1) : totals_token;
+    if (totals_token.back() == '>') totals_token.pop_back();
+
+    for (auto& c : totals_token) c = c == ',' ? ' ' : c;
+
+    std::istringstream stream(totals_token);
+    stream >> tot_nodes >> tot_edges;
+    stream.clear();
 
     for (int i = 0; i < tot_nodes; i++) insert_node(new Node(i));
 
-    for (int i = 0; i < tot_edges; i++) {
-      int node1, node2, weight;
-      input_file >> node1 >> node2 >> weight;
+    std::string edges_token;
+    while (std::getline(input, edges_token)) {
+      edges_token = edges_token.front() == '<' ? edges_token.substr(1) : edges_token;
+      if (edges_token.back() == '>') edges_token.pop_back();
 
-      Node* src = get_node(node1);
-      Node* dest = get_node(node2);
+      for (auto& c : edges_token) c = c == ',' ? ' ' : c;
+      stream.str(edges_token);
 
-      if (src && dest)
-        insert_edge(new Edge(src, dest, weight));
-      else
-        std::cerr << "Cannot add edge because " << node1 << " and/or " << node2 << " doesn't exists" << std::endl;
+      int src_data, dest_data, weight;
+      stream >> src_data >> dest_data >> weight;
+
+      Node *src = get_node(src_data), *dest = get_node(dest_data);
+      if (src && dest) insert_edge(new Edge(src, dest, weight));
+
+      stream.clear();
     }
-
-    input_file.close();
   }
 
   Node* get_node(int data) {

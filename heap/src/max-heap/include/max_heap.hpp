@@ -1,113 +1,123 @@
-
 #ifndef MAX_HEAP_HPP
 #define MAX_HEAP_HPP
 
 #include <fstream>
 #include <iostream>
+#include <memory>
+#include <sstream>
+#include <string>
 #include <vector>
 
 class MaxHeap {
-private:
-  std::vector<int> data;
+  std::vector<std::unique_ptr<int>> data;
   int size;
 
-  void build_max_heap() {
-    for (int i = size / 2; i >= 0; i--) max_heapify(i);
+  void build_heap() {
+    for (int i = size / 2; i >= 0; i--) heapify(i, size);
   }
 
-  void max_heapify(int index) {
-    int left = 2 * index + 1;
-    int right = 2 * index + 2;
-    int max = index;
+  void heapify(int index, int size) {
+    int max = index, left = 2 * index + 1, right = 2 * index + 2;
 
-    if (left < size && data[left] > data[max]) max = left;
-    if (right < size && data[right] > data[max]) max = right;
+    if (left < size && *data[left] > *data[max]) max = left;
+    if (right < size && *data[right] > *data[max]) max = right;
 
     if (max != index) {
       std::swap(data[max], data[index]);
-      max_heapify(max);
+      heapify(max, size);
     }
   }
 
-  int search(int key) {
+  int search(int item) {
     for (int i = 0; i < data.size(); i++) {
-      if (data[i] = key) return i;
+      if (*data[i] == item) return i;
     }
 
+    std::cerr << "Item " << item << " not found" << std::endl;
     return -1;
   }
 
   void shift_up(int index) {
-    while (index > 0 && data[(index - 1) / 2] < data[index]) {
-      std::swap(data[(index - 1) / 2], data[index]);
+    while (index > 0 && *data[(index - 1) / 2] < *data[index]) {
+      std::swap(data[index], data[(index - 1) / 2]);
       index = (index - 1) / 2;
     }
   }
 
 public:
-  MaxHeap(std::ifstream& input_file) {
-    int value;
-    while (input_file >> value) data.push_back(value);
-    input_file.close();
+  MaxHeap() : size(0) {}
 
-    size = data.size();
+  MaxHeap(std::ifstream& input) : size(0) { load(input); }
 
-    build_max_heap();
+  void load(std::ifstream& input) {
+    input.clear();
+    input.seekg(0, std::ios::beg);
+
+    data.clear();
+
+    std::string line;
+    std::getline(input, line);
+
+    line = line.front() == '<' ? line.substr(1) : line;
+    if (line.back() == '>') line.pop_back();
+    for (auto& c : line) c = (c == ',' ? ' ' : c);
+
+    std::istringstream stream(line);
+    int item;
+    while (stream >> item) insert(std::unique_ptr<int>(new int(item)));
+    stream.clear();
+
+    build_heap();
   }
 
-  int* extract_max() {
-    if (size == 0) {
+  void insert(std::unique_ptr<int> item) {
+    data.push_back(std::move(item));
+    size = data.size();
+    shift_up(size - 1);
+  }
+
+  std::unique_ptr<int> extract_max() {
+    if (data.empty()) {
       std::cerr << "Heap is empty" << std::endl;
       return nullptr;
     }
 
-    int* max = new int(data[0]);
+    std::unique_ptr<int> max = std::move(data[0]);
     std::swap(data[0], data[size - 1]);
     size--;
     data.pop_back();
-    max_heapify(0);
+    heapify(0, size);
 
     return max;
   }
 
-  void increase_key(int old_key, int new_key) {
-    if (new_key < old_key) {
-      std::cerr << "New key is less than old key" << std::endl;
-      return;
-    }
-
-    int index = search(old_key);
-
-    if (index == -1) {
-      std::cerr << "Old key not found" << std::endl;
-      return;
-    }
-
-    data[index] = new_key;
-    shift_up(index);
-  }
-
   void heap_sort() {
-    build_max_heap();
-
+    build_heap();
     for (int i = size - 1; i >= 0; i--) {
       std::swap(data[0], data[i]);
       size--;
-      max_heapify(0);
+      heapify(0, i);
     }
   }
 
-  void print() {
-    for (int& value : data) std::cout << value << "\t";
-    std::cout << std::endl;
+  void print(std::string message = "Heap", std::ostream& out = std::cout) {
+    out << message << std::endl;
+    for (const auto& value : data) out << *value << "\t";
+    out << std::endl;
   }
 
-  void print_in_file(std::ofstream& out) {
-    for (int& value : data) out << value << "\t";
-    out << std::endl;
+  void increase_key(int new_value, int old_value) {
+    if (new_value < old_value) {
+      std::cerr << "New value is less than old value" << std::endl;
+      return;
+    }
 
-    out.close();
+    int index = search(old_value);
+    if (index != -1) {
+      data[index].reset(new int(new_value));
+      shift_up(index);
+    }
   }
 };
 
-#endif  // MAX_HEAP_HPP
+#endif

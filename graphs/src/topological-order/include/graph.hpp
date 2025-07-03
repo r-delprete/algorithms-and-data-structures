@@ -96,7 +96,7 @@ private:
   }
 
 public:
-  Graph(std::ifstream& input) { load_from_file(input); }
+  Graph(std::ifstream& input) { load(input); }
 
   Graph() {}
 
@@ -105,27 +105,16 @@ public:
     for (auto& edge : edges) delete edge;
   }
 
-  void load_from_file(std::ifstream& input) {
+  void load(std::ifstream& input) {
     std::string line;
     std::getline(input, line);
     std::string formatted = line;
     if (line.front() == '<') formatted = formatted.substr(1);
-    if (line.back() == '>') formatted = formatted.substr(0, line.size() - 1);
+    if (line.back() == '>') formatted.pop_back();
 
-    std::size_t delim_pos = formatted.find(',');
-    std::istringstream stream;
-    if (delim_pos != std::string::npos) {
-      stream.str(formatted.substr(0, delim_pos));
-      stream >> tot_nodes;
-      stream.clear();
-
-      stream.str(formatted.substr(delim_pos + 1));
-      stream >> tot_edges;
-    } else {
-      stream.str(formatted);
-      stream >> tot_nodes >> tot_edges;
-    }
-    stream.clear();
+    for (char& c : formatted) c = c == ',' ? ' ' : c;
+    std::istringstream stream(formatted);
+    stream >> tot_nodes >> tot_edges;
 
     for (int i = 0; i < tot_nodes; i++) insert_node(new Node(i));
 
@@ -133,17 +122,15 @@ public:
       stream.clear();
       std::string formatted = line;
       if (line.front() == '<') formatted = formatted.substr(1);
-      if (line.back() == '>') formatted = formatted.substr(0, line.size() - 1);
+      if (line.back() == '>') formatted.pop_back();
+
+      for (char& c : formatted) c = c == ',' ? ' ' : c;
       stream.str(formatted);
 
-      std::string token;
       int src_data, dest_data, weight;
-      if (std::getline(stream, token, ',')) src_data = stoi(token);
-      if (std::getline(stream, token, ',')) dest_data = stoi(token);
-      if (std::getline(stream, token, ',')) weight = stoi(token);
+      stream >> src_data >> dest_data >> weight;
 
-      Node* src = get_node(src_data);
-      Node* dest = get_node(dest_data);
+      Node *src = get_node(src_data), *dest = get_node(dest_data);
 
       if (src && dest) insert_edge(new Edge(src, dest, weight));
     }
