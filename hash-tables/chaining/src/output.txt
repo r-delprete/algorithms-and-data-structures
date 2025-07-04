@@ -1,29 +1,29 @@
 Hash table
-Index: 0 -> [key: 0 - value: ciao]
-Index: 1 -> empty bucket
-Index: 2 -> [key: 12 - value: uva]
-Index: 3 -> empty bucket
-Index: 4 -> empty bucket
-Index: 5 -> [key: 5 - value: pippo] -> [key: 15 - value: pluto]
-Index: 6 -> [key: 6 - value: mamma]
-Index: 7 -> empty bucket
-Index: 8 -> [key: 8 - value: mela]
-Index: 9 -> empty bucket
+List 0 => [Key: 0 - Value: ciao] => [Key: 5 - Value: pippo]
+List 1 => empty list
+List 2 => [Key: 15 - Value: pluto]
+List 3 => empty list
+List 4 => [Key: 12 - Value: uva]
+List 5 => empty list
+List 6 => empty list
+List 7 => [Key: 6 - Value: mamma]
+List 8 => empty list
+List 9 => [Key: 8 - Value: mela]
 
 Exam hash table
-Index: 0 -> [key: 0 - value: ciao] -> [key: 15 - value: pluto]
-Index: 1 -> empty bucket
-Index: 2 -> empty bucket
-Index: 3 -> empty bucket
-Index: 4 -> empty bucket
-Index: 5 -> [key: 5 - value: pippo pluto cazzo]
-Index: 6 -> [key: 6 - value: mamma]
-Index: 7 -> empty bucket
-Index: 8 -> [key: 8 - value: mela]
-Index: 9 -> empty bucket
-Index: 10 -> empty bucket
-Index: 11 -> empty bucket
-Index: 12 -> [key: 12 - value: uva]
-Index: 13 -> empty bucket
-Index: 14 -> empty bucket
+List 0 => [Key: 0 - Value: ciao]
+List 1 => [Key: 5 - Value: pippo]
+List 2 => empty list
+List 3 => empty list
+List 4 => [Key: 15 - Value: pluto]
+List 5 => empty list
+List 6 => [Key: 12 - Value: uva]
+List 7 => empty list
+List 8 => empty list
+List 9 => empty list
+List 10 => [Key: 6 - Value: mamma]
+List 11 => empty list
+List 12 => empty list
+List 13 => empty list
+List 14 => [Key: 8 - Value: mela]
 

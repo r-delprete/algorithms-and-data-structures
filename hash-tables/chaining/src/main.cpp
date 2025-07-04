@@ -3,26 +3,26 @@
 using namespace std;
 
 int main(int argc, char** argv) {
-  ifstream input_file("input.txt");
-  ofstream output_file("output.txt");
+  ifstream input("input.txt");
+  ofstream output("output.txt");
   ifstream exam_input("exam_input_example.txt");
 
-  Hash_Table<int, string> ht(10, input_file);
-  Hash_Table<int, string> ht_exam(15, exam_input, true);
+  HashTable<int, string> ht(10, input);
+  HashTable<int, string> ht_exam(15, exam_input);
 
   ht.print();
   ht_exam.print("Exam hash table");
-  ht.print("Hash table", output_file);
-  ht_exam.print("Exam hash table", output_file);
+  ht.print("Hash table", output);
+  ht_exam.print("Exam hash table", output);
 
   ht.search(6);
-  ht.delete_element(12);
+  ht.delete_item(12);
 
   cout << endl;
-  ht.print("After deleting item 12");
+  ht.print("Base hash table after deleting item 12");
 
-  input_file.close();
-  output_file.close();
+  input.close();
+  output.close();
   exam_input.close();
 
   return 0;

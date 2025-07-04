@@ -3,29 +3,29 @@
 
 #include <cmath>
 #include <fstream>
-#include <iostream>
 #include <list>
+#include <memory>
 #include <sstream>
 #include <string>
 #include <vector>
 
+#include "../../../../cpp-utils/logger.hpp"
 #include "item.hpp"
 
-enum HashingFunction { divide, multiply };
+enum Hashing { multiply, division };
 
 template <typename K, typename V>
-class Hash_Table {
-private:
-  std::vector<std::list<Item<K, V>*>> ht;
+class HashTable {
+  std::vector<std::list<std::unique_ptr<Item<K, V>>>> data;
   int size;
-  HashingFunction fn = divide;
+  Hashing hashing;
 
   int h(K key) {
-    switch (fn) {
-      case HashingFunction::multiply: {
-        double prod = ((sqrt(5) - 1) / 2) * key;
-        double frac = prod - floor(prod);
-        return size * frac;
+    switch (hashing) {
+      case Hashing::multiply: {
+        double product = ((sqrt(5) - 1) / 2) * key;
+        double frac = product - floor(product);
+        return frac * size;
       }
       default:
         return key % size;
@@ -33,103 +33,107 @@ private:
   }
 
 public:
-  Hash_Table(int size, std::ifstream& input, bool complex_input = false, HashingFunction fn = divide) : size(size) {
-    ht.resize(size);
-    set_hashing_function(fn);
+  HashTable(int size, Hashing hashing = division) : size(size) { data.resize(size); }
 
-    if (complex_input) {
-      std::string line;
-      while (std::getline(input, line)) {
-        size_t open_bracket_pos = line.find("<"), close_bracket_pos = line.find(">");
-        std::string formatted = line.substr(open_bracket_pos + 1, close_bracket_pos - open_bracket_pos - 1);
-        size_t comma_pos = formatted.find(",");
+  HashTable(int size, std::ifstream& input, Hashing hashing = division) : size(size) {
+    data.resize(size);
+    load(input);
+  }
 
-        std::istringstream stream(formatted.substr(0, comma_pos));
-        K key;
-        stream >> key;
-        stream.clear();
+  void load(std::ifstream& input) {
+    std::string line;
+    while (std::getline(input, line)) {
+      if (line.front() == '<') line = line.substr(1);
+      if (line.back() == '>') line.pop_back();
+      for (auto& c : line) c = c == ',' ? ' ' : c;
 
-        stream.str(formatted.substr(comma_pos + 1));
-        V value;
-        getline(stream, value);
-        stream.clear();
-
-        insert(new Item<K, V>(key, value));
-      }
-    } else {
+      std::istringstream ss(line);
       K key;
       V value;
-      while (input >> key >> value) insert(new Item<K, V>(key, value));
+
+      ss >> key >> value;
+      insert(std::unique_ptr<Item<K, V>>(new Item<K, V>(key, value)));
+      ss.clear();
     }
   }
 
-  ~Hash_Table() {
-    for (auto& list : ht) {
-      for (auto& item : list) delete item;
-    }
-  }
-
-  void set_hashing_function(HashingFunction fn) {
-    if (this->fn == fn) return;
-
-    std::cout << "Changing hashing function from " << (this->fn == multiply ? "MULTIPLY" : "DIVIDE") << " to "
-              << (fn == multiply ? "MULTIPLY" : "DIVIDE") << std::endl;
-    this->fn = fn;
-  }
-
-  void insert(Item<K, V>* element) {
-    int index = h(element->get_key());
-    ht[index].push_back(element);
+  void insert(std::unique_ptr<Item<K, V>> item) {
+    int index = h(item->get_key());
+    data[index].push_back(std::move(item));
   }
 
   Item<K, V>* search(K key) {
-    int index = h(key);
+    std::ostringstream oss;
 
-    for (auto& item : ht[index]) {
+    int index = h(key);
+    if (data[index].empty()) {
+      log("List " + std::to_string(index) + " is empty", LogLevel::ERROR);
+      return nullptr;
+    }
+
+    for (auto& item : data[index]) {
       if (item->get_key() == key) {
-        std::cout << "Item " << "[Key: " << item->get_key() << " - Value: " << item->get_value() << "] found in list -"
-                  << index << "-" << std::endl;
-        return item;
+        oss << "Item ";
+        item->print(oss);
+        oss << " found in list " << index;
+        log(oss.str());
+
+        return item.get();
       }
     }
 
-    std::cerr << "Item with key -" << key << "- not found in list -" << index << "-" << std::endl;
+    oss.clear();
+    oss << "Item " << key << " not found in list " << index;
+    log(oss.str(), LogLevel::ERROR);
     return nullptr;
   }
 
-  void delete_element(K key) {
+  void delete_item(K key) {
+    std::ostringstream oss;
+
     int index = h(key);
 
-    for (auto it = ht[index].begin(); it != ht[index].end(); it++) {
+    if (data[index].empty()) {
+      log("List " + std::to_string(index) + " is empty", LogLevel::ERROR);
+      return;
+    }
+
+    for (auto it = data[index].begin(); it != data[index].end(); it++) {
       if ((*it)->get_key() == key) {
-        auto item = (*it);
-        ht[index].erase(it);
-        std::cout << "Item " << "[Key: " << item->get_key() << " - Value: " << item->get_value() << "] deleted"
-                  << std::endl;
+        oss << "Item ";
+        (*it)->print(oss);
+        oss << " deleted from list " << index;
+        log(oss.str());
+
+        data[index].erase(it);
         return;
       }
     }
 
-    std::cerr << "Item with key -" << key << "- not found in list -" << index << "-" << std::endl;
+    oss.clear();
+    oss << "Item " << key << " not found in list " << index;
+    log(oss.str(), LogLevel::ERROR);
     return;
   }
 
-  void print(std::string title = "Hash table", std::ostream& out = std::cout) {
-    out << title << std::endl;
-    for (int i = 0; i < size; i++) {
-      out << "Index: " << i;
+  void print(std::string message = "Hash table", std::ostream& out = std::cout) {
+    out << message << std::endl;
 
-      if (ht[i].empty())
-        out << " -> empty bucket" << std::endl;
+    for (int i = 0; i < size; i++) {
+      out << "List " << i;
+      if (data[i].empty())
+        out << " => empty list";
       else {
-        for (auto& item : ht[i]) {
-          out << " -> [key: " << item->get_key() << " - value: " << item->get_value() << "]";
-        }
-        out << std::endl;
+        for (auto& item : data[i]) {
+          out << " => ";
+          item->print(out);
+        };
       }
+      out << std::endl;
     }
+
     out << std::endl;
   }
 };
 
-#endif  // HASH_TABLE_HPP
+#endif
