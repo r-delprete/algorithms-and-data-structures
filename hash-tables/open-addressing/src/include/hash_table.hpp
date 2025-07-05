@@ -1,7 +1,10 @@
+#ifndef HASH_TABLE_HPP
+#define HASH_TABLE_HPP
+
+#include <cmath>
 #include <fstream>
-#include <iostream>
-#include <memory>
 #include <sstream>
+#include <string>
 #include <vector>
 
 #include "../../../../cpp-utils/logger.hpp"
@@ -11,33 +14,44 @@ enum Hashing { linear, double_hash, quadratic };
 
 template <typename K, typename V>
 class HashTable {
-  std::vector<std::unique_ptr<Item<K, V>>> data;
+  std::vector<Item<K, V>*> data;
   int size;
-  Hashing hashing = Hashing::linear;
+  Hashing hashing;
 
-  int h(const K& key, int index) {
+  void clear() {
+    for (auto& item : data) {
+      delete item;
+      item = nullptr;
+    }
+  }
+
+  int h(K key, int index) {
     switch (hashing) {
+      case Hashing::quadratic:
+        return (key + index * int(std::pow(index, 2))) % size;
+
       case Hashing::double_hash: {
         int hash1 = key % size;
         int hash2 = 1 + (key % (size - 1));
+
         return (hash1 + index * hash2) % size;
       }
-      case Hashing::quadratic:
-        return (key + index + index * index) % size;
+
       default:
         return (key + index) % size;
     }
   }
 
 public:
-  HashTable(int size, Hashing hashing = Hashing::linear) : size(size), hashing(hashing) { data.resize(size); }
-
-  HashTable(int size, std::ifstream& input, Hashing hashing = Hashing::linear) : size(size), hashing(hashing) {
-    data.resize(size);
+  HashTable(int size, std::ifstream& input) : size(size) {
+    data.resize(size, nullptr);
     load(input);
   }
 
+  ~HashTable() { clear(); }
+
   void load(std::ifstream& input) {
+    clear();
     input.clear();
     input.seekg(0, std::ios::beg);
 
@@ -45,30 +59,31 @@ public:
     while (std::getline(input, line)) {
       line = line.front() == '<' ? line.substr(1) : line;
       if (line.back() == '>') line.pop_back();
-      for (auto& c : line) c = c == ',' ? ' ' : c;
+      for (auto& ch : line) ch = ch == ',' ? ' ' : ch;
 
-      std::istringstream stream(line);
+      std::istringstream iss(line);
       K key;
       V value;
+      iss >> key >> value;
+      Item<K, V>* element = new Item<K, V>(key, value);
+      insert(element);
 
-      stream >> key >> value;
-      insert(std::unique_ptr<Item<K, V>>(new Item<K, V>(key, value)));
-
-      stream.clear();
+      iss.clear();
+      iss.str("");
     }
   }
 
-  void insert(std::unique_ptr<Item<K, V>> item) {
+  void insert(Item<K, V>* element) {
     for (int i = 0; i < size; i++) {
-      int index = h(item->get_key(), i);
+      int index = h(element->get_key(), i);
 
       if (!data[index]) {
-        data[index] = std::move(item);
+        data[index] = element;
         return;
       }
     }
 
-    log("overflow", LogLevel::ERROR);
+    log("Overflow", LogLevel::ERROR);
   }
 
   void print(std::string message = "Hash table", std::ostream& out = std::cout) {
@@ -86,63 +101,72 @@ public:
     out << std::endl;
   }
 
-  std::unique_ptr<Item<K, V>> search(const K& key) {
+  Item<K, V>* search(K key) {
     std::ostringstream oss;
-
     for (int i = 0; i < size; i++) {
       int index = h(key, i);
 
       if (!data[index]) {
         oss.clear();
-        oss << "Not found item with key " << key << " at index " << index;
+        oss.str("");
+        oss << "Cell " << index << " is empty";
         log(oss.str(), LogLevel::ERROR);
+
         return nullptr;
       }
 
       if (data[index]->get_key() == key) {
         oss.clear();
-        oss << "Found item with key " << key << " at index " << index;
+        oss.str("");
+        oss << key << " found in cell " << index;
         log(oss.str());
-
-        return std::move(data[index]);
+        return data[index];
       }
     }
 
     oss.clear();
-    oss << "Item with key " << key << " not found";
-    ::log(oss.str(), LogLevel::ERROR);
+    oss.str("");
+    oss << "Key " << key << " not found";
+    log(oss.str(), LogLevel::ERROR);
     return nullptr;
   }
 
-  void delete_item(const K& key) {
+  void delete_element(K key) {
     std::ostringstream oss;
-
     for (int i = 0; i < size; i++) {
       int index = h(key, i);
 
       if (!data[index]) {
         oss.clear();
-        oss << "Not found item with key " << key << " at index " << index;
+        oss.str("");
+        oss << "Cell " << index << " is empty";
         log(oss.str(), LogLevel::ERROR);
+
         return;
       }
 
       if (data[index]->get_key() == key) {
         oss.clear();
-        oss << "Deleting item ";
-        data[index]->print(oss);
-        oss << "...";
+        oss.str("");
+        oss << key << " found in cell " << index;
         log(oss.str());
-
+        delete data[index];
         data[index] = nullptr;
-        log("Item deleted successfully");
+        oss.clear();
+        oss.str("");
+        oss << key << " deleted successfully";
+        log(oss.str());
 
         return;
       }
     }
 
     oss.clear();
-    oss << "Item with key " << key << " not deleted";
-    ::log(oss.str(), LogLevel::ERROR);
+    oss.str("");
+    oss << "Key " << key << " not found";
+    log(oss.str(), LogLevel::ERROR);
+    return;
   }
 };
+
+#endif

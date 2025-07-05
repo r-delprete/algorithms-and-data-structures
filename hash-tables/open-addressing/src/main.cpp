@@ -10,8 +10,8 @@ int main(int argc, char** argv) {
   HashTable<int, string> ht(12, input);
   ht.print();
 
-  ht.search(4);
-  ht.delete_item(12);
+  ht.search(6);
+  ht.delete_element(12);
 
   input.close();
   input2.close();

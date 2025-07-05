@@ -4,44 +4,43 @@
 #include <climits>
 #include <iostream>
 
+enum Child { left, right };
+
 template <typename T>
 class Node {
-private:
   T key;
-  char character;
+  char ch;
+  Node<T>*left, *right, *parent;
   int frequency;
-  Node<T>*parent, *left, *right;
 
 public:
-  Node(T key, char character = '*', int frequency = INT_MAX) : key(key), character(character), frequency(frequency) {
-    parent = left = right = nullptr;
-  }
+  Node(T key, char ch, Node<T>* left = nullptr, Node<T>* right = nullptr, Node<T>* parent = nullptr)
+      : key(key), ch(ch), left(left), right(right), parent(parent) {}
 
-  Node(char character = '*', int frequency = INT_MAX, Node<T>* parent = nullptr, Node<T>* left = nullptr,
-       Node<T>* right = nullptr)
-      : character(character), frequency(frequency), parent(parent), left(left), right(right) {}
+  Node(T key, int frequency = INT_MAX, char ch = '*', Node<T>* left = nullptr, Node<T>* right = nullptr,
+       Node<T>* parent = nullptr)
+      : key(key), frequency(frequency), ch(ch), left(left), right(right), parent(parent) {}
 
   ~Node() {
     delete left;
     delete right;
   }
 
-  T get_key() { return key; }
-  char get_character() { return character; }
-  int get_frequency() { return frequency; }
-  Node<T>*& get_left() { return left; }
-  Node<T>*& get_right() { return right; }
+  T& get_key() { return key; }
+  char& get_character() { return ch; }
+  int& get_frequency() { return frequency; }
+  Node<T>*& get_child(Child dir) { return (dir == Child::left ? left : right); }
   Node<T>*& get_parent() { return parent; }
 
   void set_key(T key) { this->key = key; }
-  void set_character(char character) { this->character = character; }
-  void set_frequencu(int frequency) { this->frequency = frequency; }
+  void set_character(char ch) { this->ch = ch; }
+  void set_frequency(int frequency) { this->frequency = frequency; }
   void set_left(Node<T>* left) { this->left = left; }
   void set_right(Node<T>* right) { this->right = right; }
   void set_parent(Node<T>* parent) { this->parent = parent; }
 
   void print(std::ostream& out = std::cout) {
-    out << "(Key: " << key << " - Character: " << character << ")";
+    out << "(Key: " << key << " - Character: " << ch << ")";
 
     out << " - Parent: ";
     if (parent)

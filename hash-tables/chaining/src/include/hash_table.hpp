@@ -9,8 +9,8 @@
 #include <string>
 #include <vector>
 
-#include "../../../../cpp-utils/logger.hpp"
 #include "item.hpp"
+#include "logger.hpp"
 
 enum Hashing { multiply, division };
 

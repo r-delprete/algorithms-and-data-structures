@@ -4,17 +4,16 @@
 #include <fstream>
 #include <queue>
 #include <sstream>
-#include <string>
 #include <unordered_map>
 #include <vector>
 
+#include "logger.hpp"
 #include "node.hpp"
 
 template <typename T>
 class Huffman {
-private:
-  Node<T>* root = nullptr;
   std::vector<Node<T>*> nodes;
+  Node<T>* root;
   std::unordered_map<char, std::string> codes;
 
   struct Compare {
@@ -28,10 +27,11 @@ private:
     while (pq.size() > 1) {
       Node<T>* left = pq.top();
       pq.pop();
+
       Node<T>* right = pq.top();
       pq.pop();
 
-      Node<T>* node = new Node<T>('*', left->get_frequency() + right->get_frequency(), nullptr, left, right);
+      Node<T>* node = new Node<T>(-1, left->get_frequency() + right->get_frequency(), '*', left, right);
       left->set_parent(node);
       right->set_parent(node);
 
@@ -40,93 +40,112 @@ private:
 
     root = pq.top();
     pq.pop();
+  }
 
+  void delete_tree(Node<T>*& node) {
+    if (!node) return;
+
+    delete_tree(node->get_child((Child::left)));
+    delete_tree(node->get_child((Child::right)));
+    delete node;
+  }
+
+  void clear_nodes() {
+    if (!nodes.empty()) {
+      for (auto& node : nodes) delete node;
+    }
+    nodes.clear();
+  }
+
+public:
+  Huffman() : root(nullptr) {}
+
+  Huffman(std::ifstream& input) : root(nullptr) {
+    load(input);
+    build_tree();
     generate_codes(root);
+  }
+
+  ~Huffman() {
+    delete_tree(root);
+    clear_nodes();
+  }
+
+  void load(std::ifstream& input) {
+    clear_nodes();
+    input.clear();
+    input.seekg(0, std::ios::beg);
+
+    std::string line;
+    while (std::getline(input, line)) {
+      if (line.front() == '<') line = line.substr(1);
+      if (line.back() == '>') line.pop_back();
+      for (auto& c : line) c = c == ',' ? ' ' : c;
+
+      std::istringstream ss(line);
+      int frequency;
+      char ch;
+
+      ss >> frequency >> ch;
+      nodes.push_back(new Node<T>(-1, frequency, ch));
+
+      ss.clear();
+      ss.str("");
+    }
   }
 
   void generate_codes(Node<T>* node, std::string path = "") {
     if (!node) return;
 
     if (node->is_leaf()) codes[node->get_character()] = path;
-    generate_codes(node->get_left(), path + "0");
-    generate_codes(node->get_right(), path + "1");
+    generate_codes(node->get_child(Child::left), path + "0");
+    generate_codes(node->get_child(Child::right), path + "1");
   }
 
-  void delete_tree(Node<T>* node) {
-    if (!node) return;
-    delete_tree(node->get_left());
-    delete_tree(node->get_right());
-    delete node;
-  }
-
-public:
-  Huffman() {}
-  Huffman(std::ifstream& input) {
-    load_from_file(input);
-    build_tree();
-  }
-
-  ~Huffman() { delete_tree(root); }
-
-  Node<T>* get_root() { return root; }
-
-  void set_nodes(std::vector<Node<T>*> nodes) { this->nodes = nodes; }
-
-  void load_from_file(std::ifstream& input) {
-    input.clear();
-    input.seekg(0, std::ios::beg);
-
-    std::string line;
-    while (std::getline(input, line)) {
-      std::string formatted = line;
-      if (line.front() == '<') formatted = formatted.substr(1);
-      if (line.back() == '>') formatted = formatted.substr(0, line.size() - 1);
-
-      std::size_t delim_pos = formatted.find(',');
-      std::istringstream stream;
-      int frequency;
-      std::string character;
-      if (delim_pos != std::string::npos) {
-        stream.str(formatted.substr(0, delim_pos));
-
-        stream >> frequency;
-        stream.clear();
-
-        stream.str(formatted.substr(delim_pos + 1));
-        std::getline(stream, character);
-      } else {
-        stream.str(formatted);
-        stream >> frequency >> character;
-      }
-
-      nodes.push_back(new Node<T>(character[0], frequency));
-      stream.clear();
-    }
+  void print_codes(std::ostream& out = std::cout) {
+    out << "Huffman codes" << std::endl;
+    for (auto& pair : codes) out << pair.first << " => " << pair.second << std::endl;
+    out << std::endl;
   }
 
   std::string encode(std::string input) {
     std::string encoded;
 
-    for (auto c : input) {
-      if (codes.find(c) != codes.end())
-        encoded += codes[c] + (input.back() == c ? "" : " ");
-      else
+    for (auto& ch : input) {
+      if (codes.find(ch) != codes.end())
+        encoded += codes[ch] + (ch == input.back() ? "" : " ");
+      else {
+        std::ostringstream ss;
+        ss << "Error in encode Huffman function => " << ch << " not found in codes";
+        log(ss.str(), LogLevel::ERROR);
         return "";
+      }
     }
 
     return encoded;
+  }
+
+  void print_encode(std::string input, std::ostream& out = std::cout) {
+    std::string encoded = encode(input);
+    (encoded.empty() ? out << "Encoded string is empty"
+                     : out << "Encoded string for input \"" << input << "\" => " << encoded);
+    out << std::endl;
+  }
+
+  void print_decode(std::string encoded, std::ostream& out = std::cout) {
+    std::string decoded = decode(encoded);
+    (decoded.empty() ? out << "Decoded string is empty"
+                     : out << "Decoded string for encoded string \"" << encoded << "\" => " << decoded);
+    out << std::endl;
   }
 
   std::string decode(std::string encoded) {
     std::string decoded;
     Node<T>* current = root;
 
-    for (auto bit : encoded) {
-      if (bit == '0')
-        current = current->get_left();
-      else if (bit == '1')
-        current = current->get_right();
-
+    for (auto& bit : encoded) {
+      if (bit == '0') current = current->get_child(Child::left);
+      if (bit == '1') current = current->get_child(Child::right);
       if (current->is_leaf()) {
         decoded += current->get_character();
         current = root;
@@ -134,22 +153,6 @@ public:
     }
 
     return decoded;
-  }
-
-  void print_codes(std::ostream& out = std::cout) {
-    out << "Codes:" << std::endl;
-    for (const auto& pair : codes) {
-      out << "'" << pair.first << "' => " << pair.second << std::endl;
-    }
-    out << std::endl;
-  }
-
-  void print_encode(std::string input, std::ostream& out = std::cout) {
-    out << "Encode => " << encode(input) << std::endl;
-  }
-
-  void print_decode(std::string encoded, std::ostream& out = std::cout) {
-    out << "Decode => " << decode(encoded) << std::endl;
   }
 };
 
