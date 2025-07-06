@@ -1,5 +1,0 @@
-Node: 0 - (predecessor: NULL) - start discovery: 1 - end_visit: 10
-Node: 1 - (predecessor: 0) - start discovery: 2 - end_visit: 7
-Node: 2 - (predecessor: 0) - start discovery: 8 - end_visit: 9
-Node: 3 - (predecessor: 1) - start discovery: 3 - end_visit: 6
-Node: 4 - (predecessor: 3) - start discovery: 4 - end_visit: 5

@@ -1,3 +1,6 @@
 [submodule "hash-tables-open-addressing"]
 	path = hash-tables-open-addressing
 	url = https://github.com/r-delprete/hash-tables-open-addressing
+[submodule "graphs-algorithms-suite"]
+	path = graphs-algorithms-suite
+	url = https://github.com/r-delprete/graphs-algorithms-suite
