@@ -1,3 +1,3 @@
-[submodule "hash-tables/hash-tables-open-addressing"]
-	path = hash-tables/hash-tables-open-addressing
+[submodule "hash-tables-open-addressing"]
+	path = hash-tables-open-addressing
 	url = https://github.com/r-delprete/hash-tables-open-addressing

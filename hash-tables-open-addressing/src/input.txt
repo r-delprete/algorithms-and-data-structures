@@ -1,0 +1,6 @@
+0 ciao
+6 mamma
+12 uva
+8 mela
+5 pippo
+15 pluto
