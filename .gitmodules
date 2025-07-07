@@ -4,3 +4,6 @@
 [submodule "graph-algorithms-suite"]
 	path = graph-algorithms-suite
 	url = https://github.com/r-delprete/graph-algorithms-suite
+[submodule "tree-algorithms-suite"]
+	path = tree-algorithms-suite
+	url = https://github.com/r-delprete/tree-algorithms-suite
