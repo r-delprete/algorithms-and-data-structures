@@ -1,6 +1,3 @@
-[submodule "graphs-algorithms-suite"]
-	path = graphs-algorithms-suite
-	url = https://github.com/r-delprete/graphs-algorithms-suite
 [submodule "hash-table-algorithms-suite"]
 	path = hash-table-algorithms-suite
 	url = https://github.com/r-delprete/hash-table-algorithms-suite
