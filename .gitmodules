@@ -7,3 +7,6 @@
 [submodule "tree-algorithms-suite"]
 	path = tree-algorithms-suite
 	url = https://github.com/r-delprete/tree-algorithms-suite
+[submodule "heap-algorithms-suite"]
+	path = heap-algorithms-suite
+	url = https://github.com/r-delprete/heap-algorithms-suite
